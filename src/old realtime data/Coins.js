@@ -19,7 +19,7 @@ export default function Coins({ crypto, cryptoPrices }) {
         </div>
       </header>
 
-      <div className="px-4 sm:px-6 lg:px-8 pt-5 max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="lg:px-8 pt-5 max-w-7xl mx-auto px-4 sm:px-6">
         <div className="mt-8 flex flex-col">
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

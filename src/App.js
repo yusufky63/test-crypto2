@@ -13,7 +13,7 @@ import { Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      {/* <TickerWidget></TickerWidget> */}
+      <TickerWidget></TickerWidget>
       <Header></Header>
 
       <Routes>

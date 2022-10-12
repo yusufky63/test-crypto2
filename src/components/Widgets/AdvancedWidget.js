@@ -6,6 +6,7 @@ function AdvancedWidget({id}) {
     <div>
         <AdvancedRealTimeChart
         symbol={`BINANCE:${id}USDT`}
+        // eslint-disable-next-line react/style-prop-object
         style="1"
         interval="D"
         width="400"

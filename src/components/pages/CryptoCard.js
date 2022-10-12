@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AdvancedWidget from "../Widgets/AdvancedWidget";
+
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
-import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
+import {  makeStyles, Typography } from "@material-ui/core";
 import { CryptoState } from "../context/CryptoContext";
 import HistoryChart from "../utils/HistoryChart";
 function CryptoCard() {
