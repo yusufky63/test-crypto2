@@ -1,15 +1,18 @@
-
-
-
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { CryptoState } from "./components/context/CryptoContext";
+
+
 
 function Header() {
   const { currency, setCurrency } = CryptoState();
 
   return (
     <>
-      <nav className="flex justify-center">
+      {/* <nav className="flex justify-center">
         <div className="navbar border rounded-full w-4/6 flex text-xl justify-between p-4 px-5 items-center">
           <div>
             <Link to="/">Ana Sayfa</Link>
@@ -36,9 +39,170 @@ function Header() {
               <option value={"TRY"}>TRY</option>
             </select>
           </div>
-         
         </div>
-      </nav>
+      </nav> */}
+
+      <Disclosure as="nav" className="bg-white navbar ">
+        {({ open }) => (
+          <>
+            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 ">
+              <div className="relative flex h-24 items-center justify-between">
+                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden ">
+                  {/* Mobile menu button*/}
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
+                </div>
+                <div className=" flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                  <div className="flex flex-shrink-0 items-center ">
+                    <img
+                      className="block h-8 w-auto lg:hidden"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                      alt="Your Company"
+                    />
+                    <img
+                      className="hidden h-8 w-auto lg:block"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                      alt="Your Company"
+                    />
+                  </div>
+                  <div className="hidden sm:ml-6 sm:block ">
+                    <div className="flex space-x-4  justify-center ">
+                      <div>
+                        {" "}
+                        <Link
+                          className=" text-xl text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
+                          to="/"
+                        >
+                          AnaSayfa
+                        </Link>
+                      </div>
+
+                      <div>
+                        <Link
+                          className=" text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          to="/allcoins"
+                        >
+                          Coinler
+                        </Link>
+                      </div>
+
+                      <div>
+                        <Link
+                          className=" text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          to="/news"
+                        >
+                          Haberler
+                        </Link>
+                      </div>
+
+                      <div>
+                        <Link
+                          className=" text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          to="/profile"
+                        >
+                          Profile
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <select
+                    value={currency}
+                    className=" rounded-full  p-2 border  outline-none"
+                    onChange={(e) => setCurrency(e.target.value)}
+                  >
+                    <option value={"USD"}>USD</option>
+                    <option value={"TRY"}>TRY</option>
+                  </select>
+
+              
+
+                  {/* Profile dropdown */}
+                  <Menu as="div" className="relative ml-3">
+                    <div>
+                      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                          className="h-10 w-10 rounded-full"
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt=""
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                         <a  className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profil</a>
+                        </Menu.Item>
+                        <Menu.Item>
+                        <a   className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Ayarlar</a>
+                         
+                        </Menu.Item>
+                        <Menu.Item>
+                        <a   className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Çıkış Yap</a>
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
+              </div>
+            </div>
+
+            <Disclosure.Panel className="sm:hidden">
+              <div className="space-y-1 px-2 pt-2 pb-3">
+                <Link
+                  className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  to="/"
+                >
+                  Ana Sayfa
+                </Link>
+
+                <div>
+                  <Link
+                    className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    to="/allcoins"
+                  >
+                    Coinler
+                  </Link>
+                </div>
+
+                <div>
+                  <Link
+                    className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    to="/news"
+                  >
+                    Haberler
+                  </Link>
+                </div>
+
+                <div>
+                  <Link
+                    className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    to="/profile"
+                  >
+                    Profile
+                  </Link>
+                </div>
+              </div>
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
     </>
   );
 }

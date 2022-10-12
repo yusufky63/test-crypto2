@@ -13,8 +13,7 @@ function TickerWidget() {
         locale="en"
         width="100%"
         height="100%"
-        largeChartUrl=""
-        showSymbolLogo
+        
         symbols={[
           {
             proName: "BITSTAMP:BTCUSD",

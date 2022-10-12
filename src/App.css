@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
 body {
+    font-family: 'Signika Negative', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
     background-color: #f3f2f6;
 }
 
@@ -16,7 +21,6 @@ body {
 }
 
 header .search {
-    width: 33%;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 

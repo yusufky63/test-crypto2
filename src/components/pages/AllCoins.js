@@ -49,18 +49,18 @@ function AllCoins() {
             <input
               type="text"
               placeholder="Arama"
-              className="search text-center p-3 outline-none border rounded-full "
+              className="search w-3/4 text-center p-3 outline-none border rounded-full lg:w-2/4  mx-auto"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </header>
-
+     
         <div className=" px-4  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6">
           <div className="mt-8 flex flex-col">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5   md:rounded-lg">
                   {loading ? (
                     <LinearProgress color="secondary" />
                   ) : (
@@ -69,9 +69,9 @@ function AllCoins() {
                         <tr className="text-center">
                           <th
                             scope="col"
-                            className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 sm:pl-6"
+                            className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 0"
                           >
-                            Favoriler
+                            Favori
                           </th>
                           <th
                             scope="col"
@@ -81,37 +81,37 @@ function AllCoins() {
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5  text-sm font-semibold text-gray-900"
+                            className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                           >
                             Coin
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5  text-sm font-semibold text-gray-900"
+                            className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                           >
                             Fiyat
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5  text-sm font-semibold text-gray-900"
+                            className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                           >
-                            24 Saatlik Değişim
+                           ( 24S) Değişim
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5  text-sm font-semibold text-gray-900"
+                            className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                           >
                             Piyasa Değeri
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5  text-sm font-semibold text-gray-900"
+                            className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                           >
                             Toplam Arz
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                            className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
                             24 Saatlik Hacim
                           </th>
@@ -143,7 +143,7 @@ function AllCoins() {
                                     />
                                   </div>
                                   <div className="ml-4">
-                                    <div className="font-medium text-gray-900">
+                                    <div className="  text-gray-900 font-bold ">
                                       <Link to={`/allcoins/${item.id}`}>
                                         {item.name}
                                         <span className="uppercase text-xs text-gray-500">
@@ -155,7 +155,7 @@ function AllCoins() {
                                   </div>
                                 </div>
                               </td>
-                              <td className="price whitespace-nowrap px-3 py-4 text-sm ">
+                              <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
                                 <div className="">
                                   {" "}
                                   {symbol}
