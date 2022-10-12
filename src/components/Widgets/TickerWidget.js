@@ -1,7 +1,6 @@
 import {
   TickerTape,
-  CopyrightStyles,
-  TickerSymbol,
+
 } from "react-ts-tradingview-widgets";
 
 import React from "react";
