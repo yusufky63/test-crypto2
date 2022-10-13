@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { LinearProgress } from "@mui/material";
+import parse from 'html-react-parser';
 function News() {
   const [page, setPage] = useState(1);
   const [news, setNews] = useState([]);
@@ -42,40 +43,62 @@ function News() {
   console.log(news);
   return (
     <div className="mt-10 ">
-      <h1 className="text-5xl">Haberler</h1>
+      <h1 className="text-5xl font-bold">Kriptoya Dair Haberler</h1>
       <div className=" ">
         <ul className="flex justify-center flex-wrap mt-5">
           {loading ? (
             <LinearProgress color="secondary" />
           ) : (
             news.map((item) => (
-              <li className="" key={item.id}>
-                <div className="news-box border m-3 p-3 w-80 text-left">
-                  <div className="">
-                    <img src={item.related_image_big} width="400" alt="resim" />
-                    <div className="my-2">
+              <li className="text-left" key={item.id}>
+                <div className="m-5 p-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md  text-gray-700 ">
+                  <img
+                    class="rounded-t-lg"
+                    src={item.related_image_big}
+                    alt=""
+                  />
+                 <div className="p-3">
+                 <span class="inline-block py-1.5 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">{item.news_provider_name}</span>
+                 </div>
+                  <div className="p-3">
+                    
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
+                      {item.HEADLINE}
+                    </h5>
+
+                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                      {parse(item.BODY)}
+                    </p>
+                    <br />
+                    <div className="flex justify-between ">
+                     <div>
+                      <p>Güncelleme Tarihi </p>
+                     <p className="font-normal text-gray-700 dark:text-gray-400">
+                        {item.last_updated}
+                      </p>
+                     </div>
                       <a
-                        target="_blank"
+                      target="_blank"
                         href={item.third_party_url}
-                        rel="noreferrer"
+                        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" rel="noreferrer"
                       >
-                        <h1 className="text-xl">{item.HEADLINE}</h1>
+                        Habere Git
+                        <svg
+                          aria-hidden="true"
+                          class="ml-2 -mr-1 w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
                       </a>
                     </div>
-                    <hr />
-                    <br />
-                    <p>Haber Kaynağı : {item.news_provider_name}</p>
-                    <a
-                      target="_blank"
-                      style={{ color: "red", textAlign: "right" }}
-                      href={item.third_party_url}
-                      rel="noreferrer"
-                    >
-                      Habere Git
-                    </a>
                   </div>
-
-                  <div></div>
                 </div>
               </li>
             ))

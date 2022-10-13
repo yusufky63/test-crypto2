@@ -46,6 +46,7 @@ function AllCoins() {
           </h1>
 
           <div>
+          
             <input
               type="text"
               placeholder="Arama"

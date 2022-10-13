@@ -9,11 +9,12 @@ import CryptoCard from "./components/pages/CryptoCard";
 import Header from "./Header";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-
+import Exchanges from "./components/pages/Exchanges";
+import Academia from "./components/pages/Academia";
+import Quiz from "./components/pages/Quiz";
 function App() {
   return (
-    <div className="App">
-      
+    <div className="App ">
       <TickerWidget></TickerWidget>
       <Header></Header>
 
@@ -23,6 +24,9 @@ function App() {
         <Route path="/allcoins/:id" element={<CryptoCard />} />
         <Route path="/news" element={<News />} />
         <Route exact path="/profile" element={<Profile />} />
+        <Route path="/academia" element={<Academia />} />
+        <Route exact path="/exchanges" element={<Exchanges />} />
+        <Route exact path="/quiz" element={<Quiz />} />
       </Routes>
       <Footer></Footer>
     </div>

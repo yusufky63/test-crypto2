@@ -2,10 +2,8 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { CryptoState } from "./components/context/CryptoContext";
-
-
 
 function Header() {
   const { currency, setCurrency } = CryptoState();
@@ -15,19 +13,19 @@ function Header() {
       {/* <nav className="flex justify-center">
         <div className="navbar border rounded-full w-4/6 flex text-xl justify-between p-4 px-5 items-center">
           <div>
-            <Link to="/">Ana Sayfa</Link>
+            <NavLink to="/">Ana Sayfa</NavLink>
           </div>
           <div>
-            <Link to="/allcoins">Coinler</Link>
+            <NavLink to="/allcoins">Coinler</NavLink>
           </div>
           <div>
             <img src={require("./img/logo.png")} width="100" alt="resim" />
           </div>
           <div>
-            <Link to="/news">Haberler</Link>
+            <NavLink to="/news">Haberler</NavLink>
           </div>
           <div>
-            <Link to="/profile">Profile</Link>
+            <NavLink to="/profile">Profile</NavLink>
           </div>
           <div className="absolute right-10">
             <select
@@ -45,9 +43,9 @@ function Header() {
       <Disclosure as="nav" className="bg-white navbar ">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 ">
+            <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8 ">
               <div className="relative flex h-24 items-center justify-between">
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden ">
+                <div className="absolute  inset-y-0 left-0 flex items-center sm:hidden ">
                   {/* Mobile menu button*/}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
@@ -58,56 +56,74 @@ function Header() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className=" flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="flex flex-shrink-0 items-center ">
+                <div className=" flex flex-1 items-center justify-center sm:items-stretch ">
+                  <div className="flex  flex-shrink-0 items-center ">
                     <img
-                      className="block h-8 w-auto lg:hidden"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
-                    />
-                    <img
-                      className="hidden h-8 w-auto lg:block"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
+                      className="block  h-16 w-16 lg:hidden "
+                      src="https://www.citypng.com/public/uploads/preview/-51614811467slofjndnl0.png"
+                      alt=" Crypto"
                     />
                   </div>
                   <div className="hidden sm:ml-6 sm:block ">
-                    <div className="flex space-x-4  justify-center ">
+                    <div className="flex space-x-4  justify-center items-center">
+                      <img
+                        className="hidden  h-14 w-14 lg:block"
+                        src="https://www.citypng.com/public/uploads/preview/-51614811467slofjndnl0.png"
+                        alt="Crypto"
+                      />
                       <div>
                         {" "}
-                        <Link
-                          className=" text-xl text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
+                        <NavLink
+                        
+                          className="mx-2 text-xl text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
                           to="/"
                         >
                           AnaSayfa
-                        </Link>
+                        </NavLink>
                       </div>
 
                       <div>
-                        <Link
-                          className=" text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                        <NavLink
+                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/allcoins"
                         >
                           Coinler
-                        </Link>
+                        </NavLink>
+                      </div>
+                      <div>
+                        <NavLink
+                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          to="/exchanges"
+                        >
+                          Borsalar
+                        </NavLink>
                       </div>
 
                       <div>
-                        <Link
-                          className=" text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                        <NavLink
+                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/news"
                         >
                           Haberler
-                        </Link>
+                        </NavLink>
                       </div>
 
                       <div>
-                        <Link
-                          className=" text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
-                          to="/profile"
+                        <NavLink
+                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          to="/academia"
                         >
-                          Profile
-                        </Link>
+                          Akademi
+                        </NavLink>
+                      </div>
+
+                      <div>
+                        <NavLink
+                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          to="/quiz"
+                        >
+                          Quiz
+                        </NavLink>
                       </div>
                     </div>
                   </div>
@@ -121,8 +137,6 @@ function Header() {
                     <option value={"USD"}>USD</option>
                     <option value={"TRY"}>TRY</option>
                   </select>
-
-              
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
@@ -147,14 +161,19 @@ function Header() {
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
-                         <a  className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profil</a>
+                          <a className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                            Profil
+                          </a>
                         </Menu.Item>
                         <Menu.Item>
-                        <a   className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Ayarlar</a>
-                         
+                          <a className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                            Ayarlar
+                          </a>
                         </Menu.Item>
                         <Menu.Item>
-                        <a   className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Çıkış Yap</a>
+                          <a className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                            Çıkış Yap
+                          </a>
                         </Menu.Item>
                       </Menu.Items>
                     </Transition>
@@ -165,38 +184,38 @@ function Header() {
 
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pt-2 pb-3">
-                <Link
+                <NavLink
                   className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                   to="/"
                 >
                   Ana Sayfa
-                </Link>
+                </NavLink>
 
                 <div>
-                  <Link
+                  <NavLink
                     className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                     to="/allcoins"
                   >
                     Coinler
-                  </Link>
+                  </NavLink>
                 </div>
 
                 <div>
-                  <Link
+                  <NavLink
                     className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                     to="/news"
                   >
                     Haberler
-                  </Link>
+                  </NavLink>
                 </div>
 
                 <div>
-                  <Link
+                  <NavLink
                     className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                     to="/profile"
                   >
                     Profile
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </Disclosure.Panel>
