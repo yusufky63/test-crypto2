@@ -1,5 +1,5 @@
 import "./App.css";
-import TickerWidget from "./components/Widgets/TickerWidget";
+
 import Footer from "./footer";
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
@@ -12,17 +12,13 @@ import { Route, Routes } from "react-router-dom";
 import Exchanges from "./components/pages/Exchanges";
 import Academia from "./components/pages/Academia";
 import Quiz from "./components/pages/Quiz";
-
-
-
+import AllCoinsWidget from "./components/Widgets/AllCoinsWidget";
 
 function App() {
-
- 
   return (
     <div className="App ">
-     
-      <TickerWidget></TickerWidget>
+      <AllCoinsWidget></AllCoinsWidget>
+      {/* <TickerWidget></TickerWidget> */}
       <Header></Header>
 
       <Routes>

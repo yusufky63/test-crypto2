@@ -7,7 +7,7 @@ import { Sparklines, SparklinesLine ,SparklinesSpots} from "react-sparklines";
 
 import { CoinList } from "../../services/Api";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
-import convertToInternationalCurrencySystem from "../utils/convertCurrency";
+import numberWithCommas from "../utils/convertCurrency";
 function AllCoins() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -179,14 +179,14 @@ function AllCoins() {
                               <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {symbol}
-                                  {convertToInternationalCurrencySystem(
+                                  {numberWithCommas(
                                     item.market_cap
                                   )}
                                 </div>
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
-                                  {convertToInternationalCurrencySystem(
+                                  {numberWithCommas(
                                     item.total_supply
                                   )}
                                 </div>
@@ -194,14 +194,25 @@ function AllCoins() {
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {symbol}
-                                  {convertToInternationalCurrencySystem(
+                                  {numberWithCommas(
                                     item.total_volume
                                   )}
                                 </div>
                               </td>
                               <td>
-                                <td className="px-5 mx-20 py-4">
-                                  <Sparklines
+                                <td className="px-10 mx-20 py-4">
+                                <Sparklines
+                      svgHeight={30}
+                      width={50}
+                      height={90}
+                      margin={-30}
+                      data={item.sparkline_in_7d.price}
+                    >
+                      <SparklinesLine style={{ fill: "" }} />
+                      <SparklinesSpots />
+                    </Sparklines>
+
+                                  {/* <Sparklines
                                   svgWidth={500} svgHeight={40}
                                     data={item.sparkline_in_7d.price}
                                     margin={5}
@@ -222,7 +233,7 @@ function AllCoins() {
                                         fill: "white",
                                       }}
                                     />
-                                  </Sparklines>
+                                  </Sparklines> */}
                                 </td>
                               </td>
                             </tr>
