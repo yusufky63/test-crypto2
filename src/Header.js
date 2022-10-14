@@ -66,11 +66,6 @@ function Header() {
                   </div>
                   <div className="hidden sm:ml-6 sm:block ">
                     <div className="flex space-x-4  justify-center items-center">
-                      <img
-                        className="hidden  h-14 w-14 lg:block"
-                        src="https://www.citypng.com/public/uploads/preview/-51614811467slofjndnl0.png"
-                        alt="Crypto"
-                      />
                       <div>
                         {" "}
                         <NavLink
