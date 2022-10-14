@@ -200,11 +200,12 @@ function AllCoins() {
                                 </div>
                               </td>
                               <td>
-                                <td className="pl-5">
+                                <td className="px-5 mx-20 py-4">
                                   <Sparklines
-                                  svgWidth={200} svgHeight={40}
+                                  svgWidth={500} svgHeight={40}
                                     data={item.sparkline_in_7d.price}
                                     margin={5}
+                                    
                                   >
                                     <SparklinesLine
                                       style={{

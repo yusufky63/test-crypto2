@@ -74,7 +74,6 @@ function Header() {
                       <div>
                         {" "}
                         <NavLink
-                        
                           className="mx-2 text-xl text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
                           to="/"
                         >
@@ -206,6 +205,31 @@ function Header() {
                     to="/news"
                   >
                     Haberler
+                  </NavLink>
+                </div>
+                <div>
+                  <NavLink
+                    className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium "
+                    to="/exchanges"
+                  >
+                    Borsalar
+                  </NavLink>
+                </div>
+                <div>
+                  <NavLink
+                    className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    to="/academia"
+                  >
+                    Akademi
+                  </NavLink>
+                </div>
+
+                <div>
+                  <NavLink
+                    className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium "
+                    to="/quiz"
+                  >
+                    Quiz
                   </NavLink>
                 </div>
 

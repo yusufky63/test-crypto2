@@ -69,10 +69,12 @@ function Exchanges() {
             </div>
           ) : (
             exchanges.map((exchange) => (
-              <li className="border" key={exchange.id}>
-                <div class="p-1 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
+              <li className="border relative" key={exchange.id}>
+                 <h1 className="absolute  mb-8 border px-4 py-1  rounded-r-full bg-yellow-400">{exchange.trust_score_rank}</h1>
+                <div class="p-1 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
                   <div className="flex justify-center mt-5">
                     {" "}
+                  
                     <img className="rounded-full" src={exchange.image} alt="" />
                   </div>
 
