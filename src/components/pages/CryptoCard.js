@@ -1,20 +1,27 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+// import Chart from "../utils/Chart";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
-import {  makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import { CryptoState } from "../context/CryptoContext";
 import HistoryChart from "../utils/HistoryChart";
+import AdvancedWidget from "../Widgets/AdvancedWidget";
 function CryptoCard() {
   const { id } = useParams();
   const [coin, setCoin] = useState();
   const { currency, symbol } = CryptoState();
-const [day,setDay] = useState("7")
-  const fetchCoin = async () => {
-    const { data } = await axios.get(SingleCoin(id));
+  const [day, setDay] = useState("7");
+  const [loading,setLoading] = useState(false)
 
+
+
+  const fetchCoin = async () => {
+    setLoading(true)
+    const { data } = await axios.get(SingleCoin(id));
+console.log(data)
     setCoin(data);
+    setLoading(false)
   };
 
   useEffect(() => {
@@ -76,91 +83,99 @@ const [day,setDay] = useState("7")
 
   const classes = useStyles();
   return (
-    
-    <><div >
-      <div className={classes.sidebar}>
-        <Typography variant="h3" className={classes.heading}>
-          {coin?.name}
-        </Typography>
-        <img
-          src={coin?.image.small}
-          alt={coin?.name}
-          height="200"
-          style={{ marginBottom: 20 }} />
-
-        <Typography variant="subtitle1" className={classes.description}>
-          {(coin?.description.en.split(". ")[0])}.
-        </Typography>
-        <div className={classes.marketData}>
-          <span style={{ display: "flex" }}>
-            <Typography variant="h5" className={classes.heading}>
-              Rank:
-            </Typography>
-            &nbsp; &nbsp;
-            <Typography
-              variant="h5"
-              style={{
-                fontFamily: "Montserrat",
-              }}
-            >
-              {(coin?.market_cap_rank)}
-            </Typography>
-          </span>
-
-          <span style={{ display: "flex" }}>
-            <Typography variant="h5" className={classes.heading}>
-              Current Price:
-            </Typography>
-            &nbsp; &nbsp;
-            <Typography
-              variant="h5"
-              style={{
-                fontFamily: "Montserrat",
-              }}
-            >
-              {symbol}{" "}
-              {(
-                coin?.market_data.current_price[currency.toLowerCase()]
-              )}
-            </Typography>
-          </span>
-          <span style={{ display: "flex" }}>
-            <Typography variant="h5" className={classes.heading}>
-              Market Cap:
-            </Typography>
-            &nbsp; &nbsp;
-            <Typography
-              variant="h5"
-              style={{
-                fontFamily: "Montserrat",
-              }}
-            >
-              {symbol}{" "}
-              {(
-                coin?.market_data.market_cap[currency.toLowerCase()]
-                  .toString()
-                  .slice(0, -6)
-              )}
-              M
-            </Typography>
-          </span>
-
-        </div>
-
-      </div>
+    <>
       <div>
-      
+        <div className={classes.sidebar}>
+          <Typography variant="h3" className={classes.heading}>
+            {coin?.name}
+          </Typography>
+          <img
+            src={coin?.image.small}
+            alt={coin?.name}
+            height="200"
+            style={{ marginBottom: 20 }}
+          />
 
-        <select name="" id="" value={day}
-        onChange={(e)=> setDay(e.target.value) }>
-          <option  value="7">7 Days</option>
-          <option value="30">30 Days</option>
-          <option value="365">365 Days</option>
-        </select>
-        <HistoryChart day={day} currency={currency}/>
-     </div>
-     
-    </div>
+          <Typography variant="subtitle1" className={classes.description}>
+            {coin?.description.en.split(". ")[0]}.
+          </Typography>
+          <div className={classes.marketData}>
+            <span style={{ display: "flex" }}>
+              <Typography variant="h5" className={classes.heading}>
+                Rank:
+              </Typography>
+              &nbsp; &nbsp;
+              <Typography
+                variant="h5"
+                style={{
+                  fontFamily: "Montserrat",
+                }}
+              >
+                {coin?.market_cap_rank}
+              </Typography>
+            </span>
+
+            <span style={{ display: "flex" }}>
+              <Typography variant="h5" className={classes.heading}>
+                Current Price:
+              </Typography>
+              &nbsp; &nbsp;
+              <Typography
+                variant="h5"
+                style={{
+                  fontFamily: "Montserrat",
+                }}
+              >
+                {symbol}{" "}
+                {coin?.market_data.current_price[currency.toLowerCase()]}
+              </Typography>
+            </span>
+            <span style={{ display: "flex" }}>
+              <Typography variant="h5" className={classes.heading}>
+                Market Cap:
+              </Typography>
+              &nbsp; &nbsp;
+              <Typography
+                variant="h5"
+                style={{
+                  fontFamily: "Montserrat",
+                }}
+              >
+                {symbol}{" "}
+                {coin?.market_data.market_cap[currency.toLowerCase()]
+                  .toString()
+                  .slice(0, -6)}
+                M
+              </Typography>
+            </span>
+         
+          </div>
+          
+        </div>
+        <div>
+          
+        </div>
+        <div>
+       
+          <select
+            name=""
+            id=""
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
+          >
+            <option value="7">7 Days</option>
+            <option value="30">30 Days</option>
+            <option value="365">365 Days</option>
+          </select>
+          <HistoryChart day={day} currency={currency} />
+          {/* <Chart id={id}></Chart> */}
+      <br />
+      <br />
+          <Typography>
+            {loading ? "Tradingview Yükleniyor" : (<AdvancedWidget id={coin?.symbol} />)}
+            </Typography>
+        </div>
+      </div>
     </>
   );
 }

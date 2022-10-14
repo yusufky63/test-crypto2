@@ -12,9 +12,16 @@ import { Route, Routes } from "react-router-dom";
 import Exchanges from "./components/pages/Exchanges";
 import Academia from "./components/pages/Academia";
 import Quiz from "./components/pages/Quiz";
+
+
+
+
 function App() {
+
+ 
   return (
     <div className="App ">
+     
       <TickerWidget></TickerWidget>
       <Header></Header>
 

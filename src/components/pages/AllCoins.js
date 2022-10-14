@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CryptoState } from "../context/CryptoContext";
 import axios from "axios";
 import { Pagination, LinearProgress } from "@mui/material";
+import { Sparklines, SparklinesLine ,SparklinesSpots} from "react-sparklines";
 
 import { CoinList } from "../../services/Api";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
@@ -14,7 +15,7 @@ function AllCoins() {
   const [page, setPage] = useState(1);
   const fetchCoins = async () => {
     setLoading(true);
-    const { data } = await axios.get(CoinList(currency));
+    const { data } = await axios.get(CoinList(currency, 100));
 
     setCoins(data);
     setLoading(false);
@@ -46,7 +47,6 @@ function AllCoins() {
           </h1>
 
           <div>
-          
             <input
               type="text"
               placeholder="Arama"
@@ -56,7 +56,7 @@ function AllCoins() {
             />
           </div>
         </header>
-     
+
         <div className=" px-4  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6">
           <div className="mt-8 flex flex-col">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -96,7 +96,7 @@ function AllCoins() {
                             scope="col"
                             className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                           >
-                           ( 24S) Değişim
+                            ( 24S) Değişim
                           </th>
                           <th
                             scope="col"
@@ -115,6 +115,12 @@ function AllCoins() {
                             className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
                             24 Saatlik Hacim
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
+                          >
+                            7 Günlük Değişim
                           </th>
                         </tr>
                       </thead>
@@ -192,6 +198,31 @@ function AllCoins() {
                                     item.total_volume
                                   )}
                                 </div>
+                              </td>
+                              <td>
+                                <td className="pl-5">
+                                  <Sparklines
+                                  svgWidth={200} svgHeight={40}
+                                    data={item.sparkline_in_7d.price}
+                                    margin={5}
+                                  >
+                                    <SparklinesLine
+                                      style={{
+                                        strokeWidth: 2,
+                                        stroke: "#336aff",
+                                        fill: "#8e44af"
+                                      }}
+                                    />
+                                    <SparklinesSpots
+                                      size={2}
+                                      style={{
+                                        stroke: "#336aff",
+                                        strokeWidth: 3,
+                                        fill: "white",
+                                      }}
+                                    />
+                                  </Sparklines>
+                                </td>
                               </td>
                             </tr>
                           ))}

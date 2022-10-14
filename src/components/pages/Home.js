@@ -1,6 +1,6 @@
 
 
-function Home({ crypto, cryptoPrices }) {
+function Home() {
     
     return (
         <>

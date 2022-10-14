@@ -4,19 +4,19 @@ function AdvancedWidget({id}) {
 
   return (
     <div>
-        <AdvancedRealTimeChart
+      {id &&   <AdvancedRealTimeChart
         symbol={`BINANCE:${id}USDT`}
         // eslint-disable-next-line react/style-prop-object
         style="1"
         interval="D"
-        width="400"
+        width="500"
         height="400"
-        locale="en"
+        locale="tr"
         
         theme="light" 
        
        
-        ></AdvancedRealTimeChart>
+        ></AdvancedRealTimeChart>}
     </div>
   )
 }

@@ -58,11 +58,11 @@ function Header() {
                 </div>
                 <div className=" flex flex-1 items-center justify-center sm:items-stretch ">
                   <div className="flex  flex-shrink-0 items-center ">
-                    <img
+                    {/* <img
                       className="block  h-16 w-16 lg:hidden "
                       src="https://www.citypng.com/public/uploads/preview/-51614811467slofjndnl0.png"
                       alt=" Crypto"
-                    />
+                    /> */}
                   </div>
                   <div className="hidden sm:ml-6 sm:block ">
                     <div className="flex space-x-4  justify-center items-center">
