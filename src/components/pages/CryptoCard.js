@@ -195,7 +195,7 @@ function CryptoCard() {
             </select>
           </div> */}
 
-          <div id="test" className="container max-w-screen-lg flex ml-5">
+          <div id="test" className="container max-w-screen-lg flex ">
             <AdvancedRealTimeChart
               details
               container_id="test"
