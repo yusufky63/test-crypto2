@@ -40,7 +40,7 @@ function Header() {
         </div>
       </nav> */}
 
-      <Disclosure as="nav" className="bg-white navbar ">
+      <Disclosure as="nav" className="bg-white navbar w-full">
         {({ open }) => (
           <>
             <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8 ">

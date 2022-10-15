@@ -5,7 +5,7 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {CryptoState} from "../context/CryptoContext";
+import { CryptoState } from "../context/CryptoContext";
 import { CoinList } from "../../services/Api";
 
 function AllCoinsWidget() {
@@ -30,13 +30,13 @@ function AllCoinsWidget() {
           <AliceCarousel
             autoPlay
             autoPlayStrategy="none"
-            autoPlayInterval={1000}
+            autoPlayInterval={500}
             animationDuration={1000}
             animationType="fadeout"
             infinite
             touchTracking={false}
             disableButtonsControls
-          disableDotsControls
+            disableDotsControls
             responsive={responsive}
           >
             {crypto.map((coin) => (
@@ -75,11 +75,11 @@ function AllCoinsWidget() {
 export default AllCoinsWidget;
 
 const responsive = {
-    0: { items: 2 },
-    680: { items: 3 },
-    940: { items: 4 },
-    1280: { items: 6 },
-    1480: { items: 7 },
-    1536: { items: 10 },
- 
+  0: { items: 2 },
+  680: { items: 3 },
+  940: { items: 4 },
+  1280: { items: 6 },
+  1480: { items: 6 },
+  1536: { items: 8 },
+  1920: { items: 10 },
 };
