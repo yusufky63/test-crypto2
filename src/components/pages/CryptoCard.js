@@ -32,10 +32,12 @@ function CryptoCard() {
 
   return (
     <>
-    <br />
-      <h1 className="text-sm">Eğer <b> "Hatalı Sembol"</b> Uyarısı alıyorsanız İşlem Çiftini Değiştiriniz !</h1>
+      <br />
+      <h1 className="text-sm">
+        Eğer <b> "Hatalı Sembol"</b> Uyarısı alıyorsanız İşlem Çiftini
+        Değiştiriniz !
+      </h1>
       {coin && (
-        
         <div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
           <div className=" ml-10 mr-5">
             <div className="flex items-center">
@@ -47,7 +49,7 @@ function CryptoCard() {
                 alt={coin.name}
                 className="w-16 h-16 mr-4 mt-5"
               />
-              <h1 className="text-xl ">
+              <h1 className="text-xl font-bold mt-3">
                 {coin.name}{" "}
                 <span className="text-sm uppercase text-gray-500">
                   {coin.symbol}
@@ -55,7 +57,7 @@ function CryptoCard() {
               </h1>
             </div>
             <br />
-            <div className="flex justify-start ">
+            <div className="flex justify-center ">
               <h1 className="text-2xl font-bold mx-2">
                 {symbol}
                 {coin.market_data.current_price[currencyEdit]}
@@ -72,7 +74,7 @@ function CryptoCard() {
               </span>
             </div>
             <br />
-            <div className="flex justify-start ">
+            <div className="flex justify-center ">
               <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-red-600 text-white rounded-full">
                 {symbol} {coin.market_data.low_24h[currencyEdit]}
               </h1>
@@ -180,7 +182,7 @@ function CryptoCard() {
               )}
             </div>
           </div>
-       
+
           {/* <div>
             <select
               name=""
@@ -207,10 +209,7 @@ function CryptoCard() {
               theme="light"
             ></AdvancedRealTimeChart>
 
-            <div>
-              {" "}
-            
-            </div>
+            <div> </div>
             {/* <CoinChart id={id}></CoinChart> */}
           </div>
         </div>
