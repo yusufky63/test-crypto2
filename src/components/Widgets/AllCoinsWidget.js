@@ -43,7 +43,7 @@ function AllCoinsWidget() {
               <div
                 data-value={coin.market_cap_rank}
                 key={coin.id}
-                className="border p-3 bg-white"
+                className="border p-1 bg-white"
               >
                 <div className="card-body">
                   <div className="flex  items-center justify-center">

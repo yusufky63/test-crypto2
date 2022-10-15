@@ -32,11 +32,14 @@ function CryptoCard() {
 
   return (
     <>
+    <br />
+      <h1 className="text-sm">Eğer <b> "Hatalı Sembol"</b> Uyarısı alıyorsanız İşlem Çiftini Değiştiriniz !</h1>
       {coin && (
-        <div className=" flex   lg:flex-row flex-col mt-20 gap-20 justify-center">
+        
+        <div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
           <div className=" ml-10 mr-5">
             <div className="flex items-center">
-              <span className=" absolute mb-20 bg-yellow-500 font-medium text-black rounded-lg p-1">
+              <span className=" absolute mb-20 bg-yellow-500  text-black rounded-r-lg px-1 ">
                 Rank #{coin.market_cap_rank}
               </span>
               <img
@@ -70,15 +73,15 @@ function CryptoCard() {
             </div>
             <br />
             <div className="flex justify-start ">
-              <h1 className="rounded-md  text-sm bg-red-500 p-1 text-white ">
+              <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-red-600 text-white rounded-full">
                 {symbol} {coin.market_data.low_24h[currencyEdit]}
               </h1>
 
-              <span className="text-sm p-1 mx-2 bg-yellow-500 rounded-lg ">
+              <span className="text-xs inline-block py-2 px-2 leading-none text-center whitespace-nowrap align-baseline  bg-yellow-500 text-black rounded-lg mx-5 ">
                 24H
               </span>
 
-              <h1 className="rounded-md  text-sm bg-green-500 p-1 text-white ">
+              <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-green-600 text-white rounded-full">
                 {symbol} {coin.market_data.high_24h[currencyEdit]}
               </h1>
             </div>
@@ -133,25 +136,51 @@ function CryptoCard() {
 
             <div className="flex items-center   justify-between">
               <h1 className="font-bold mr-10">Site :</h1>
-              <span className="text-sm bg-yellow-400 rounded-lg  px-2">
-                {coin.links.homepage[0]}
-              </span>
+              {coin.links.homepage[0] ? (
+                <a
+                  href={coin.links.homepage[0]}
+                  target={"_blank"}
+                  className="text-sm bg-yellow-400 rounded-lg  px-2"
+                  rel="noreferrer"
+                >
+                  {coin.links.homepage[0]}
+                </a>
+              ) : (
+                <span className="text-sm">Mevcut Değil</span>
+              )}
             </div>
 
             <div className="flex items-center  justify-between">
               <h1 className="font-bold mr-10">Forum : </h1>
-              <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
-                {coin.links.official_forum_url[0]}
-              </span>
+              {coin.links.official_forum_url[0] ? (
+                <a
+                  href={coin.links.official_forum_url[0]}
+                  className=" text-sm bg-yellow-400 rounded-lg  px-2"
+                >
+                  {coin.links.official_forum_url[0]}
+                </a>
+              ) : (
+                <span className="text-sm">Mevcut Değil</span>
+              )}
             </div>
 
             <div className="flex items-center  justify-between">
               <h1 className="font-bold mr-10">Reddit : </h1>
-              <span className=" text-sm bg-yellow-400 rounded-lg px-2">
-                {coin.links.subreddit_url}
-              </span>
+              {coin.links.subreddit_url ? (
+                <a
+                  href={coin.links.subreddit_url}
+                  target="_blank"
+                  className=" text-sm bg-yellow-400 rounded-lg px-2"
+                  rel="noreferrer"
+                >
+                  {coin.links.subreddit_url}
+                </a>
+              ) : (
+                <span className="text-sm">Mevcut Değil</span>
+              )}
             </div>
           </div>
+       
           {/* <div>
             <select
               name=""
@@ -163,11 +192,12 @@ function CryptoCard() {
               <option value={2}>Custom Chart</option>
             </select>
           </div> */}
-          <div id="test" className="container max-w-screen-lg flex ">
+
+          <div id="test" className="container max-w-screen-lg flex ml-5">
             <AdvancedRealTimeChart
               details
               container_id="test"
-              symbol={`BINANCE:${coin.symbol}${currency}`}
+              symbol={`BINANCE:${coin.symbol}USD`}
               // eslint-disable-next-line react/style-prop-object
               style="1"
               interval="D"
@@ -177,6 +207,10 @@ function CryptoCard() {
               theme="light"
             ></AdvancedRealTimeChart>
 
+            <div>
+              {" "}
+            
+            </div>
             {/* <CoinChart id={id}></CoinChart> */}
           </div>
         </div>

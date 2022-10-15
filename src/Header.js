@@ -40,7 +40,7 @@ function Header() {
         </div>
       </nav> */}
 
-      <Disclosure as="nav" className="bg-white navbar w-full">
+      <Disclosure as="nav" className="bg-white navbar ">
         {({ open }) => (
           <>
             <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8 ">
@@ -131,6 +131,7 @@ function Header() {
                     <option value={"USD"}>USD</option>
                     <option value={"TRY"}>TRY</option>
                   </select>
+                  
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">

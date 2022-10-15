@@ -1,81 +1,58 @@
 import React from "react";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
-import AliceCarousel from "react-alice-carousel";
+
 import "react-alice-carousel/lib/alice-carousel.css";
 
 function TrendCoin({ crypto, symbol }) {
   return (
     <div>
-      <div className=" flex justify-center  max-w-4xl mx-auto flex-wrap gap-4 mt-10">
-        {
-          <AliceCarousel
-            autoPlay
-            autoPlayStrategy="none"
-            autoPlayInterval={1000}
-            animationDuration={1000}
-            animationType="fadeout"
-            infinite
-            touchTracking={false}
-            
-            disableButtonsControls
-            responsive={responsive}
+      <div className="mt-10 flex justify-center  max-w-7xl mx-auto flex-wrap gap-8">
+        {crypto.map((coin) => (
+          <div
+            key={coin.id}
+            className="top-coins rounded-lg p-7 bg-white m-10 relative"
           >
-            {crypto.map((coin) => (
-              <div
-                data-value={coin.market_cap_rank}
-                key={coin.id}
-                className="border rounded-lg p-5 w-52 bg-white"
+            <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded-r text-sm px-2">
+              {coin.market_cap_rank}
+            </span>
+            <div className="flex items-center">
+              {" "}
+              <img
+                src={coin.image}
+                width="50"
+                alt="coin"
+                className="card-img mr-2"
+              />
+              <h1>
+                {coin.name} <br />
+                <span className="uppercase text-xs text-gray-500">
+                  {coin.symbol}
+                </span>
+              </h1>
+            </div>
+            <br />
+            <div className="flex items-center justify-center">
+              <h1 className="text-lg font-bold mr-3">
+                {symbol}
+                {coin.current_price}
+              </h1>
+              <CheckPositiveNumber number={coin.price_change_percentage_24h} />
+            </div>
+            <div className="mx-10 mt-10 mb-6">
+              <Sparklines
+                svgHeight={30}
+                width={40}
+                height={40}
+                margin={-40}
+                data={coin.sparkline_in_7d.price}
               >
-                <div className="card-body">
-                  <div className="flex  items-center justify-center">
-                    <img
-                      src={coin.image}
-                      width="50"
-                      alt="coin"
-                      className="card-img"
-                    />
-                    <h5 className="ml-1 card-title font-bold text-xl">
-                      {coin.name}
-                    </h5>
-                  </div>
-                  <br />
-                  <span className="font-medium text-gray-500 uppercase">
-                    {coin.symbol}
-                  </span>
-                  <br />
-
-                  <div className=" m-5 ml-10 item-center">
-                    <h5 className="card-title text-xl">
-                      {symbol}
-                      {coin.current_price}
-                    </h5>{" "}
-                    <span className=" ">
-                      {" "}
-                      <CheckPositiveNumber
-                        number={coin.price_change_percentage_24h}
-                      />
-                    </span>
-                  </div>
-
-                  <div className="flex justify-center py-5 px-2">
-                    {" "}
-                    <Sparklines
-                      svgHeight={50}
-                      width={30}
-                      height={50}
-                      margin={-30}
-                      data={coin.sparkline_in_7d.price}
-                    >
-                      <SparklinesLine style={{ fill: "" }} />
-                      <SparklinesSpots />
-                    </Sparklines>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </AliceCarousel>
-        }
+                <SparklinesLine style={{ fill: "" }} />
+                <SparklinesSpots />
+              </Sparklines>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -83,8 +60,3 @@ function TrendCoin({ crypto, symbol }) {
 
 export default TrendCoin;
 
-const responsive = {
-  0: { items: 2 },
-  568: { items: 2 },
-  1024: { items: 4 },
-};
