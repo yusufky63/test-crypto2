@@ -11,7 +11,7 @@ function Home() {
   const { currency, symbol } = CryptoState();
 
   const getCoins = async () => {
-  const { data } = await axios.get(TopCoins(currency));
+    const { data } = await axios.get(TopCoins(currency));
     setCrypto(data);
   };
 
@@ -22,8 +22,30 @@ function Home() {
   console.log(crypto);
   return (
     <div>
-      <TrendCoin crypto={crypto} currency={currency} symbol={symbol} />
-
+      <h1 className="font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-2xl  my-10">Kripto Dünyasına Hoşgeldiniz</h1>
+      <div  className=" flex justify-center items-center  ">
+        <div className="font-bold text-start  sm:text-xs md:text-xl lg:text-3xl xl:text-4xl text-xs whitespace-nowrap mr-5">
+          Kripto satın almanın, satmanın ve <br /> kripto ticareti yapmanın dünyadaki <br />
+          en popüler yolu
+          <br />
+          <br />
+          <p className="text-gray-900  sm:text-xs md:text-xl lg:text-2xl xl:text-3xl text-xs">
+          2011'den beri milyonlarca insanın güveni ile <br /> değeri 1 Trilyon doları
+          aşan kripto para işlemleri.
+        </p>
+        </div>
+        <br />
+       
+        <img
+          className=" "
+          width={"30%"}
+          src={require("../../img/svg-1.png")}
+          alt="resim"
+        />
+      </div>
+      <div className="flex justify-center bg">
+        <TrendCoin crypto={crypto} currency={currency} symbol={symbol} />
+      </div>
     </div>
   );
 }

@@ -1,17 +1,21 @@
 import React from "react";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
-
+import { NavLink } from "react-router-dom";
 import "react-alice-carousel/lib/alice-carousel.css";
 
 function TrendCoin({ crypto, symbol }) {
   return (
     <div>
-      <div className="mt-10 flex justify-center  max-w-7xl mx-auto flex-wrap gap-8">
+      <h1 className=" font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl text-2xl mb-20">
+        Trend Coinler
+      </h1>
+      <div className="mt-10 flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-14">
         {crypto.map((coin) => (
           <div
+          
             key={coin.id}
-            className="top-coins rounded-lg p-7 bg-white m-10 relative"
+            className="top-coins rounded-lg p-7 bg-white  relative "
           >
             <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded-r text-sm px-2">
               {coin.market_cap_rank}
@@ -24,12 +28,12 @@ function TrendCoin({ crypto, symbol }) {
                 alt="coin"
                 className="card-img mr-2"
               />
-              <h1>
+              <NavLink to={`/allcoins/${coin.id}`}>
                 {coin.name} <br />
                 <span className="uppercase text-xs text-gray-500">
                   {coin.symbol}
                 </span>
-              </h1>
+              </NavLink>
             </div>
             <br />
             <div className="flex items-center justify-center">
@@ -47,7 +51,7 @@ function TrendCoin({ crypto, symbol }) {
                 margin={-40}
                 data={coin.sparkline_in_7d.price}
               >
-                <SparklinesLine style={{ fill: "" }} />
+                <SparklinesLine style={{ fill: "none" }} />
                 <SparklinesSpots />
               </Sparklines>
             </div>
@@ -59,4 +63,3 @@ function TrendCoin({ crypto, symbol }) {
 }
 
 export default TrendCoin;
-

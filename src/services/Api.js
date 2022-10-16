@@ -4,7 +4,7 @@ export const CoinList = (currency,page) =>
 
 
   export const TopCoins = (currency) =>
-  `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=8&page=1&sparkline=true`;
+  `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=10&page=1&sparkline=true`;
  
 
 export const SingleCoin = (id) =>
