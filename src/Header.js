@@ -131,7 +131,6 @@ function Header() {
                     <option value={"USD"}>USD</option>
                     <option value={"TRY"}>TRY</option>
                   </select>
-                  
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
@@ -176,69 +175,84 @@ function Header() {
                 </div>
               </div>
             </div>
-
-            <Disclosure.Panel className="sm:hidden">
-              <div className="space-y-1 px-2 pt-2 pb-3">
-                <NavLink
-                  className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  to="/"
-                >
-                  Ana Sayfa
-                </NavLink>
-
-                <div>
-                  <NavLink
+            <Transition
+              enter="transition duration-100 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
+            >
+              <Disclosure.Panel className="sm:hidden">
+                <div className="space-y-1 px-2 pt-2 pb-3">
+                  <Disclosure.Button
+                    as={NavLink}
                     className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    to="/allcoins"
+                    to="/"
                   >
-                    Coinler
-                  </NavLink>
-                </div>
+                    Ana Sayfa
+                  </Disclosure.Button>
 
-                <div>
-                  <NavLink
-                    className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    to="/news"
-                  >
-                    Haberler
-                  </NavLink>
-                </div>
-                <div>
-                  <NavLink
-                    className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium "
-                    to="/exchanges"
-                  >
-                    Borsalar
-                  </NavLink>
-                </div>
-                <div>
-                  <NavLink
-                    className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    to="/academia"
-                  >
-                    Akademi
-                  </NavLink>
-                </div>
+                  <div>
+                    <Disclosure.Button
+                      as={NavLink}
+                      className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                      to="/allcoins"
+                    >
+                      Coinler
+                    </Disclosure.Button>
+                  </div>
 
-                <div>
-                  <NavLink
-                    className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium "
-                    to="/quiz"
-                  >
-                    Quiz
-                  </NavLink>
-                </div>
+                  <div>
+                    <Disclosure.Button
+                      as={NavLink}
+                      className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                      to="/news"
+                    >
+                      Haberler
+                    </Disclosure.Button>
+                  </div>
+                  <div>
+                    <Disclosure.Button
+                      as={NavLink}
+                      className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium "
+                      to="/exchanges"
+                    >
+                      Borsalar
+                    </Disclosure.Button>
+                  </div>
+                  <div>
+                    <Disclosure.Button
+                      as={NavLink}
+                      className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                      to="/academia"
+                    >
+                      Akademi
+                    </Disclosure.Button>
+                  </div>
 
-                <div>
-                  <NavLink
-                    className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    to="/profile"
-                  >
-                    Profile
-                  </NavLink>
+                  <div>
+                    <Disclosure.Button
+                      as={NavLink}
+                      className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium "
+                      to="/quiz"
+                    >
+                      Quiz
+                    </Disclosure.Button>
+                  </div>
+
+                  <div>
+                    <Disclosure.Button
+                      as={NavLink}
+                      className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                      to="/profile"
+                    >
+                      Profile
+                    </Disclosure.Button>
+                  </div>
                 </div>
-              </div>
-            </Disclosure.Panel>
+              </Disclosure.Panel>
+            </Transition>
           </>
         )}
       </Disclosure>

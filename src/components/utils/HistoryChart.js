@@ -31,7 +31,7 @@ const HistoryChart = ({ day, currency }) => {
   console.log(day);
 
   const { id } = useParams();
-  
+
   const { response } = useAxios(HistoricalChart(id, day, currency));
 
   if (!response) {

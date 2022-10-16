@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
-import { HistoricalChart } from "../../services/Api";
+import { HistoricalChart } from "../services/Api";
 
 import { Line } from "react-chartjs-2";
 import Skeleton from "react-loading-skeleton";
