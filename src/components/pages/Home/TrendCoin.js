@@ -7,10 +7,8 @@ import "react-alice-carousel/lib/alice-carousel.css";
 function TrendCoin({ crypto, symbol }) {
   return (
     <div>
-      <h1 className=" font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl text-2xl mb-20">
-        Trend Coinler
-      </h1>
-      <div className="mt-10 flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-14">
+    
+      <div className=" flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-14">
         {crypto.map((coin) => (
           <div
           

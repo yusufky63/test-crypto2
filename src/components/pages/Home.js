@@ -22,9 +22,9 @@ function Home() {
   console.log(crypto);
   return (
     <div>
-      <h1 className="font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-2xl  my-10">Kripto Dünyasına Hoşgeldiniz</h1>
-      <div  className=" flex justify-center items-center  ">
-        <div className="font-bold text-start  sm:text-xs md:text-xl lg:text-3xl xl:text-4xl text-xs whitespace-nowrap mr-5">
+      <h1 className="font-bold sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl text-3xl  my-16">Kripto Dünyasına Hoşgeldiniz</h1>
+      <div  className=" flex justify-center items-center  mb-20 lg:mr-20">
+        <div className="font-bold text-start  sm:text-xl md:text-xl lg:text-3xl xl:text-4xl text-sm whitespace-nowrap mr-5">
           Kripto satın almanın, satmanın ve <br /> kripto ticareti yapmanın dünyadaki <br />
           en popüler yolu
           <br />
@@ -37,14 +37,21 @@ function Home() {
         <br />
        
         <img
-          className=" "
+          className=" xl:ml-20"
           width={"30%"}
+          
           src={require("../../img/svg-1.png")}
           alt="resim"
         />
       </div>
+      <h1 className=" font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl text-3xl mt-20 ">
+        Trend Coinler
+      </h1>
       <div className="flex justify-center bg">
         <TrendCoin crypto={crypto} currency={currency} symbol={symbol} />
+      </div>
+      <div className="flex justify-center bg-reverse">
+  
       </div>
     </div>
   );

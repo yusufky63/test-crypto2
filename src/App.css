@@ -31,7 +31,16 @@ header .search {
 
 .bg {
     background-image: url("./img/overview-bg.svg");
-    margin-top: 150px;
+    margin-top: 80px;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-reverse {
+    background-image: url("./img/overview-bg.svg");
+    margin-top: 200px;
+    background-size: cover;
+    background-position: center;
 }
 
 
