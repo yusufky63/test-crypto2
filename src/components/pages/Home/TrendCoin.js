@@ -8,7 +8,7 @@ function TrendCoin({ crypto, symbol }) {
   return (
     <div>
     
-      <div className=" flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-14">
+      <div className=" flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-8 xl:gap-20 lg:gap-16 md:gap-12 ">
         {crypto.map((coin) => (
           <div
           
