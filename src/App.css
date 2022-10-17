@@ -43,7 +43,8 @@ header .search {
     background-position: center;
 }
 
-.slide-in-left {
+
+/* .slide-in-left {
     -webkit-animation: slide-in-left 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
     animation: slide-in-left 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
@@ -123,7 +124,7 @@ header .search {
         transform: translateX(0);
         opacity: 1;
     }
-}
+} */
 
 
 /* LAODER*/
