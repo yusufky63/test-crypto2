@@ -23,10 +23,10 @@ function Exchanges() {
   return (
     <div className="">
       <div>
-        <h1 className="text-4xl my-10 flex justify-center items-center">
+        <h1 className="font-bold xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl my-10 flex justify-center items-center">
           Borsalar TOP{" "}
           <span
-            className="inline-flex items-center py-2 px-3 mx-2 text-xl font-medium text-center text-white bg-red-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-red-800"
+            className="inline-flex items-center py-2 px-3 mx-2 xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-xl font-medium text-center text-white bg-red-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-red-800"
             rel="noreferrer"
           >
             {count}

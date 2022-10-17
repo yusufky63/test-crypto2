@@ -44,7 +44,7 @@ function News() {
   console.log(news);
   return (
     <div className="my-10 ">
-      <h1 className="text-5xl font-bold">Kriptoya Dair Haberler</h1>
+      <h1 className=" xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl  font-bold">Kriptoya Dair Haberler</h1>
       <div className=" ">
         <ul className="flex justify-center flex-wrap mt-5">
           {loading ? (
