@@ -8,7 +8,7 @@ function TrendCoin({ crypto, symbol }) {
   return (
     <div>
     
-      <div className=" flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-8 xl:gap-20 lg:gap-16 md:gap-12 ">
+      <div className="slide-in-left flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-8 xl:gap-20 lg:gap-16 md:gap-12 mb-10">
         {crypto.map((coin) => (
           <div
           
@@ -27,15 +27,15 @@ function TrendCoin({ crypto, symbol }) {
                 className="card-img mr-2"
               />
               <NavLink to={`/allcoins/${coin.id}`}>
-                {coin.name} <br />
+              <h1 className="sm:text-sm md:text-base lg:text-lg xl:text-lg text-sm">  {coin.name}</h1>
                 <span className="uppercase text-xs text-gray-500">
                   {coin.symbol}
                 </span>
               </NavLink>
             </div>
             <br />
-            <div className="flex items-center justify-center">
-              <h1 className="text-lg font-bold mr-3">
+            <div className="flex items-center justify-between max-w-sm">
+            <h1 className="sm:text-sm md:text-base lg:text-lg xl:text-lg text-base font-bold">
                 {symbol}
                 {coin.current_price}
               </h1>

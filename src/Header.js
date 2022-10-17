@@ -5,6 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
 import { CryptoState } from "./components/context/CryptoContext";
 
+
 function Header() {
   const { currency, setCurrency } = CryptoState();
 
@@ -135,13 +136,9 @@ function Header() {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="flex rounded-full text-sm ">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-10 w-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
+                        <i class="fa-regular fa-2x fa-user-circle"></i>
                       </Menu.Button>
                     </div>
                     <Transition
