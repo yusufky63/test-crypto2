@@ -2,7 +2,7 @@
 function CheckPositiveNumber({ number }) {
     if (number > 0) {
         return (
-            <div style={{ color: 'green' }}>
+            <div className=" text-sm" style={{ color: 'green' }}>
               <i class="fa fa-caret-up" aria-hidden="true"></i> <br />
                {parseFloat(number).toFixed(2)}%
             </div>

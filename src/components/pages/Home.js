@@ -22,17 +22,17 @@ function Home() {
   console.log(crypto);
   return (
     <div>
-      <h1 className="font-bold sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl text-3xl  my-16">
+      <h1 className="font-bold sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl text-2xl  my-16">
         Kripto Dünyasına Hoşgeldiniz
       </h1>
       <div className=" flex justify-center items-center  mb-20 lg:mr-20 ">
-        <div className="slide-in-left font-bold text-start  sm:text-xl md:text-xl lg:text-3xl xl:text-4xl text-sm whitespace-nowrap mr-5">
+        <div className="slide-in-left font-bold   text-start  sm:text-lg md:text-xl lg:text-3xl xl:text-4xl text-lg">
           Kripto satın almanın, satmanın ve <br /> kripto ticareti yapmanın
           dünyadaki <br />
           en popüler yolu
           <br />
           <br />
-          <p className="text-gray-900  sm:text-xs md:text-xl lg:text-2xl xl:text-3xl text-xs">
+          <p className="text-gray-900  sm:text-xs md:text-xl lg:text-2xl xl:text-3xl text-sm sm:whitespace-pre-wrap">
             2011'den beri milyonlarca insanın güveni ile <br /> değeri 1 Trilyon
             doları aşan kripto para işlemleri.
           </p>
@@ -40,13 +40,13 @@ function Home() {
         <br />
 
         <img
-          className="slide-in-right xl:ml-20"
+          className="slide-in-right xl:ml-20 "
           width={"30%"}
           src={require("../../img/svg-1.png")}
           alt="resim"
         />
       </div>
-      <h1 className=" font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl text-3xl mt-20 ">
+      <h1 className=" font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl text-2xl mt-20 ">
         Trend Coinler
       </h1>
       <div className="flex justify-center bg">

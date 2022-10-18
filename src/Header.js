@@ -73,7 +73,7 @@ function Header() {
                           className="mx-2 text-xl text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
                           to="/"
                         >
-                          AnaSayfa
+                          Ana Sayfa
                         </NavLink>
                       </div>
 

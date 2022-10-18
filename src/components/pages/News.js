@@ -35,16 +35,17 @@ function News() {
     setLoading(false);
   };
   useEffect(() => {
-  
     fetchNews();
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   console.log(news);
   return (
     <div className="my-10 ">
-      <h1 className=" xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl  font-bold">Kriptoya Dair Haberler</h1>
+      <h1 className=" xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl  font-bold">
+        Kriptoya Dair Haberler
+      </h1>
       <div className=" ">
         <ul className="flex justify-center flex-wrap mt-5">
           {loading ? (
@@ -125,9 +126,8 @@ function News() {
             ))
           )}
         </ul>
-        <hr />
-        <br />
-        <div className=" flex justify-center items-center">
+      </div>
+    {!loading ? ( <div className=" flex justify-center items-center">
           {" "}
           <button
             className="border border-gray-300 rounded-full  p-3 font-medium mx-10  hover:bg-gray-900 hover:text-white"
@@ -145,8 +145,7 @@ function News() {
           >
             Sonraki Sayfa <i className="fa-2 fa fa-arrow-right ml-2"></i>
           </button>
-        </div>
-      </div>
+        </div>) : null}  
     </div>
   );
 }
