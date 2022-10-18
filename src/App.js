@@ -13,6 +13,8 @@ import Exchanges from "./components/pages/Exchanges";
 import Academia from "./components/pages/Academia";
 import Quiz from "./components/pages/Quiz";
 import AllCoinsWidget from "./components/Widgets/AllCoinsWidget";
+import Portfolyo from "./components/pages/Portfolyo";
+import Settings from "./components/pages/Settings";
 
 function App() {
   return (
@@ -26,10 +28,12 @@ function App() {
         <Route path="/allcoins" element={<AllCoins />} />
         <Route path="/allcoins/:id" element={<CryptoCard />} />
         <Route path="/news" element={<News />} />
-        <Route exact path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/academia" element={<Academia />} />
-        <Route exact path="/exchanges" element={<Exchanges />} />
-        <Route exact path="/quiz" element={<Quiz />} />
+        <Route path="/exchanges" element={<Exchanges />} />
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/portfolyo" element={<Portfolyo />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
       <Footer></Footer>
     </div>

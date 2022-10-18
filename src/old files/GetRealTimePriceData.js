@@ -5,7 +5,7 @@ function GetRealTimePriceData({ currPrice, updatedIds, updatedPrices, coinId }) 
     
 
     // const side = numberFormatter.format(updatedPrices[index] > 0 ? 'up' : 'down';
-    // const output = `<span class="dollar">$</span>${price} <span class="direction">${side === 'up' ? '▲' : '▼'}</span>`;
+    // const output = `<span className="dollar">$</span>${price} <span className="direction">${side === 'up' ? '▲' : '▼'}</span>`;
     
     // document.querySelector('.price').innerHTML = output;
     // if(side === 'up') {

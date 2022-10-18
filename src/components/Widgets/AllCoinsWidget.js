@@ -22,9 +22,8 @@ function AllCoinsWidget() {
   };
 
   useEffect(() => {
-  
     fetchCoins();
-   
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency]);
 
@@ -35,18 +34,16 @@ function AllCoinsWidget() {
           <AliceCarousel
             autoPlay
             autoPlayStrategy="none"
-            autoPlayInterval={500}
+            autoPlayInterval={1000}
             animationDuration={1000}
             animationType="fadeout"
             infinite
-            touchTracking={false}
             disableButtonsControls
             disableDotsControls
             responsive={responsive}
           >
             {loading ? (
               <WidgetSkeleton></WidgetSkeleton>
-             
             ) : (
               crypto.map((coin) => (
                 <div

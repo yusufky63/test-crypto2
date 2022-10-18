@@ -19,7 +19,7 @@ function News() {
         lang_ID: "10",
       },
       headers: {
-        "X-RapidAPI-Key": "448c5e48f7msh9728769d4d23a16p1c72f3jsndb048d269553",
+        "X-RapidAPI-Key": "889a157c0amshd3719aa86b5831fp1a003cjsn2463be379936",
         "X-RapidAPI-Host": "investing-cryptocurrency-markets.p.rapidapi.com",
       },
     };
@@ -52,7 +52,7 @@ function News() {
             <div role="status">
               <h1 className="my-2">Yükleniyor...</h1>
               <svg
-                class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+                className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -66,19 +66,19 @@ function News() {
                   fill="currentFill"
                 />
               </svg>
-              <span class="sr-only">Loading...</span>
+              <span className="sr-only">Loading...</span>
             </div>
           ) : (
             news.map((item) => (
               <li className="text-left" key={item.id}>
                 <div className="m-5 p-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md  text-gray-700 ">
                   <img
-                    class="rounded-t-lg"
+                    className="rounded-t-lg"
                     src={item.related_image_big}
                     alt=""
                   />
                   <div className="p-3">
-                    <span class="inline-block py-1.5 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">
+                    <span className="inline-block py-1.5 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">
                       {item.news_provider_name}
                     </span>
                   </div>
@@ -107,15 +107,15 @@ function News() {
                         Habere Git
                         <svg
                           aria-hidden="true"
-                          class="ml-2 -mr-1 w-4 h-4"
+                          className="ml-2 -mr-1 w-4 h-4"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           ></path>
                         </svg>
                       </a>
@@ -127,7 +127,8 @@ function News() {
           )}
         </ul>
       </div>
-    {!loading ? ( <div className=" flex justify-center items-center">
+      {!loading && !news ? (
+        <div className=" flex justify-center items-center">
           {" "}
           <button
             className="border border-gray-300 rounded-full  p-3 font-medium mx-10  hover:bg-gray-900 hover:text-white"
@@ -145,7 +146,8 @@ function News() {
           >
             Sonraki Sayfa <i className="fa-2 fa fa-arrow-right ml-2"></i>
           </button>
-        </div>) : null}  
+        </div>
+      ) : null}
     </div>
   );
 }

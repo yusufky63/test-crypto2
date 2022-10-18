@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { CryptoState } from "../context/CryptoContext";
 import axios from "axios";
 import { Pagination, LinearProgress } from "@mui/material";
-import { Sparklines, SparklinesLine ,SparklinesSpots} from "react-sparklines";
-
+import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
+import { AiOutlineHeart,AiTwotoneHeart } from "react-icons/ai";
 import { CoinList } from "../../services/Api";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
 import numberWithCommas from "../utils/convertCurrency";
@@ -13,6 +13,15 @@ function AllCoins() {
   const [loading, setLoading] = useState(false);
   const { currency, symbol } = CryptoState();
   const [page, setPage] = useState(1);
+
+  // eslint-disable-next-line no-unused-vars
+  const [saved, setSaved] = useState(false);
+
+  // const handleSavedCoin = (e) => {
+  //   e.preventDefault()
+  //   setSaved((prevCoin) => !prevCoin);
+  // };
+
   const fetchCoins = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency, 100));
@@ -134,7 +143,9 @@ function AllCoins() {
                               className="hover:bg-gray-100 hover:px-10 "
                               key={item.id}
                             >
-                              <td>{Fav()}</td>
+                              <td onClick={saved}>
+                              {saved ? <AiTwotoneHeart color='red'/> : <AiOutlineHeart/>}
+                              </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {item.market_cap_rank}
@@ -179,38 +190,32 @@ function AllCoins() {
                               <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {symbol}
-                                  {numberWithCommas(
-                                    item.market_cap
-                                  )}
+                                  {numberWithCommas(item.market_cap)}
                                 </div>
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
-                                  {numberWithCommas(
-                                    item.total_supply
-                                  )}
+                                  {numberWithCommas(item.total_supply)}
                                 </div>
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {symbol}
-                                  {numberWithCommas(
-                                    item.total_volume
-                                  )}
+                                  {numberWithCommas(item.total_volume)}
                                 </div>
                               </td>
                               <td>
                                 <td className="px-10 mx-20 py-4">
-                                <Sparklines
-                      svgHeight={30}
-                      width={50}
-                      height={90}
-                      margin={-30}
-                      data={item.sparkline_in_7d.price}
-                    >
-                      <SparklinesLine style={{ fill: "" }} />
-                      <SparklinesSpots />
-                    </Sparklines>
+                                  <Sparklines
+                                    svgHeight={30}
+                                    width={50}
+                                    height={90}
+                                    margin={-30}
+                                    data={item.sparkline_in_7d.price}
+                                  >
+                                    <SparklinesLine style={{ fill: "" }} />
+                                    <SparklinesSpots />
+                                  </Sparklines>
 
                                   {/* <Sparklines
                                   svgWidth={500} svgHeight={40}
@@ -269,6 +274,7 @@ function AllCoins() {
 
 export default AllCoins;
 
+// eslint-disable-next-line no-unused-vars
 const Fav = () => {
   return (
     <div id="main-content">
@@ -283,7 +289,7 @@ const Fav = () => {
             <g
               id="Group"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
               transform="translate(467 392)"
             >
               <path

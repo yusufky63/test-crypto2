@@ -16,14 +16,17 @@ function CryptoCard() {
   const [coin, setCoin] = useState();
   const { currency, symbol } = CryptoState();
   const [symbolTrading, setSymbolTrading] = useState();
+
   // const [day, setDay] = useState("7");
 
   // const [chart, setChart] = useState(1);
   const fetchCoin = async () => {
+  
     const { data } = await axios.get(SingleCoin(id));
     console.log(symbolTrading);
     setSymbolTrading(data.symbol);
     setCoin(data);
+    
   };
 
   useEffect(() => {
@@ -41,7 +44,7 @@ function CryptoCard() {
         Değiştiriniz !
       </h1>
       {coin ? (
-        <div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
+        <><div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
           <div className=" ml-10 mr-5">
             <div className="flex items-center">
               <span className=" absolute mb-20 bg-yellow-500  text-black rounded-r-lg px-1 ">
@@ -50,8 +53,7 @@ function CryptoCard() {
               <img
                 src={coin.image.small}
                 alt={coin.name}
-                className="w-16 h-16 mr-4 mt-5"
-              />
+                className="w-16 h-16 mr-4 mt-5" />
               <h1 className="text-xl font-bold mt-3">
                 {coin.name}{" "}
                 <span className="text-sm uppercase text-gray-500">
@@ -68,12 +70,7 @@ function CryptoCard() {
               <span className="font-bold ">
                 {" "}
                 <CheckPositiveNumber
-                  number={
-                    coin.market_data.price_change_percentage_24h_in_currency[
-                      currencyEdit
-                    ]
-                  }
-                />
+                  number={coin.market_data.price_change_percentage_24h_in_currency[currencyEdit]} />
               </span>
             </div>
             <br />
@@ -97,7 +94,7 @@ function CryptoCard() {
             <br />
 
             <div className="flex items-center justify-between">
-              <h1 className=" font-bold mr-10"> ATH : </h1>
+              <h1 className=" font-bold mr-10"> ATH: </h1>
               <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
                 {symbol}
                 {coin.market_data.ath[currencyEdit]}
@@ -105,28 +102,28 @@ function CryptoCard() {
             </div>
 
             <div className="flex items-center   justify-between ">
-              <h1 className=" font-bold mr-10"> Market Cap Rank : </h1>
+              <h1 className=" font-bold mr-10"> Market Cap Rank: </h1>
               <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
                 {coin.market_data.market_cap_rank}
               </span>
             </div>
 
             <div className="flex items-center  justify-between">
-              <h1 className=" font-bold mr-10">24H Market Cap Change : </h1>
+              <h1 className=" font-bold mr-10">24H Market Cap Change: </h1>
               <span className="flex justify-end text-sm bg-yellow-400 rounded-lg  px-2">
                 {numberWithCommas(coin.market_data.market_cap_change_24h)}
               </span>
             </div>
 
             <div className="flex items-center  justify-between">
-              <h1 className="font-bold mr-10">Max Supply : </h1>
+              <h1 className="font-bold mr-10">Max Supply: </h1>
               <span className="  text-sm bg-yellow-400 rounded-lg px-2">
                 {numberWithCommas(coin.market_data.max_supply)}
               </span>
             </div>
 
             <div className="flex items-center  justify-between">
-              <h1 className="font-bold  mr-10">Total Volume : </h1>
+              <h1 className="font-bold  mr-10">Total Volume: </h1>
               <span className="text-sm bg-yellow-400 rounded-lg  px-2">
                 {symbol}{" "}
                 {numberWithCommas(coin.market_data.total_volume[currencyEdit])}
@@ -156,7 +153,7 @@ function CryptoCard() {
             </div>
 
             <div className="flex items-center  justify-between">
-              <h1 className="font-bold mr-10">Forum : </h1>
+              <h1 className="font-bold mr-10">Forum: </h1>
               {coin.links.official_forum_url[0] ? (
                 <a
                   href={coin.links.official_forum_url[0]}
@@ -170,7 +167,7 @@ function CryptoCard() {
             </div>
 
             <div className="flex items-center  justify-between">
-              <h1 className="font-bold mr-10">Reddit : </h1>
+              <h1 className="font-bold mr-10">Reddit: </h1>
               {coin.links.subreddit_url ? (
                 <a
                   href={coin.links.subreddit_url}
@@ -184,19 +181,20 @@ function CryptoCard() {
                 <span className="text-sm">Mevcut Değil</span>
               )}
             </div>
+
           </div>
 
           {/* <div>
-            <select
-              name=""
-              id=""
-              onChange={(e) => setChart(e.target.value)}
-              value={chart}
-            >
-              <option value={1}>TradingView</option>
-              <option value={2}>Custom Chart</option>
-            </select>
-          </div> */}
+      <select
+        name=""
+        id=""
+        onChange={(e) => setChart(e.target.value)}
+        value={chart}
+      >
+        <option value={1}>TradingView</option>
+        <option value={2}>Custom Chart</option>
+      </select>
+    </div> */}
 
           {symbolTrading && (
             <div id="test" className="container max-w-screen-lg flex ">
@@ -216,12 +214,15 @@ function CryptoCard() {
               {/* <CoinChart id={id}></CoinChart> */}
             </div>
           )}
-        </div>
+        </div><div>
+            <h1 className='text-xl font-semibold mt-8 mb-4'> {coin.name} ({coin.symbol?.toUpperCase()}) Hakkında</h1>
+            <div className='mx-5 about-text whitespace-pre-wrap  tracking-wide ' dangerouslySetInnerHTML={{ __html: coin.description?.en }}></div>
+          </div></>
       ) : (
         <div role="status">
           <h1 className="my-2">Yükleniyor...</h1>
           <svg
-            class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+            className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -235,9 +236,10 @@ function CryptoCard() {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
         </div>
       )}
+      
     </>
   );
 }

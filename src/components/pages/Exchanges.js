@@ -47,12 +47,12 @@ function Exchanges() {
         </select>
       </div>
       <ul>
-        <div class=" flex justify-center  max-w-7xl mx-auto flex-wrap gap-8">
+        <div className=" flex justify-center  max-w-7xl mx-auto flex-wrap gap-8">
           {loading ? (
             <div role="status">
                <h1 className="my-2">Yükleniyor...</h1>
               <svg
-                class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+                className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ function Exchanges() {
             exchanges.map((exchange) => (
               <li className="border relative" key={exchange.id}>
                  <h1 className="absolute  mb-8 border px-4 py-1  rounded-r-full bg-yellow-400">{exchange.trust_score_rank}</h1>
-                <div class="p-1 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
+                <div className="p-1 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
                   <div className="flex justify-center mt-5">
                     {" "}
                   
@@ -122,9 +122,9 @@ function Exchanges() {
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         ></path>
                       </svg>
                     </a>
