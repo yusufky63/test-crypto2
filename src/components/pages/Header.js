@@ -3,50 +3,23 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
-import { CryptoState } from "./components/context/CryptoContext";
-
-
+import { CryptoState } from "../redux/CryptoContext";
+import ModalLogin from "../modal/ModalLogin";
+import ModalRegister from "../modal/ModalRegister";
+import { logout } from "../../services/firebase";
+import { useSelector } from "react-redux";
 function Header() {
+  const { user } = useSelector((state) => state.auth);
   const { currency, setCurrency } = CryptoState();
 
   return (
     <>
-      {/* <nav className="flex justify-center">
-        <div className="navbar border rounded-full w-4/6 flex text-xl justify-between p-4 px-5 items-center">
-          <div>
-            <NavLink to="/">Ana Sayfa</NavLink>
-          </div>
-          <div>
-            <NavLink to="/allcoins">Coinler</NavLink>
-          </div>
-          <div>
-            <img src={require("./img/logo.png")} width="100" alt="resim" />
-          </div>
-          <div>
-            <NavLink to="/news">Haberler</NavLink>
-          </div>
-          <div>
-            <NavLink to="/profile">Profile</NavLink>
-          </div>
-          <div className="absolute right-10">
-            <select
-              value={currency}
-              className="bg-gray-200 rounded-full p-2 border-sm"
-              onChange={(e) => setCurrency(e.target.value)}
-            >
-              <option value={"USD"}>USD</option>
-              <option value={"TRY"}>TRY</option>
-            </select>
-          </div>
-        </div>
-      </nav> */}
-
       <Disclosure as="nav" className="bg-white navbar ">
         {({ open }) => (
           <>
             <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8 ">
               <div className="relative flex h-24 items-center justify-between">
-                <div className="absolute  inset-y-0 left-0 flex items-center sm:hidden ">
+                <div className="absolute  inset-y-0 left-0 flex items-center lg:hidden ">
                   {/* Mobile menu button*/}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
@@ -58,14 +31,8 @@ function Header() {
                   </Disclosure.Button>
                 </div>
                 <div className=" flex flex-1 items-center justify-center sm:items-stretch ">
-                  <div className="flex  flex-shrink-0 items-center ">
-                    {/* <img
-                      className="block  h-16 w-16 lg:hidden "
-                      src="https://www.citypng.com/public/uploads/preview/-51614811467slofjndnl0.png"
-                      alt=" Crypto"
-                    /> */}
-                  </div>
-                  <div className="hidden sm:ml-6 sm:block ">
+                  <div className="flex  flex-shrink-0 items-center "></div>
+                  <div className="hidden sm:ml-6 lg:block ">
                     <div className="flex space-x-4  justify-center items-center">
                       <div>
                         {" "}
@@ -114,27 +81,29 @@ function Header() {
 
                       <div>
                         <NavLink
-                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          className="mx-2  text-xl  mr-10 text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/quiz"
                         >
                           Quiz
                         </NavLink>
                       </div>
-                      <div>
-                        <NavLink
-                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
-                          to="/portfolyo"
-                        >
-                          Portfolyo
-                        </NavLink>
-                      </div>
+                      {!user && (
+                        <div className="flex  ">
+                        <div className="hover:bg-gray-200 border p-3 px-4  rounded-lg mr-2 cursor-pointer">
+                            <ModalLogin isOpen={true} />
+                          </div>
+                          <div className="hover:bg-gray-200 border p-3 px-4  rounded-lg cursor-pointer">
+                            <ModalRegister isOpen={true} />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <div className=" absolute inset-y-0 right-0 flex  items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <select
                     value={currency}
-                    className=" rounded-full  p-2 border  outline-none"
+                    className=" rounded-lg  p-2 border  outline-none"
                     onChange={(e) => setCurrency(e.target.value)}
                   >
                     <option value={"USD"}>USD</option>
@@ -142,11 +111,23 @@ function Header() {
                   </select>
 
                   {/* Profile dropdown */}
-                  <Menu as="div" className="relative ml-3">
+                  <Menu as="div" className=" relative ml-3">
                     <div>
                       <Menu.Button className="flex rounded-full text-sm ">
                         <span className="sr-only">Open user menu</span>
-                        <i className="fa-regular fa-2x fa-user-circle"></i>
+                        {!user ? (
+                          <div className="">
+                            {" "}
+                            <i className=" fa-regular fa-2x fa-user-circle"></i>
+                          </div>
+                        ) : (
+                          <img
+                            src={user.photoURL}
+                            alt=""
+                            width={35}
+                            className="rounded-full"
+                          />
+                        )}
                       </Menu.Button>
                     </div>
                     <Transition
@@ -160,20 +141,39 @@ function Header() {
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
-                          <NavLink to="/profile" className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                          <NavLink
+                            to="/profile"
+                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                          >
                             Profil
                           </NavLink>
                         </Menu.Item>
                         <Menu.Item>
-                          <NavLink to="/settings" className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                            Ayarlar
+                          <NavLink
+                            to="/portfolyo"
+                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                          >
+                            Portfolyo
                           </NavLink>
                         </Menu.Item>
                         <Menu.Item>
-                          <a className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                            Çıkış Yap
-                          </a>
+                          <NavLink
+                            to="/settings"
+                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                          >
+                            Ayarlar
+                          </NavLink>
                         </Menu.Item>
+                        {user && (
+                          <Menu.Item>
+                            <a
+                              onClick={logout}
+                              className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                            >
+                              Çıkış Yap
+                            </a>
+                          </Menu.Item>
+                        )}
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -188,7 +188,7 @@ function Header() {
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              <Disclosure.Panel className="sm:hidden">
+              <Disclosure.Panel className="lg:hidden">
                 <div className="space-y-1 px-2 pt-2 pb-3">
                   <Disclosure.Button
                     as={NavLink}
@@ -246,7 +246,6 @@ function Header() {
                     </Disclosure.Button>
                   </div>
 
-                 
                   <div>
                     <Disclosure.Button
                       as={NavLink}
@@ -256,6 +255,17 @@ function Header() {
                       Portfolyo
                     </Disclosure.Button>
                   </div>
+
+                  {!user && (
+                    <div>
+                      <div className=" hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-bold  ">
+                        <Disclosure.Button as={ModalLogin}></Disclosure.Button>
+                      </div>
+                      <div className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-bold ">
+                      <Disclosure.Button as={ModalRegister}></Disclosure.Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Disclosure.Panel>
             </Transition>

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 
-function footer() {
+function Footer() {
   return (
     <section className="bg-white mt-50">
       <div className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
@@ -75,4 +75,4 @@ function footer() {
   );
 }
 
-export default footer;
+export default Footer;

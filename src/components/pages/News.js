@@ -88,6 +88,7 @@ function News() {
                     </h5>
 
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+
                       {parse(item.BODY)}
                     </p>
                     <br />
@@ -127,7 +128,7 @@ function News() {
           )}
         </ul>
       </div>
-      {!loading && !news ? (
+      {!loading ? (
         <div className=" flex justify-center items-center">
           {" "}
           <button

@@ -6,7 +6,7 @@ import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
 
-import { CryptoState } from "../context/CryptoContext";
+import { CryptoState } from "../redux/CryptoContext";
 // import HistoryChart from "../utils/HistoryChart";
 
 import numberWithCommas from "../utils/convertCurrency";

@@ -1,12 +1,12 @@
 import "./App.css";
 
-import Footer from "./footer";
+import Footer from "./components/pages/Footer";
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
 import Profile from "./components/pages/Profile";
 import AllCoins from "./components/pages/AllCoins";
 import CryptoCard from "./components/pages/CryptoCard";
-import Header from "./Header";
+import Header from "./components/pages/Header";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Exchanges from "./components/pages/Exchanges";
@@ -15,10 +15,19 @@ import Quiz from "./components/pages/Quiz";
 import AllCoinsWidget from "./components/Widgets/AllCoinsWidget";
 import Portfolyo from "./components/pages/Portfolyo";
 import Settings from "./components/pages/Settings";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="App ">
+      <ToastContainer
+        position="top-right"
+        autoClose={700}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+      />
       <AllCoinsWidget></AllCoinsWidget>
       {/* <TickerWidget></TickerWidget> */}
       <Header></Header>
