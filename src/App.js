@@ -15,7 +15,7 @@ import Quiz from "./components/pages/Quiz";
 import AllCoinsWidget from "./components/Widgets/AllCoinsWidget";
 import Portfolyo from "./components/pages/Portfolyo";
 import Settings from "./components/pages/Settings";
-import 'react-toastify/dist/ReactToastify.css';
+// import  'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 
 function App() {
