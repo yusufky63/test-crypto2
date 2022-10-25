@@ -17,11 +17,11 @@ function Header() {
       <Disclosure as="nav" className="bg-white navbar ">
         {({ open }) => (
           <>
-            <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8 ">
-              <div className="relative flex h-24 items-center justify-between">
-                <div className="absolute  inset-y-0 left-0 flex items-center lg:hidden ">
+            <div className="mx-auto  max-w-7xl px-2 sm:px-6 ">
+              <div className="relative flex h-24 items-center justify-between ">
+                <div className="absolute  inset-y-0 left-0 flex items-center lg:hidden  ">
                   {/* Mobile menu button*/}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className=" inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -33,7 +33,7 @@ function Header() {
                 <div className=" flex flex-1 items-center justify-center sm:items-stretch ">
                   <div className="flex  flex-shrink-0 items-center "></div>
                   <div className="hidden sm:ml-6 lg:block ">
-                    <div className="flex space-x-4  justify-center items-center">
+                    <div className="flex space-x-4  justify-center items-center  ">
                       <div>
                         {" "}
                         <NavLink
@@ -89,7 +89,7 @@ function Header() {
                       </div>
                       {!user && (
                         <div className="flex  ">
-                        <div className="hover:bg-gray-200 border p-3 px-4  rounded-lg mr-2 cursor-pointer">
+                          <div className="hover:bg-gray-200 border p-3 px-4  rounded-lg mr-2 cursor-pointer">
                             <ModalLogin isOpen={true} />
                           </div>
                           <div className="hover:bg-gray-200 border p-3 px-4  rounded-lg cursor-pointer">
@@ -111,11 +111,11 @@ function Header() {
                   </select>
 
                   {/* Profile dropdown */}
-                  <Menu as="div" className=" relative ml-3">
+                  <Menu as="div" className=" relative ml-3 ">
                     <div>
                       <Menu.Button className="flex rounded-full text-sm ">
                         <span className="sr-only">Open user menu</span>
-                        {!user ? (
+                        {!user.photoURL ? (
                           <div className="">
                             {" "}
                             <i className=" fa-regular fa-2x fa-user-circle"></i>
@@ -124,13 +124,13 @@ function Header() {
                           <img
                             src={user.photoURL}
                             alt=""
-                            width={35}
-                            className="rounded-full"
+                            width={45}
+                            className="border p-1  rounded-full"
                           />
                         )}
                       </Menu.Button>
                     </div>
-                    <Transition
+                    {user && (<> <Transition
                       as={Fragment}
                       enter="transition ease-out duration-100"
                       enterFrom="transform opacity-0 scale-95"
@@ -139,11 +139,29 @@ function Header() {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="text-left absolute right-0 z-10 mt-2 ml- w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          <>
+                            {user && (
+                              <>
+                                <span
+                                  className="font-bold text-left block px-4 py-2  text-gray-700 hover:bg-gray-100"
+                                  role="menuitem"
+                                >
+                                  Kullanıcı <br />
+                                  <span className="text-sm font-medium border rounded-lg bg-yellow-400 p-1">
+                                    {user.email}
+                                  </span>
+                                </span>
+                              </>
+                            )}
+                          </>
+                        </Menu.Item>
+                        <hr />
                         <Menu.Item>
                           <NavLink
                             to="/profile"
-                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2  rounded-md text-base font-medium"
                           >
                             Profil
                           </NavLink>
@@ -175,7 +193,8 @@ function Header() {
                           </Menu.Item>
                         )}
                       </Menu.Items>
-                    </Transition>
+                    </Transition></>)}
+                   
                   </Menu>
                 </div>
               </div>
@@ -188,8 +207,8 @@ function Header() {
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              <Disclosure.Panel className="lg:hidden">
-                <div className="space-y-1 px-2 pt-2 pb-3">
+              <Disclosure.Panel className=" lg:hidden w-64 text-left ">
+                <div className="space-y-1 px-2 pt-2 pb-3 ">
                   <Disclosure.Button
                     as={NavLink}
                     className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
@@ -246,15 +265,19 @@ function Header() {
                     </Disclosure.Button>
                   </div>
 
-                  <div>
-                    <Disclosure.Button
-                      as={NavLink}
-                      className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                      to="/portfolyo"
-                    >
-                      Portfolyo
-                    </Disclosure.Button>
-                  </div>
+                  {user && (
+                    <>
+                      <div>
+                        <Disclosure.Button
+                          as={NavLink}
+                          className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                          to="/portfolyo"
+                        >
+                          Portfolyo
+                        </Disclosure.Button>
+                      </div>
+                    </>
+                  )}
 
                   {!user && (
                     <div>
@@ -262,7 +285,9 @@ function Header() {
                         <Disclosure.Button as={ModalLogin}></Disclosure.Button>
                       </div>
                       <div className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-bold ">
-                      <Disclosure.Button as={ModalRegister}></Disclosure.Button>
+                        <Disclosure.Button
+                          as={ModalRegister}
+                        ></Disclosure.Button>
                       </div>
                     </div>
                   )}

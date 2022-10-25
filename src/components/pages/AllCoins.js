@@ -4,23 +4,24 @@ import { CryptoState } from "../redux/CryptoContext";
 import axios from "axios";
 import { Pagination, LinearProgress } from "@mui/material";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
-// import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { CoinList } from "../../services/Api";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
 import numberWithCommas from "../utils/convertCurrency";
+import { addCrypto, deleteCrypto } from "../../services/firebase";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 function AllCoins() {
+  const { user } = useSelector((state) => state.auth);
+  const { favori } = useSelector((state) => state.favorites);
+  console.log(favori);
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const { currency, symbol } = CryptoState();
   const [page, setPage] = useState(1);
 
   // eslint-disable-next-line no-unused-vars
-  // const [saved, setSaved] = useState(false);
-
-  // const handleSavedCoin = (e) => {
-  //   e.preventDefault()
-  //   setSaved((prevCoin) => !prevCoin);
-  // };
 
   const fetchCoins = async () => {
     setLoading(true);
@@ -46,7 +47,32 @@ function AllCoins() {
     );
   }, [coins, search]);
 
-  console.log(filteredCoins);
+  const handleSavedCoin = (e, id) => {
+    e.preventDefault();
+    if (user) {
+      const data = favori.find((item) => item.name === id);
+      if (!data) {
+        addCrypto({
+          name: id,
+          uid: user.uid,
+        });
+      } else {
+        deleteCrypto(data.id);
+      }
+    } else {
+      toast.warning("Lütfen Giriş Yapınız !");
+    }
+  };
+
+  function controlFavorites(id) {
+    const data = favori.find((item) => item.name === id);
+    if (data) {
+      return <AiTwotoneHeart fontSize={25} color="red"></AiTwotoneHeart>;
+    } else {
+      return <AiOutlineHeart fontSize={25} color="black"></AiOutlineHeart>;
+    }
+  }
+
   return (
     <div>
       <>
@@ -78,15 +104,15 @@ function AllCoins() {
                       <table className="min-w-full divide-y divide-gray-300">
                         <thead className="bg-gray-50 ">
                           <tr className="text-center">
-                            {/* <th
+                            <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 0"
                             >
                               Favori
-                            </th> */}
+                            </th>
                             <th
                               scope="col"
-                              className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 sm:pl-6"
+                              className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 "
                             >
                               Rank
                             </th>
@@ -144,11 +170,11 @@ function AllCoins() {
                                 className="hover:bg-gray-100 hover:px-10 "
                                 key={item.id}
                               >
-                                {/* <td onClick={handleSavedCoin}>
-                                  {!saved && (
-                                    <AiOutlineHeart color="red" />
-                                  ) }
-                                </td> */}
+                                <td
+                                  onClick={(e) => handleSavedCoin(e, item.id)}
+                                >
+                                  {controlFavorites(item.id)}
+                                </td>
                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                   <div className="text-gray-900">
                                     {item.market_cap_rank}

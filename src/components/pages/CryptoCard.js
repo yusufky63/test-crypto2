@@ -11,22 +11,24 @@ import { CryptoState } from "../redux/CryptoContext";
 
 import numberWithCommas from "../utils/convertCurrency";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
+
+import { addCrypto, deleteCrypto } from "../../services/firebase";
+import { useSelector } from "react-redux";
+import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 function CryptoCard() {
+  const { user } = useSelector((state) => state.auth);
+  const { favori } = useSelector((state) => state.favorites);
+
   const { id } = useParams();
   const [coin, setCoin] = useState();
   const { currency, symbol } = CryptoState();
   const [symbolTrading, setSymbolTrading] = useState();
 
-  // const [day, setDay] = useState("7");
-
-  // const [chart, setChart] = useState(1);
   const fetchCoin = async () => {
-  
     const { data } = await axios.get(SingleCoin(id));
     console.log(symbolTrading);
     setSymbolTrading(data.symbol);
     setCoin(data);
-    
   };
 
   useEffect(() => {
@@ -36,6 +38,28 @@ function CryptoCard() {
   }, [id]);
   const currencyEdit = currency.toLowerCase();
 
+  const handleSavedCoin = (e, id) => {
+    e.preventDefault();
+    const data = favori.find((item) => item.name === id);
+    if (!data) {
+      addCrypto({
+        name: id,
+        uid: user.uid,
+      });
+    } else {
+      deleteCrypto(data.id);
+    }
+  };
+  function controlFavorites(id) {
+    const data = favori.find((item) => item.name === id);
+    if (data) {
+      return <AiTwotoneHeart fontSize={30} color="red"></AiTwotoneHeart>;
+    } else {
+      return <AiOutlineHeart fontSize={30} color="black"></AiOutlineHeart>;
+    }
+  }
+  console.log(coin);
+
   return (
     <>
       <br />
@@ -44,147 +68,162 @@ function CryptoCard() {
         Değiştiriniz !
       </h1>
       {coin ? (
-        <><div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
-          <div className=" ml-10 mr-5">
-            <div className="flex items-center">
-              <span className=" absolute mb-20 bg-yellow-500  text-black rounded-r-lg px-1 ">
-                Rank #{coin.market_cap_rank}
-              </span>
-              <img
-                src={coin.image.small}
-                alt={coin.name}
-                className="w-16 h-16 mr-4 mt-5" />
-              <h1 className="text-xl font-bold mt-3">
-                {coin.name}{" "}
-                <span className="text-sm uppercase text-gray-500">
-                  {coin.symbol}
+        <>
+          <div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
+            <div className=" ml-10 mr-5">
+              <div className="flex items-center relative">
+                <span className=" absolute mb-20 bg-yellow-500  text-black rounded-r-lg px-1 ">
+                  Rank #{coin.market_cap_rank}
                 </span>
-              </h1>
+
+                <span className=" absolute mb-16 right-0 text-black rounded-r-lg px-1 ">
+                  <button onClick={(e) => handleSavedCoin(e, coin.id)}>
+                    {controlFavorites(coin.id)}
+                  </button>
+                </span>
+
+                <img
+                  src={coin.image.small}
+                  alt={coin.name}
+                  className="w-16 h-16 mr-4 mt-5"
+                />
+                <h1 className="text-xl font-bold mt-3">
+                  {coin.name}{" "}
+                  <span className="text-sm uppercase text-gray-500">
+                    {coin.symbol}
+                  </span>
+                </h1>
+              </div>
+              <br />
+              <div className="flex justify-center ">
+                <h1 className="text-2xl font-bold mx-2">
+                  {symbol}
+                  {coin.market_data.current_price[currencyEdit]}
+                </h1>
+                <span className="font-bold ">
+                  {" "}
+                  <CheckPositiveNumber
+                    number={
+                      coin.market_data.price_change_percentage_24h_in_currency[
+                        currencyEdit
+                      ]
+                    }
+                  />
+                </span>
+              </div>
+              <br />
+              <div className="flex justify-center ">
+                <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-red-600 text-white rounded-full">
+                  {symbol} {coin.market_data.low_24h[currencyEdit]}
+                </h1>
+
+                <span className="text-xs inline-block py-2 px-2 leading-none text-center whitespace-nowrap align-baseline  bg-yellow-500 text-black rounded-lg mx-5 ">
+                  24H
+                </span>
+
+                <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-green-600 text-white rounded-full">
+                  {symbol} {coin.market_data.high_24h[currencyEdit]}
+                </h1>
+              </div>
+              <br />
+              <h1 className="text-gray-500 font-bold mr-10">Market Data</h1>
+
+              <hr />
+              <br />
+
+              <div className="flex items-center justify-between">
+                <h1 className=" font-bold mr-10"> ATH: </h1>
+                <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
+                  {symbol}
+                  {coin.market_data.ath[currencyEdit]}
+                </span>
+              </div>
+
+              <div className="flex items-center   justify-between ">
+                <h1 className=" font-bold mr-10"> Market Cap Rank: </h1>
+                <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
+                  {coin.market_data.market_cap_rank}
+                </span>
+              </div>
+
+              <div className="flex items-center  justify-between">
+                <h1 className=" font-bold mr-10">24H Market Cap Change: </h1>
+                <span className="flex justify-end text-sm bg-yellow-400 rounded-lg  px-2">
+                  {numberWithCommas(coin.market_data.market_cap_change_24h)}
+                </span>
+              </div>
+
+              <div className="flex items-center  justify-between">
+                <h1 className="font-bold mr-10">Max Supply: </h1>
+                <span className="  text-sm bg-yellow-400 rounded-lg px-2">
+                  {numberWithCommas(coin.market_data.max_supply)}
+                </span>
+              </div>
+
+              <div className="flex items-center  justify-between">
+                <h1 className="font-bold  mr-10">Total Volume: </h1>
+                <span className="text-sm bg-yellow-400 rounded-lg  px-2">
+                  {symbol}{" "}
+                  {numberWithCommas(
+                    coin.market_data.total_volume[currencyEdit]
+                  )}
+                </span>
+              </div>
+              <br />
+              <h1 className="text-gray-500 font-bold mr-10">Social Media</h1>
+
+              <hr />
+              <br />
+              {/* Social */}
+
+              <div className="flex items-center   justify-between">
+                <h1 className="font-bold mr-10">Site :</h1>
+                {coin.links.homepage[0] ? (
+                  <a
+                    href={coin.links.homepage[0]}
+                    target={"_blank"}
+                    className="text-sm bg-yellow-400 rounded-lg  px-2"
+                    rel="noreferrer"
+                  >
+                    {coin.links.homepage[0]}
+                  </a>
+                ) : (
+                  <span className="text-sm">Mevcut Değil</span>
+                )}
+              </div>
+
+              <div className="flex items-center  justify-between">
+                <h1 className="font-bold mr-10">Forum: </h1>
+                {coin.links.official_forum_url[0] ? (
+                  <a
+                    href={coin.links.official_forum_url[0]}
+                    className=" text-sm bg-yellow-400 rounded-lg  px-2"
+                  >
+                    {coin.links.official_forum_url[0]}
+                  </a>
+                ) : (
+                  <span className="text-sm">Mevcut Değil</span>
+                )}
+              </div>
+
+              <div className="flex items-center  justify-between">
+                <h1 className="font-bold mr-10">Reddit: </h1>
+                {coin.links.subreddit_url ? (
+                  <a
+                    href={coin.links.subreddit_url}
+                    target="_blank"
+                    className=" text-sm bg-yellow-400 rounded-lg px-2"
+                    rel="noreferrer"
+                  >
+                    {coin.links.subreddit_url}
+                  </a>
+                ) : (
+                  <span className="text-sm">Mevcut Değil</span>
+                )}
+              </div>
             </div>
-            <br />
-            <div className="flex justify-center ">
-              <h1 className="text-2xl font-bold mx-2">
-                {symbol}
-                {coin.market_data.current_price[currencyEdit]}
-              </h1>
-              <span className="font-bold ">
-                {" "}
-                <CheckPositiveNumber
-                  number={coin.market_data.price_change_percentage_24h_in_currency[currencyEdit]} />
-              </span>
-            </div>
-            <br />
-            <div className="flex justify-center ">
-              <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-red-600 text-white rounded-full">
-                {symbol} {coin.market_data.low_24h[currencyEdit]}
-              </h1>
 
-              <span className="text-xs inline-block py-2 px-2 leading-none text-center whitespace-nowrap align-baseline  bg-yellow-500 text-black rounded-lg mx-5 ">
-                24H
-              </span>
-
-              <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-green-600 text-white rounded-full">
-                {symbol} {coin.market_data.high_24h[currencyEdit]}
-              </h1>
-            </div>
-            <br />
-            <h1 className="text-gray-500 font-bold mr-10">Market Data</h1>
-
-            <hr />
-            <br />
-
-            <div className="flex items-center justify-between">
-              <h1 className=" font-bold mr-10"> ATH: </h1>
-              <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
-                {symbol}
-                {coin.market_data.ath[currencyEdit]}
-              </span>
-            </div>
-
-            <div className="flex items-center   justify-between ">
-              <h1 className=" font-bold mr-10"> Market Cap Rank: </h1>
-              <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
-                {coin.market_data.market_cap_rank}
-              </span>
-            </div>
-
-            <div className="flex items-center  justify-between">
-              <h1 className=" font-bold mr-10">24H Market Cap Change: </h1>
-              <span className="flex justify-end text-sm bg-yellow-400 rounded-lg  px-2">
-                {numberWithCommas(coin.market_data.market_cap_change_24h)}
-              </span>
-            </div>
-
-            <div className="flex items-center  justify-between">
-              <h1 className="font-bold mr-10">Max Supply: </h1>
-              <span className="  text-sm bg-yellow-400 rounded-lg px-2">
-                {numberWithCommas(coin.market_data.max_supply)}
-              </span>
-            </div>
-
-            <div className="flex items-center  justify-between">
-              <h1 className="font-bold  mr-10">Total Volume: </h1>
-              <span className="text-sm bg-yellow-400 rounded-lg  px-2">
-                {symbol}{" "}
-                {numberWithCommas(coin.market_data.total_volume[currencyEdit])}
-              </span>
-            </div>
-            <br />
-            <h1 className="text-gray-500 font-bold mr-10">Social Media</h1>
-
-            <hr />
-            <br />
-            {/* Social */}
-
-            <div className="flex items-center   justify-between">
-              <h1 className="font-bold mr-10">Site :</h1>
-              {coin.links.homepage[0] ? (
-                <a
-                  href={coin.links.homepage[0]}
-                  target={"_blank"}
-                  className="text-sm bg-yellow-400 rounded-lg  px-2"
-                  rel="noreferrer"
-                >
-                  {coin.links.homepage[0]}
-                </a>
-              ) : (
-                <span className="text-sm">Mevcut Değil</span>
-              )}
-            </div>
-
-            <div className="flex items-center  justify-between">
-              <h1 className="font-bold mr-10">Forum: </h1>
-              {coin.links.official_forum_url[0] ? (
-                <a
-                  href={coin.links.official_forum_url[0]}
-                  className=" text-sm bg-yellow-400 rounded-lg  px-2"
-                >
-                  {coin.links.official_forum_url[0]}
-                </a>
-              ) : (
-                <span className="text-sm">Mevcut Değil</span>
-              )}
-            </div>
-
-            <div className="flex items-center  justify-between">
-              <h1 className="font-bold mr-10">Reddit: </h1>
-              {coin.links.subreddit_url ? (
-                <a
-                  href={coin.links.subreddit_url}
-                  target="_blank"
-                  className=" text-sm bg-yellow-400 rounded-lg px-2"
-                  rel="noreferrer"
-                >
-                  {coin.links.subreddit_url}
-                </a>
-              ) : (
-                <span className="text-sm">Mevcut Değil</span>
-              )}
-            </div>
-
-          </div>
-
-          {/* <div>
+            {/* <div>
       <select
         name=""
         id=""
@@ -196,28 +235,36 @@ function CryptoCard() {
       </select>
     </div> */}
 
-          {symbolTrading && (
-            <div id="test" className="container max-w-screen-lg flex ">
-              <AdvancedRealTimeChart
-                details
-                container_id="test"
-                symbol={`BINANCE:${symbolTrading}USD`}
-                // eslint-disable-next-line react/style-prop-object
-                style="1"
-                interval="D"
-                locale="tr"
-                width="95%"
-                height={550}
-                theme="light"
-              ></AdvancedRealTimeChart>
+            {symbolTrading && (
+              <div id="test" className="container max-w-screen-lg flex ">
+                <AdvancedRealTimeChart
+                  details
+                  container_id="test"
+                  symbol={`BINANCE:${symbolTrading}USD`}
+                  // eslint-disable-next-line react/style-prop-object
+                  style="1"
+                  interval="D"
+                  locale="tr"
+                  width="95%"
+                  height={550}
+                  theme="light"
+                ></AdvancedRealTimeChart>
 
-              {/* <CoinChart id={id}></CoinChart> */}
-            </div>
-          )}
-        </div><div>
-            <h1 className='text-xl font-semibold mt-8 mb-4'> {coin.name} ({coin.symbol?.toUpperCase()}) Hakkında</h1>
-            <div className='mx-5 about-text whitespace-pre-wrap  tracking-wide ' dangerouslySetInnerHTML={{ __html: coin.description?.en }}></div>
-          </div></>
+                {/* <CoinChart id={id}></CoinChart> */}
+              </div>
+            )}
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold mt-8 mb-4">
+              {" "}
+              {coin.name} ({coin.symbol?.toUpperCase()}) Hakkında
+            </h1>
+            <div
+              className="mx-5 about-text whitespace-pre-wrap  tracking-wide "
+              dangerouslySetInnerHTML={{ __html: coin.description?.en }}
+            ></div>
+          </div>
+        </>
       ) : (
         <div role="status">
           <h1 className="my-2">Yükleniyor...</h1>
@@ -239,7 +286,6 @@ function CryptoCard() {
           <span className="sr-only">Loading...</span>
         </div>
       )}
-      
     </>
   );
 }

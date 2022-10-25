@@ -1,18 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { useDispatch } from "react-redux";
+
 import {
   login,
   resetPasword,
   githubLogin,
   googleLogin,
 } from "../../services/firebase";
-import { login as LoginHandle } from "../../components/redux/auth";
 
 export default function ModalLogin() {
-  const dispatch = useDispatch();
-
   let [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,8 +25,7 @@ export default function ModalLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
     const user = login(email, password);
-    if (user) {
-      dispatch(LoginHandle(user));
+    if (user.email || user.photoURL) {
       closeModal();
     }
   };
@@ -134,7 +130,6 @@ export default function ModalLogin() {
                     </svg>
                   </button>
                 </div>
-                
 
                 <Dialog.Title
                   as="h3"
@@ -199,7 +194,7 @@ export default function ModalLogin() {
                       />
                     </div>
                     <a
-                      onClick={()=>resetPasword(email)}
+                      onClick={() => resetPasword(email)}
                       className="text-indigo-500 flex justify-end mb-2 text-sm cursor-pointer"
                     >
                       Şifremi Unuttum
@@ -216,8 +211,6 @@ export default function ModalLogin() {
                     Giriş Yap
                   </button>
                 </div>
-
-              
               </div>
             </Transition.Child>
           </div>

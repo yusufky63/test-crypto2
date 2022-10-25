@@ -1,12 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-
-import { useDispatch } from "react-redux";
 import { register as registerFirebase } from "../../services/firebase";
 import { githubLogin, googleLogin } from "../../services/firebase";
 export default function ModalRegister() {
-  const dispatch = useDispatch();
   let [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,8 +20,7 @@ export default function ModalRegister() {
     e.preventDefault();
     const user = registerFirebase(email, password);
     console.log("register", user);
-    if (user) {
-      dispatch(registerFirebase(user));
+    if (user.email || user.photoURL) {
       closeModal();
     }
   };

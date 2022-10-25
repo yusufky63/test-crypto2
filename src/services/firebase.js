@@ -11,6 +11,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
+  updateProfile,
+  updatePassword,
+  sendEmailVerification,
+  
 } from "firebase/auth";
 
 import {
@@ -56,7 +60,25 @@ export const register = async (email, password) => {
 
     return user;
   } catch (error) {
-    toast.error(error);
+    console.log(error.message);
+    toast.error(
+      error.message ===
+        "Firebase: Password should be at least 6 characters (auth/weak-password)."
+        ? "Şifre en az 6 karakter olmalıdır."
+        : error.message ||
+          error.message === "Firebase: Error (auth/invalid-email)."
+        ? "Geçersiz E-posta"
+        : error.message ===
+          "Firebase: The email address is already in use by another account. (auth/email-already-in-use)."
+        ? "Bu e-posta adresi zaten kullanımda."
+        : error.message ===
+          "Firebase: The email address is badly formatted. (auth/invalid-email)."
+        ? "Geçersiz E-posta"
+        : error.message ===
+          "Firebase: Password should be at least 6 characters (auth/weak-password)."
+        ? "Şifre en az 6 karakter olmalıdır."
+        : error.message
+    );
   }
 };
 
@@ -99,6 +121,7 @@ export const logout = async () => {
 onAuthStateChanged(auth, (user) => {
   console.log(auth);
   if (user) {
+    console.log(user);
     store.dispatch(LoginRedux(user));
     console.log("onAuthStateChanged", user);
     onSnapshot(
@@ -155,10 +178,8 @@ export const githubLogin = async () => {
     });
 };
 
-
-
 //ADD NOTE
-export const addNote = async (favorite) => {
+export const addCrypto = async (favorite) => {
   try {
     const result = await addDoc(collection(db, "favorites"), favorite);
     return result.id;
@@ -170,7 +191,7 @@ export const addNote = async (favorite) => {
 };
 
 //DELETE NOTE
-export const deleteNote = async (id) => {
+export const deleteCrypto = async (id) => {
   try {
     await deleteDoc(doc(db, "favorites", id));
   } catch (error) {
@@ -182,3 +203,88 @@ export const deleteNote = async (id) => {
     );
   }
 };
+
+//UPDATE PROFILE
+export const upProfile = async (photoURL, displayName) => {
+  try {
+    await updateProfile(auth.currentUser, {
+      displayName,
+      photoURL,
+    });
+    toast.success("Profil Güncellendi");
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
+
+// export const reAuth = async (password) => {
+//   try {
+//     const credential = await EmailAuthProvider.credential(
+//       auth.currentUser.email,
+//       password
+//     );
+
+//     const { user } = await reauthenticateWithCredential(
+//       auth.currentUser,
+//       credential
+//     );
+//     toast.success("Giriş Yapıldı");
+//     return user;
+//   } catch (error) {
+//     toast.error(error.message);
+//   }
+// };
+
+//UPDATE PASSWORD
+
+export const UpdatePassword = async (password) => {
+  updatePassword(auth.currentUser, password)
+    .then(() => {
+      toast.success("Şifre Güncelleme Başarılı");
+    })
+    .catch((error) => {
+      // if (error.code === "auth/requires-recent-login") {
+      //   store.dispatch(
+      //     openModal({
+      //       name: "re-auth-modal",
+      //     })
+      //   );
+      // }
+      toast.error(
+        error.message === "Firebase: Error (auth/requires-recent-login)."
+          ? "Tekrar Giriş Yapın"
+          : error.message || error.message === "auth/weak-password"
+          ? "Şifre En Az 6 Karakter Olmalıdır"
+          : error.message
+      );
+    });
+};
+
+//SEND EMAIL VERIFICATION
+export const emailVerified = async () => {
+  try {
+    sendEmailVerification(auth.currentUser).then(() => {
+      toast.success("Onay Linki Gönderildi !");
+    });
+  } catch (error) {
+    toast.error(error);
+  }
+};
+
+//DELETE ACCOUNT
+export const deleteAccount = async () => {
+  try {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('Hesaabınızı silmek istediğinize emin misiniz ?')) {
+      await auth.currentUser.delete();
+      toast.success("Hesap Silindi");
+    }
+
+    
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
+
+
+

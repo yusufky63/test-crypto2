@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import parse from "html-react-parser";
+// import parse from "html-react-parser";
 function News() {
   const [page, setPage] = useState(1);
   const [news, setNews] = useState([]);
@@ -88,8 +88,7 @@ function News() {
                     </h5>
 
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-
-                      {parse(item.BODY)}
+                      {/* {(parse(item.BODY))} */}
                     </p>
                     <br />
                     <div className="flex justify-between ">
@@ -132,6 +131,7 @@ function News() {
         <div className=" flex justify-center items-center">
           {" "}
           <button
+            disabled={page === 1}
             className="border border-gray-300 rounded-full  p-3 font-medium mx-10  hover:bg-gray-900 hover:text-white"
             onClick={() => setPage(page < 0 ? page : page - 1)}
           >
