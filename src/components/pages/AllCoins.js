@@ -11,6 +11,8 @@ import numberWithCommas from "../utils/convertCurrency";
 import { addCrypto, deleteCrypto } from "../../services/firebase";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import BuyCrypto from "../modal/BuyCrypto";
+import SellCrypto from "../modal/SellCrypto";
 
 function AllCoins() {
   const { user } = useSelector((state) => state.auth);
@@ -85,7 +87,7 @@ function AllCoins() {
             <input
               type="text"
               placeholder="Arama"
-              className="search w-3/4 text-center p-3 outline-none border rounded-full lg:w-2/4  mx-auto"
+              className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-lg md:4/6 lg:w-3/6  xl:w-2/6  mx-auto"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -233,26 +235,32 @@ function AllCoins() {
                                     {numberWithCommas(item.total_volume)}
                                   </div>
                                 </td>
+                                <td className="px-10 mx-20 py-4">
+                                  <Sparklines
+                                    svgHeight={30}
+                                    width={50}
+                                    height={90}
+                                    margin={-30}
+                                    data={item.sparkline_in_7d.price}
+                                  >
+                                    <SparklinesLine style={{ fill: "" }} />
+                                    <SparklinesSpots />
+                                  </Sparklines>
+                                </td>
                                 <td>
-                                  <td className="px-10 mx-20 py-4">
-                                    <Sparklines
-                                      svgHeight={30}
-                                      width={50}
-                                      height={90}
-                                      margin={-30}
-                                      data={item.sparkline_in_7d.price}
-                                    >
-                                      <SparklinesLine style={{ fill: "" }} />
-                                      <SparklinesSpots />
-                                    </Sparklines>
-                                  </td>
+                                  <button className="border bg-green-500 rounded-lg p-1 px-5 w-full">
+                                    <BuyCrypto cryptoID={item.id}></BuyCrypto>
+                                  </button>
+                                  <button className="border bg-red-500 rounded-lg p-1 px-5 w-full">
+                                    <SellCrypto cryptoID={item.id}></SellCrypto>
+                                  </button>
                                 </td>
                               </tr>
                             ))}
                         </tbody>
                       </table>
                       <Pagination
-                        count={(filteredCoins?.length / 20).toFixed(0)}
+                        count={Number((filteredCoins?.length / 20).toFixed(0))}
                         variant="outlined"
                         shape="rounded"
                         color="warning"

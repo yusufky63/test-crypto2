@@ -3,10 +3,10 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
-import { CryptoState } from "../redux/CryptoContext";
-import ModalLogin from "../modal/ModalLogin";
-import ModalRegister from "../modal/ModalRegister";
-import { logout } from "../../services/firebase";
+import { CryptoState } from "./redux/CryptoContext";
+import ModalLogin from "./modal/ModalLogin";
+import ModalRegister from "./modal/ModalRegister";
+import { logout } from "../services/firebase";
 import { useSelector } from "react-redux";
 function Header() {
   const { user } = useSelector((state) => state.auth);
@@ -18,7 +18,7 @@ function Header() {
         {({ open }) => (
           <>
             <div className="mx-auto  max-w-7xl px-2 sm:px-6 ">
-              <div className="relative flex h-24 items-center justify-between ">
+              <div className="relative flex h-20 items-center justify-between ">
                 <div className="absolute  inset-y-0 left-0 flex items-center lg:hidden  ">
                   {/* Mobile menu button*/}
                   <Disclosure.Button className=" inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -49,7 +49,7 @@ function Header() {
                           className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/allcoins"
                         >
-                          Coinler
+                          Piyasalar
                         </NavLink>
                       </div>
                       <div>
@@ -130,71 +130,75 @@ function Header() {
                         )}
                       </Menu.Button>
                     </div>
-                    {user && (<> <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="text-left absolute right-0 z-10 mt-2 ml- w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
-                          <>
-                            {user && (
+                    {user && (
+                      <>
+                        {" "}
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="text-left absolute right-0 z-10 mt-2 ml- w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Item>
                               <>
-                                <span
-                                  className="font-bold text-left block px-4 py-2  text-gray-700 hover:bg-gray-100"
-                                  role="menuitem"
-                                >
-                                  Kullanıcı <br />
-                                  <span className="text-sm font-medium border rounded-lg bg-yellow-400 p-1">
-                                    {user.email}
-                                  </span>
-                                </span>
+                                {user && (
+                                  <>
+                                    <span
+                                      className="font-bold text-left block px-4 py-2  text-gray-700 hover:bg-gray-100"
+                                      role="menuitem"
+                                    >
+                                      Kullanıcı <br />
+                                      <span className="text-sm font-medium border rounded-lg bg-yellow-400 p-1">
+                                        {user.email}
+                                      </span>
+                                    </span>
+                                  </>
+                                )}
                               </>
+                            </Menu.Item>
+                            <hr />
+                            <Menu.Item>
+                              <NavLink
+                                to="/profile"
+                                className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2  rounded-md text-base font-medium"
+                              >
+                                Profil
+                              </NavLink>
+                            </Menu.Item>
+                            <Menu.Item>
+                              <NavLink
+                                to="/portfolyo"
+                                className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                              >
+                                Portfolyo
+                              </NavLink>
+                            </Menu.Item>
+                            <Menu.Item>
+                              <NavLink
+                                to="/settings"
+                                className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                              >
+                                Ayarlar
+                              </NavLink>
+                            </Menu.Item>
+                            {user && (
+                              <Menu.Item>
+                                <a
+                                  onClick={logout}
+                                  className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                >
+                                  Çıkış Yap
+                                </a>
+                              </Menu.Item>
                             )}
-                          </>
-                        </Menu.Item>
-                        <hr />
-                        <Menu.Item>
-                          <NavLink
-                            to="/profile"
-                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2  rounded-md text-base font-medium"
-                          >
-                            Profil
-                          </NavLink>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <NavLink
-                            to="/portfolyo"
-                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                          >
-                            Portfolyo
-                          </NavLink>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <NavLink
-                            to="/settings"
-                            className="text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                          >
-                            Ayarlar
-                          </NavLink>
-                        </Menu.Item>
-                        {user && (
-                          <Menu.Item>
-                            <a
-                              onClick={logout}
-                              className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                            >
-                              Çıkış Yap
-                            </a>
-                          </Menu.Item>
-                        )}
-                      </Menu.Items>
-                    </Transition></>)}
-                   
+                          </Menu.Items>
+                        </Transition>
+                      </>
+                    )}
                   </Menu>
                 </div>
               </div>
@@ -207,7 +211,7 @@ function Header() {
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              <Disclosure.Panel className=" lg:hidden w-64 text-left ">
+              <Disclosure.Panel className=" lg:hidden w-full text-center ">
                 <div className="space-y-1 px-2 pt-2 pb-3 ">
                   <Disclosure.Button
                     as={NavLink}
@@ -223,7 +227,7 @@ function Header() {
                       className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                       to="/allcoins"
                     >
-                      Coinler
+                      Piyasalar
                     </Disclosure.Button>
                   </div>
 

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
-import { addCrypto, deleteCrypto } from "../../services/firebase";
-import numberWithCommas from "../../components/utils/convertCurrency";
-import CheckPositiveNumber from "../utils/CheckPositiveNumber";
+import { addCrypto, deleteCrypto } from "../../../services/firebase";
+import numberWithCommas from "../../utils/convertCurrency";
+import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { CryptoState } from "../redux/CryptoContext";
-import { SingleCoin } from "../../services/Api";
-
+import { CryptoState } from "../../redux/CryptoContext";
+import { SingleCoin } from "../../../services/Api";
+import BuyCrypto from "../../modal/BuyCrypto";
+import SellCrypto from "../../modal/SellCrypto";
 function Portfolyo() {
   const { currency, symbol } = CryptoState();
   const { user } = useSelector((state) => state.auth);
@@ -22,7 +23,7 @@ function Portfolyo() {
     setLoading(true);
     favori.map(async (name) => {
       console.log(name.name);
-     await axios
+      await axios
         .get(SingleCoin(name.name))
         .then((res) => {
           setCoins((prev) => [...prev, res.data]);
@@ -64,8 +65,10 @@ function Portfolyo() {
 
   return (
     <div className=" px-4  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6">
-      <h1 className="text-3xl font-bold border inline  p-2 px-4 shadow-md rounded-lg">Favoriler</h1>
-      <div className="mt-8 flex flex-col">
+      <h1 className="text-3xl font-bold    p-3 shadow-md rounded-lg text-left ">
+        Favoriler
+      </h1>
+      <div className="mt-4 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5   md:rounded-lg">
@@ -226,9 +229,11 @@ function Portfolyo() {
                             </div>
                           </td>
                           <td>
-                            <button className="border p-2 rounded-lg flex">
-                              <span className="text-green-500 mr-1">Al </span> /{" "}
-                              <span className="text-red-500 ml-1"> Sat</span>
+                            <button className="border p-1 rounded-lg  w-full">
+                              <BuyCrypto cryptoID={item.id} ></BuyCrypto>
+                            </button>
+                              <button className="border p-1 rounded-lg  w-full">
+                              <SellCrypto cryptoID={item.id} ></SellCrypto>
                             </button>
                           </td>
                         </tr>

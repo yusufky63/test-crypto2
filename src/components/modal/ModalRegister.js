@@ -93,7 +93,7 @@ export default function ModalRegister() {
                   <button
                     onClick={githubLogin}
                     type="button"
-                    class="inline-block px-12 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
+                    class="inline-block px-12 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  active:shadow-lg transition duration-150 ease-in-out"
                     style={{ backgroundColor: "#333" }}
                   >
                     <svg
@@ -110,7 +110,7 @@ export default function ModalRegister() {
                   <button
                     onClick={googleLogin}
                     type="button"
-                    className="inline-block px-12 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
+                    className="inline-block px-12 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  active:shadow-lg transition duration-150 ease-in-out"
                     style={{ backgroundColor: "#ea4335" }}
                   >
                     <svg

@@ -1,22 +1,26 @@
-import React from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   upProfile,
   UpdatePassword,
-  emailVerified,deleteAccount
-} from "../../services/firebase";
+  emailVerified,
+} from "../../../services/firebase";
+import DeleteAccount from "../../modal/DeleteAccount";
 function Profile() {
+  const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
-  const [email, setEmail] = React.useState(user.email);
-  const [password, setPassword] = React.useState("");
-  const [displayName, setDisplayName] = React.useState(user.displayName);
-  const [photoURL, setPhotoURL] = React.useState(user.photoURL);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState(user.displayName);
+  const [photoURL, setPhotoURL] = useState(user.photoURL);
 
   const handleUpdate = (e) => {
     e.preventDefault();
     upProfile(photoURL, displayName);
-    UpdatePassword(password);
-    setPassword("");
+    if (password && password.length > 5) {
+      UpdatePassword(password);
+      setPassword("");
+    }
   };
   const handleEmailVerified = (e) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ function Profile() {
   return (
     <div className="flex justify-center">
       <div>
-        <div className="flex text-left p-2 border m-10 ">
+        <div className="flex text-left p-2 border shadow-2xl rounded-lg m-10 ">
           <div className="p-10 ">
             <h1 className="text-3xl text-center  font-bold mx-14 p-1 drop-shadow-xl">
               Profil Güncelleme
@@ -51,7 +55,7 @@ function Profile() {
                 type="text"
                 onChange={(e) => setPhotoURL(e.target.value)}
                 value={photoURL}
-                class="form-control
+                className="form-control
       block
       w-full
       px-5
@@ -78,7 +82,7 @@ function Profile() {
                   type="text"
                   onChange={(e) => setDisplayName(e.target.value)}
                   value={displayName}
-                  class="form-control
+                  className="form-control
       block
       w-full
       px-5
@@ -106,7 +110,7 @@ function Profile() {
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   type="email"
-                  class="form-control
+                  className="form-control
       block
       w-full
       px-5
@@ -131,7 +135,9 @@ function Profile() {
                 >
                   Emaili Doğrula
                 </button>
-              ):(<span className="text-green-500">Email Doğrulandı</span>)}
+              ) : (
+                <span className="text-green-500">Email Doğrulandı</span>
+              )}
             </div>
             <br />
             <div>
@@ -142,7 +148,7 @@ function Profile() {
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   type="password"
-                  class="form-control
+                  className="form-control
       block
       w-full
       px-5
@@ -198,8 +204,11 @@ function Profile() {
               >
                 Güncelle
               </button>
-              <button onClick={deleteAccount} className="border rounded-lg text-red-600 hover:bg-red-200 p-3 px-8">
-                Hesabı Sil
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="border rounded-lg text-red-600 hover:bg-red-200 p-3 px-8"
+              >
+                <DeleteAccount />
               </button>
             </div>
           </div>

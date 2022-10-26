@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { toast } from "react-toastify";
 import { setFavorites } from "../components/redux/favorite/favoriteSlice";
+import { setPortfolyo } from "../components/redux/portfolyo/portfolyoSlice";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -14,7 +15,9 @@ import {
   updateProfile,
   updatePassword,
   sendEmailVerification,
-  
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  deleteUser,
 } from "firebase/auth";
 
 import {
@@ -24,6 +27,7 @@ import {
   addDoc,
   onSnapshot,
   deleteDoc,
+  updateDoc,
   query,
   where,
 } from "firebase/firestore";
@@ -47,7 +51,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
-
+const user = auth.currentUser;
 //REGISTER
 export const register = async (email, password) => {
   try {
@@ -60,7 +64,6 @@ export const register = async (email, password) => {
 
     return user;
   } catch (error) {
-    console.log(error.message);
     toast.error(
       error.message ===
         "Firebase: Password should be at least 6 characters (auth/weak-password)."
@@ -90,7 +93,15 @@ export const login = async (email, password) => {
 
     return user;
   } catch (error) {
-    toast.error(error.message);
+    toast.error(
+      error.message === "Firebase: Error (auth/user-not-found)."
+        ? "Kullanıcı Bulunamadı"
+        : error.message === "Firebase: Error (auth/wrong-password)."
+        ? "Şifre Yanlış"
+        : error.message === "Firebase: Error (auth/invalid-email)."
+        ? "Geçersiz E-posta"
+        : error.message
+    );
   }
 };
 
@@ -101,7 +112,14 @@ export const resetPasword = async (email) => {
     toast.success("Şifre Sıfırlama Maili Gönderildi");
     return true;
   } catch (error) {
-    toast.error("Lütfen Geçerli bir Mail Adresi Giriniz !", error.message);
+    toast.error(
+      error.message === "Firebase: Error (auth/user-not-found)."
+        ? "Kullanıcı Bulunamadı"
+        : error.message === "Firebase: Error (auth/invalid-email)."
+        ? "Geçersiz E-posta"
+        : error.message
+    );
+
     return false;
   }
 };
@@ -124,6 +142,7 @@ onAuthStateChanged(auth, (user) => {
     console.log(user);
     store.dispatch(LoginRedux(user));
     console.log("onAuthStateChanged", user);
+    //FAVORITES
     onSnapshot(
       query(collection(db, "favorites"), where("uid", "==", user.uid)),
       (doc) => {
@@ -133,6 +152,24 @@ onAuthStateChanged(auth, (user) => {
               (favorites, favori) => [
                 ...favorites,
                 { ...favori.data(), id: favori.id },
+              ],
+              []
+            )
+          )
+        );
+      }
+    );
+    //PORTFOLIO
+
+    onSnapshot(
+      query(collection(db, "portfolios"), where("uid", "==", user.uid)),
+      (doc) => {
+        store.dispatch(
+          setPortfolyo(
+            doc.docs.reduce(
+              (portfolios, portfolyo) => [
+                ...portfolios,
+                { ...portfolyo.data(), id: portfolyo.id },
               ],
               []
             )
@@ -154,7 +191,7 @@ providerGoogle.setCustomParameters({
 export const googleLogin = async () => {
   await signInWithPopup(auth, providerGoogle)
     .then((result) => {
-      store.dispatch(LoginRedux(result));
+      // store.dispatch(LoginRedux(result));
       toast.success("Google İle Giriş Yapıldı");
       window.location.href = "/";
     })
@@ -168,7 +205,7 @@ const providerGithub = new GithubAuthProvider();
 export const githubLogin = async () => {
   await signInWithPopup(auth, providerGithub)
     .then(function (result) {
-      store.dispatch(LoginRedux(result.user));
+      // store.dispatch(LoginRedux(result.user));
       toast.success("Github İle Giriş Yapıldı");
       window.location.href = "/";
     })
@@ -178,11 +215,13 @@ export const githubLogin = async () => {
     });
 };
 
-//ADD NOTE
+//ADD CRYPTO
 export const addCrypto = async (favorite) => {
   try {
-    const result = await addDoc(collection(db, "favorites"), favorite);
-    return result.id;
+    if (favorite) {
+      const result = await addDoc(collection(db, "favorites"), favorite);
+      return result.id;
+    }
   } catch (error) {
     toast.error("Not Eklenemdi", error.message);
   }
@@ -190,7 +229,7 @@ export const addCrypto = async (favorite) => {
   await addDoc(collection(db, "favorites"), favorite);
 };
 
-//DELETE NOTE
+//DELETE CRYPTO
 export const deleteCrypto = async (id) => {
   try {
     await deleteDoc(doc(db, "favorites", id));
@@ -204,10 +243,38 @@ export const deleteCrypto = async (id) => {
   }
 };
 
+//ADD PORTFOLIO
+export const addPortfolyo = async (portfolyo) => {
+  try {
+    if (portfolyo) {
+      const result = await addDoc(collection(db, "portfolios"), portfolyo);
+      toast.success("Portfolyo Eklendi");
+      return result.id;
+    }
+  } catch (error) {
+    toast.error("Porfolyo Eklenemdi", error.message);
+  }
+
+  await addDoc(collection(db, "portfolios"), portfolyo);
+};
+
+//UPDATE PORTFOLIO
+export const updatePorfolyo = async (id, portfolyo) => {
+  try {
+    if (portfolyo) {
+      await updateDoc(doc(db, "portfolios", id), portfolyo);
+      toast.success("Portfolyo Güncellendi");
+    }
+  } catch (error) {
+    console.log(error.message);
+    toast.error("Porfolyo Güncellenemedi", error.message);
+  }
+};
+
 //UPDATE PROFILE
 export const upProfile = async (photoURL, displayName) => {
   try {
-    await updateProfile(auth.currentUser, {
+    await updateProfile(user, {
       displayName,
       photoURL,
     });
@@ -217,28 +284,9 @@ export const upProfile = async (photoURL, displayName) => {
   }
 };
 
-// export const reAuth = async (password) => {
-//   try {
-//     const credential = await EmailAuthProvider.credential(
-//       auth.currentUser.email,
-//       password
-//     );
-
-//     const { user } = await reauthenticateWithCredential(
-//       auth.currentUser,
-//       credential
-//     );
-//     toast.success("Giriş Yapıldı");
-//     return user;
-//   } catch (error) {
-//     toast.error(error.message);
-//   }
-// };
-
 //UPDATE PASSWORD
-
 export const UpdatePassword = async (password) => {
-  updatePassword(auth.currentUser, password)
+  updatePassword(user, password)
     .then(() => {
       toast.success("Şifre Güncelleme Başarılı");
     })
@@ -263,7 +311,7 @@ export const UpdatePassword = async (password) => {
 //SEND EMAIL VERIFICATION
 export const emailVerified = async () => {
   try {
-    sendEmailVerification(auth.currentUser).then(() => {
+    sendEmailVerification(user).then(() => {
       toast.success("Onay Linki Gönderildi !");
     });
   } catch (error) {
@@ -272,19 +320,30 @@ export const emailVerified = async () => {
 };
 
 //DELETE ACCOUNT
-export const deleteAccount = async () => {
-  try {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm('Hesaabınızı silmek istediğinize emin misiniz ?')) {
-      await auth.currentUser.delete();
-      toast.success("Hesap Silindi");
-    }
+export const deletAccount = async () => {
+  await deleteUser(auth.currentUser)
+    .then(() => {
+      toast.success("Hesabınız Silindi !");
+    })
+    .catch((error) => {
+      toast.warning(error.message);
+    });
+};
 
-    
+export const reAuth = async (password) => {
+  try {
+    const credential = await EmailAuthProvider.credential(
+      auth.currentUser.email,
+      password
+    );
+
+    const { user } = await reauthenticateWithCredential(
+      auth.currentUser,
+      credential
+    );
+    toast.success("Onaylandı !");
+    return user;
   } catch (error) {
     toast.error(error.message);
   }
 };
-
-
-

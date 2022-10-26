@@ -15,6 +15,8 @@ import CheckPositiveNumber from "../utils/CheckPositiveNumber";
 import { addCrypto, deleteCrypto } from "../../services/firebase";
 import { useSelector } from "react-redux";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
+import BuyCrypto from "../modal/BuyCrypto";
+import SellCrypto from "../modal/SellCrypto";
 function CryptoCard() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
@@ -221,6 +223,13 @@ function CryptoCard() {
                   <span className="text-sm">Mevcut Değil</span>
                 )}
               </div>
+              <br />
+              <button className="border bg-green-500 rounded-lg p-1 px-5 w-full">
+                <BuyCrypto cryptoID={coin.id}></BuyCrypto>
+              </button>
+              <button className="border bg-red-500 rounded-lg p-1 px-5 w-full">
+                <SellCrypto cryptoID={coin.id}></SellCrypto>
+              </button>
             </div>
 
             {/* <div>
