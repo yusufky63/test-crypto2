@@ -7,48 +7,38 @@ import { DialogTitle } from "@mui/material";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
-
-import { CryptoState } from "../redux/CryptoContext";
 import { addPortfolyo, updatePorfolyo } from "../../services/firebase";
 import numberWithCommas from "../utils/convertCurrency";
+import { toast } from "react-toastify";
 
 function SellCrypto({ cryptoID }) {
   const { portfolyo } = useSelector((state) => state.portfolios);
-  console.log(portfolyo);
-
-  let [isOpen, setIsOpen] = useState(false);
-
   const { user } = useSelector((state) => state.auth);
+  const data = portfolyo.find((item) => item.coin === cryptoID);
+
+  console.log(data);
+  let [isOpen, setIsOpen] = useState(false);
   const [coin, setCoin] = useState();
-  const { currency, symbol } = CryptoState();
-
-
   const [amount, setAmount] = useState(0);
   const [totalUSD, setTotalUSD] = useState(0);
-  const [totalTRY, setTotalTRY] = useState(0);
-
-  const currencyEdit = currency.toLowerCase();
-  const total = currencyEdit === "usd" ? totalUSD : totalTRY;
-
-  useEffect(() => {
-    if (coin) {
-      setTotalUSD(amount / coin.market_data.current_price.usd);
-      setTotalTRY(amount / coin.market_data.current_price.try);
-    }
-  }, [amount, coin, currencyEdit]);
 
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(cryptoID));
-
-
     setCoin(data);
   };
 
   useEffect(() => {
     fetchCoin();
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
+
+  useEffect(() => {
+    if (coin) {
+      setTotalUSD(amount / coin.market_data.current_price.usd);
+    }
+  }, [amount, coin]);
 
   function closeModal() {
     setIsOpen(false);
@@ -57,49 +47,52 @@ function SellCrypto({ cryptoID }) {
   function openModal() {
     setIsOpen(true);
   }
-  console.log(coin);
 
-  const handleBuy = () => {
+
+  const handleSell = () => {
     const data = portfolyo.find((item) => item.coin === coin.id);
+
     if (!data)
       addPortfolyo({
         uid: user.uid,
         coin: coin.id,
         coin_price_usd: coin.market_data.current_price.usd,
-        coin_price_try: coin.market_data.current_price.try,
-        buy_total_crypto_TRY: totalTRY,
-        buy_total_crypto_USD: totalUSD,
+        buy_total_crypto: totalUSD,
         buy_date: new Date(),
       });
     else {
-      console.log(portfolyo.id);
-      updatePorfolyo(data.id, {
-        uid: user.uid,
-        coin: coin.id,
-        coin_price_usd: coin.market_data.current_price.usd,
-        coin_price_try: coin.market_data.current_price.try,
-        buy_total_crypto_TRY: totalTRY - data.buy_total_crypto_TRY,
-        buy_total_crypto_USD: totalUSD - data.buy_total_crypto_USD,
-        buy_date: new Date(),
-      });
+      console.log(data.buy_total_crypto, amount);
+      if (data.buy_total_crypto < totalUSD || totalUSD === 0) {
+        toast.warning(
+          "Satılacak miktar portfolyonuzda yok veya Geçerli  Değer Giriniz !"
+        );
+      } else {
+        updatePorfolyo(data.id, {
+          uid: user.uid,
+          coin: coin.id,
+          coin_price_usd: coin.market_data.current_price.usd,
+          buy_total_crypto: data.buy_total_crypto - totalUSD,
+          buy_date: new Date(),
+        });
+      }
     }
     setAmount(0);
-    setTotalTRY(0);
     setTotalUSD(0);
-
     closeModal();
   };
 
   return (
     <div>
-      {" "}
-      <div className="bg-red-500 text-white">
-        {" "}
-        <a className=" w-full " onClick={openModal}>
-          SAT
-        </a>
-      </div>
-      {coin && (
+      {
+        <div display={data} className="bg-white text-red-600">
+          {" "}
+          <a className=" w-full " onClick={openModal}>
+            SAT
+            {}
+          </a>
+        </div>
+      }
+      {coin && data && (
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -153,21 +146,29 @@ function SellCrypto({ cryptoID }) {
                         </span>
                       </h1>
                       <h1 className="font-bold text-gray-500 text-xl">
-                        {numberWithCommas(
-                          coin.market_data.current_price[currencyEdit]
-                        )}{" "}
-                        {symbol}
+                        {numberWithCommas(coin.market_data.current_price.usd)} $
                       </h1>
                       <br />
                     </div>
                     <div className="flex items-center  border rounded-lg">
-                      <h1 className="text-2xl p-4">{symbol}</h1>
+                      <h1 className="text-2xl p-4">$</h1>
                       <input
-                        value={amount}
+                        max={99999999}
+                        min={0.01}
+                        type="number"
+                        value={
+                          amount >=
+                          data.buy_total_crypto *
+                            coin.market_data.current_price.usd
+                            ? (
+                                data.buy_total_crypto *
+                                coin.market_data.current_price.usd
+                              ).toFixed(3)
+                            : amount
+                        }
                         onChange={(e) => setAmount(e.target.value)}
-                        type="text "
                         className="border-l-2 text-gray-600 outline-none p-3   placeholder:text-end w-full"
-                        placeholder={currency}
+                        placeholder="0.00 $"
                       />
                     </div>
                     <br />
@@ -177,17 +178,48 @@ function SellCrypto({ cryptoID }) {
                         src={coin.image.small}
                         alt=""
                       />
-                      <input
-                        value={total.toFixed(6)}
-                        type="text "
-                        className="border-l-2 text-gray-600 outline-none p-3  placeholder:uppercase placeholder:text-end w-full"
-                        placeholder={coin.symbol}
-                      />
+                      {
+                        <input
+                          value={
+                            data.buy_total_crypto <= totalUSD.toFixed(6)
+                              ? data.buy_total_crypto.toFixed(7)
+                              : totalUSD.toFixed(6)
+                          }
+                          className={`no border-l-2 text-gray-600 outline-none p-3  placeholder:uppercase placeholder:text-end w-full`}
+                          placeholder={coin.symbol}
+                        />
+                      }
+                    
                     </div>
+                  
+                    {data && (
+                        <><div className="my-2 justify-center">
+                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md mx-1">% 25</button>
+                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  mx-1">% 50</button>
+                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  mx-1">% 75</button>
+                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  ">% 100</button>
+                      </div><h1 className="text-start my-2 text-sm text-gray-500 flex justify-between">
+                          <span>
+                            {" "}
+                            Hesaptaki {coin.name} :{" "}
+                            {data.buy_total_crypto.toFixed(6)}{" "}
+                          </span>
+
+                          <span>
+                            {" "}
+                            Fiyatı :{" "}
+                            {(
+                              data.buy_total_crypto *
+                              coin.market_data.current_price.usd
+                            ).toFixed(3)}
+                            $
+                          </span>
+                        </h1></>
+                    )}
 
                     <div>
                       <button
-                        onClick={handleBuy}
+                        onClick={handleSell}
                         className=" border w-full p-2 mt-5 text-white rounded-lg bg-red-600 hover:bg-red-800"
                       >
                         Sat

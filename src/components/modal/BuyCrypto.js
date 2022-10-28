@@ -7,47 +7,36 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
 
-import { CryptoState } from "../redux/CryptoContext";
 import { addPortfolyo, updatePorfolyo } from "../../services/firebase";
 import numberWithCommas from "../utils/convertCurrency";
 
 function BuyCrypto({ cryptoID }) {
   const { portfolyo } = useSelector((state) => state.portfolios);
-  console.log(portfolyo);
+  const { user } = useSelector((state) => state.auth);
+  const data = portfolyo.find((item) => item.coin === cryptoID);
 
   let [isOpen, setIsOpen] = useState(false);
-
-  const { user } = useSelector((state) => state.auth);
   const [coin, setCoin] = useState();
-  const { currency, symbol } = CryptoState();
-
-
   const [amount, setAmount] = useState(0);
   const [totalUSD, setTotalUSD] = useState(0);
-  const [totalTRY, setTotalTRY] = useState(0);
-
-  const currencyEdit = currency.toLowerCase();
-  const total = currencyEdit === "usd" ? totalUSD : totalTRY;
-
-  useEffect(() => {
-    if (coin) {
-      setTotalUSD(amount / coin.market_data.current_price.usd);
-      setTotalTRY(amount / coin.market_data.current_price.try);
-    }
-  }, [amount, coin, currencyEdit]);
 
   const fetchCoin = async () => {
-    const { data } = await axios.get(SingleCoin(cryptoID));
-
-   
-    setCoin(data);
+    if (cryptoID) {
+      const { data } = await axios.get(SingleCoin(cryptoID));
+      setCoin(data);
+    }
   };
 
   useEffect(() => {
     fetchCoin();
-   
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cryptoID]);
+  }, []);
+
+  useEffect(() => {
+    if (coin) {
+      setTotalUSD(amount / coin.market_data.current_price.usd);
+    }
+  }, [amount, coin]);
 
   function closeModal() {
     setIsOpen(false);
@@ -56,7 +45,6 @@ function BuyCrypto({ cryptoID }) {
   function openModal() {
     setIsOpen(true);
   }
-  console.log(coin);
 
   const handleBuy = () => {
     const data = portfolyo.find((item) => item.coin === coin.id);
@@ -65,9 +53,7 @@ function BuyCrypto({ cryptoID }) {
         uid: user.uid,
         coin: coin.id,
         coin_price_usd: coin.market_data.current_price.usd,
-        coin_price_try: coin.market_data.current_price.try,
-        buy_total_crypto_TRY: totalTRY,
-        buy_total_crypto_USD: totalUSD,
+        buy_total_crypto: totalUSD,
         buy_date: new Date(),
       });
     else {
@@ -76,14 +62,12 @@ function BuyCrypto({ cryptoID }) {
         uid: user.uid,
         coin: coin.id,
         coin_price_usd: coin.market_data.current_price.usd,
-        coin_price_try: coin.market_data.current_price.try,
-        buy_total_crypto_TRY: totalTRY + data.buy_total_crypto_TRY,
-        buy_total_crypto_USD: totalUSD + data.buy_total_crypto_USD,
+        buy_total_crypto: totalUSD + data.buy_total_crypto,
         buy_date: new Date(),
       });
     }
     setAmount(0);
-    setTotalTRY(0);
+    portfolyo();
     setTotalUSD(0);
 
     closeModal();
@@ -92,7 +76,7 @@ function BuyCrypto({ cryptoID }) {
   return (
     <div>
       {" "}
-      <div className="bg-green-500 text-white">
+      <div className="bg-white text-green-500">
         {" "}
         <a className=" w-full " onClick={openModal}>
           AL
@@ -152,21 +136,20 @@ function BuyCrypto({ cryptoID }) {
                         </span>
                       </h1>
                       <h1 className="font-bold text-gray-500 text-xl">
-                        {numberWithCommas(
-                          coin.market_data.current_price[currencyEdit]
-                        )}{" "}
-                        {symbol}
+                        {numberWithCommas(coin.market_data.current_price.usd)} $
                       </h1>
                       <br />
                     </div>
                     <div className="flex items-center  border rounded-lg">
-                      <h1 className="text-2xl p-4">{symbol}</h1>
+                      <h1 className="text-2xl p-4">$</h1>
                       <input
+                       max={99999999}
+                       min={1}
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
-                        type="text "
-                        className="border-l-2 text-gray-600 outline-none p-3   placeholder:text-end w-full"
-                        placeholder={currency}
+                        type="number"
+                        className="border-l-2 text-gray-600 outline-none p-3   w-full"
+                        placeholder="0.00 USD"
                       />
                     </div>
                     <br />
@@ -177,12 +160,32 @@ function BuyCrypto({ cryptoID }) {
                         alt=""
                       />
                       <input
-                        value={total.toFixed(6)}
-                        type="text "
+                      
+                        value={totalUSD.toFixed(6)}
+                        type="number"
                         className="border-l-2 text-gray-600 outline-none p-3  placeholder:uppercase placeholder:text-end w-full"
                         placeholder={coin.symbol}
                       />
                     </div>
+                    {data && (
+                      <h1 className="text-start my-2 text-sm text-gray-500 flex justify-between">
+                        <span>
+                          {" "}
+                          Hesaptaki {coin.name} :{" "}
+                          {data.buy_total_crypto.toFixed(6)}{" "}
+                        </span>
+
+                        <span>
+                          {" "}
+                          Fiyatı :{" "}
+                          {(
+                            data.buy_total_crypto *
+                            coin.market_data.current_price.usd
+                          ).toFixed(3)}
+                          $
+                        </span>
+                      </h1>
+                    )}
                     <div>
                       <button
                         onClick={handleBuy}

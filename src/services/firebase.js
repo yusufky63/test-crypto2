@@ -248,11 +248,11 @@ export const addPortfolyo = async (portfolyo) => {
   try {
     if (portfolyo) {
       const result = await addDoc(collection(db, "portfolios"), portfolyo);
-      toast.success("Portfolyo Eklendi");
+      toast.success("Satın Alma İşlemi Başarılı");
       return result.id;
     }
   } catch (error) {
-    toast.error("Porfolyo Eklenemdi", error.message);
+    toast.error("Satın Alma Başarısız", error.message);
   }
 
   await addDoc(collection(db, "portfolios"), portfolyo);
@@ -263,23 +263,41 @@ export const updatePorfolyo = async (id, portfolyo) => {
   try {
     if (portfolyo) {
       await updateDoc(doc(db, "portfolios", id), portfolyo);
-      toast.success("Portfolyo Güncellendi");
+      if (portfolyo.coin_price_usd * portfolyo.buy_total_crypto <= 0.01) {
+        deletePortfolyo(id);
+      }
+      toast.success("İşlem Gerçekleşti");
     }
   } catch (error) {
     console.log(error.message);
-    toast.error("Porfolyo Güncellenemedi", error.message);
+    toast.error("İşlem Gerçekleşmedi", error.message);
+  }
+};
+
+//DELETE PORTFOLIO
+export const deletePortfolyo = async (id) => {
+  try {
+    await deleteDoc(doc(db, "portfolios", id));
+  } catch (error) {
+    console.log(error.message);
+    toast.error(
+      error.message === "Missing or insufficient permissions."
+        ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
+        : error.message
+    );
   }
 };
 
 //UPDATE PROFILE
 export const upProfile = async (photoURL, displayName) => {
   try {
-    await updateProfile(user, {
+    await updateProfile(auth.currentUser, {
       displayName,
       photoURL,
     });
     toast.success("Profil Güncellendi");
   } catch (error) {
+    console.log(error.message);
     toast.error(error.message);
   }
 };
@@ -298,6 +316,7 @@ export const UpdatePassword = async (password) => {
       //     })
       //   );
       // }
+
       toast.error(
         error.message === "Firebase: Error (auth/requires-recent-login)."
           ? "Tekrar Giriş Yapın"

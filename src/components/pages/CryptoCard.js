@@ -224,12 +224,13 @@ function CryptoCard() {
                 )}
               </div>
               <br />
-              <button className="border bg-green-500 rounded-lg p-1 px-5 w-full">
+              <div className="border p-2">  <button className="border bg-white my-1 rounded-lg p-1 px-5 w-full">
                 <BuyCrypto cryptoID={coin.id}></BuyCrypto>
               </button>
-              <button className="border bg-red-500 rounded-lg p-1 px-5 w-full">
+              <button className="border bg-white rounded-lg  my-1 p-1 px-5 w-full">
                 <SellCrypto cryptoID={coin.id}></SellCrypto>
-              </button>
+              </button></div>
+            
             </div>
 
             {/* <div>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@506&display=swap');
 @import "react-alice-carousel/lib/alice-carousel.css";
 body {
     font-family: 'Signika Negative', sans-serif;

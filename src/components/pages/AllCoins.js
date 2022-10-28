@@ -79,8 +79,8 @@ function AllCoins() {
     <div>
       <>
         <header>
-          <h1 className="text-3xl text-center font-bold text-gray-800 my-5">
-            TOP 100 COIN
+          <h1 className="text-3xl text-center  text-gray-800 my-8">
+            TOP <b>100</b>  COIN
           </h1>
 
           <div>
@@ -94,7 +94,7 @@ function AllCoins() {
           </div>
         </header>
 
-        <div className=" px-4  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6">
+        <div className=" px-4  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
           <div className="mt-8 flex flex-col">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -169,7 +169,7 @@ function AllCoins() {
                             .map((item) => (
                               <tr
                                 id="priceT"
-                                className="hover:bg-gray-100 hover:px-10 "
+                                className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 "
                                 key={item.id}
                               >
                                 <td
@@ -247,11 +247,11 @@ function AllCoins() {
                                     <SparklinesSpots />
                                   </Sparklines>
                                 </td>
-                                <td>
-                                  <button className="border bg-green-500 rounded-lg p-1 px-5 w-full">
+                                <td className="p-1">
+                                  <button className="border bg-white rounded-lg my-1 p-1 px-5 w-full">
                                     <BuyCrypto cryptoID={item.id}></BuyCrypto>
                                   </button>
-                                  <button className="border bg-red-500 rounded-lg p-1 px-5 w-full">
+                                  <button className="border bg-white rounded-lg p-1 my-1 px-5 w-full">
                                     <SellCrypto cryptoID={item.id}></SellCrypto>
                                   </button>
                                 </td>
@@ -288,77 +288,3 @@ function AllCoins() {
 }
 
 export default AllCoins;
-
-// eslint-disable-next-line no-unused-vars
-const Fav = () => {
-  return (
-    <div id="main-content">
-      <div>
-        <input type="checkbox" id="checkbox" />
-        <label htmlFor="checkbox">
-          <svg
-            id="heart-svg"
-            viewBox="467 392 58 57"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g
-              id="Group"
-              fill="none"
-              fillRule="evenodd"
-              transform="translate(467 392)"
-            >
-              <path
-                d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
-                id="heart"
-                fill="#AAB8C2"
-              />
-              <circle
-                id="main-circ"
-                fill="#E2264D"
-                opacity="0"
-                cx="29.5"
-                cy="29.5"
-                r="1.5"
-              />
-
-              <g id="grp7" opacity="0" transform="translate(7 6)">
-                <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2" />
-                <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2" />
-              </g>
-
-              <g id="grp6" opacity="0" transform="translate(0 28)">
-                <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2" />
-                <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2" />
-              </g>
-
-              <g id="grp3" opacity="0" transform="translate(52 28)">
-                <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2" />
-                <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2" />
-              </g>
-
-              <g id="grp2" opacity="0" transform="translate(44 6)">
-                <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2" />
-                <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2" />
-              </g>
-
-              <g id="grp5" opacity="0" transform="translate(14 50)">
-                <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2" />
-                <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2" />
-              </g>
-
-              <g id="grp4" opacity="0" transform="translate(35 50)">
-                <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2" />
-                <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2" />
-              </g>
-
-              <g id="grp1" opacity="0" transform="translate(24)">
-                <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2" />
-                <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2" />
-              </g>
-            </g>
-          </svg>
-        </label>
-      </div>
-    </div>
-  );
-};
