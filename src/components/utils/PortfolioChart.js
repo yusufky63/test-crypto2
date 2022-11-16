@@ -1,4 +1,4 @@
-import { Pie, G2 } from "@ant-design/plots";
+import { Pie } from "@ant-design/plots";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
