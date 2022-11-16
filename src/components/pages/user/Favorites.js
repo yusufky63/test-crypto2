@@ -62,11 +62,9 @@ export default function Favorites() {
 
   const currencyEdit = currency.toLowerCase();
   return (
-    <>
+    <div className="lg:ml-5 ml-5">
       {" "}
-      <h1 className="text-3xl font-bold  my-5  p-3 shadow-md rounded-lg text-left ">
-        Favoriler
-      </h1>
+    
       <div className="mt-4 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -102,12 +100,12 @@ export default function Favorites() {
                         >
                           Favori
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 "
                         >
                           Rank
-                        </th>
+                        </th> */}
                         <th
                           scope="col"
                           className="px-1  py-3.5  text-sm font-semibold text-gray-900"
@@ -126,7 +124,7 @@ export default function Favorites() {
                         >
                           ( 24S) Değişim
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                         >
@@ -137,23 +135,23 @@ export default function Favorites() {
                           className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                         >
                           Toplam Arz
-                        </th>
+                        </th> */}
                         <th
                           scope="col"
-                          className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
+                          className="px-1  py-3.5 text-center text-sm font-semibold text-gray-900"
                         >
                           24 Saatlik Hacim
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
                         >
                           Ayrıntılar
-                        </th>
+                        </th> */}
                       </tr>
                     </thead>
 
-                    <tbody className=" divide-y divide-gray-200 bg-white ">
+                    <tbody className=" divide-y divide-gray-200 bg-white  ">
                       {coins.map((item) => (
                         <tr
                           id="priceT"
@@ -163,11 +161,11 @@ export default function Favorites() {
                           <td onClick={(e) => handleSavedCoin(e, item.id)}>
                             {controlFavorites(item.id)}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
                               {item.market_data.market_cap_rank}
                             </div>
-                          </td>
+                          </td> */}
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                             <div className="flex items-center">
                               <div className="h-10 w-10 flex-shrink-0">
@@ -206,19 +204,19 @@ export default function Favorites() {
                               />
                             </div>
                           </td>
-                          <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {/* <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
                               {symbol}
                               {numberWithCommas(
                                 item.market_data.market_cap[currencyEdit]
                               )}
                             </div>
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          </td> */}
+                          {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
                               {numberWithCommas(item.market_data.total_supply)}
                             </div>
-                          </td>
+                          </td> */}
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
                               {symbol}
@@ -245,6 +243,6 @@ export default function Favorites() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

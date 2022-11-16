@@ -21,7 +21,7 @@ function PageLinks() {
           </p>
           <a
             className=" sm:text-xs md:text-xl lg:text-xl xl:text-2xl text-sm text-blue-600"
-            href="/coins"
+            href="/allcoins"
           >
             Kripto Paralar <i className="fa fa-arrow-right-long"></i>
           </a>

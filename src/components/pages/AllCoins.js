@@ -17,18 +17,17 @@ import SellCrypto from "../modal/SellCrypto";
 function AllCoins() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
-  console.log(favori);
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const { currency, symbol } = CryptoState();
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [filteredCoins, setFilteredCoins] = useState([]);
 
-  // eslint-disable-next-line no-unused-vars
 
   const fetchCoins = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency, 100));
-
     setCoins(data);
     setLoading(false);
   };
@@ -38,9 +37,7 @@ function AllCoins() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency]);
 
-  const [search, setSearch] = useState("");
-  const [filteredCoins, setFilteredCoins] = useState([]);
-
+  
   useEffect(() => {
     setFilteredCoins(
       coins.filter((coin) =>

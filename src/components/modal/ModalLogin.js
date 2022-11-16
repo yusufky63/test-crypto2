@@ -137,6 +137,12 @@ export default function ModalLogin() {
                 >
                   Giriş Yap
                 </Dialog.Title>
+                <div className="flex justify-center my-5 text-sm mx-10 bg-green-100 p-2 rounded-lg">
+                  <div className="text-center ">
+                    <span className="text-green-600">https://</span>{" "}
+                    test-react-crypo-app/login{" "}
+                  </div>
+                </div>
                 <div class="flex justify-center">
                   <div>
                     <label htmlFor="floatingInput" className="text-gray-700">

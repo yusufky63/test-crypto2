@@ -14,6 +14,7 @@ import Academia from "./components/pages/Academia";
 import Quiz from "./components/pages/Quiz";
 import AllCoinsWidget from "./components/Widgets/AllCoinsWidget";
 import Portfolyo from "./components/pages/user/Portfolyo";
+
 import Settings from "./components/pages/user/Settings";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -21,15 +22,16 @@ import { useSelector } from "react-redux";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
-  console.log("user", user);
+ 
 
   const PrivateRoute = ({ children }) => {
-    const { user } = useSelector((state) => state.auth);
+   
     return !user ? <Navigate to="/" /> : children;
   };
 
   return (
     <div className="App ">
+
       <ToastContainer
         position="top-right"
         autoClose={1000}

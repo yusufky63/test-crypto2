@@ -20,7 +20,7 @@ function Home() {
     getCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency]);
-  console.log(crypto);
+
   return (
     <div>
       <HomeHeader />

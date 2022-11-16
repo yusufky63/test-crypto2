@@ -264,6 +264,7 @@ export const updatePorfolyo = async (id, portfolyo) => {
     if (portfolyo) {
       await updateDoc(doc(db, "portfolios", id), portfolyo);
       if (portfolyo.coin_price_usd * portfolyo.buy_total_crypto <= 0.01) {
+        console.log(id)
         deletePortfolyo(id);
       }
       toast.success("İşlem Gerçekleşti");
@@ -278,6 +279,7 @@ export const updatePorfolyo = async (id, portfolyo) => {
 export const deletePortfolyo = async (id) => {
   try {
     await deleteDoc(doc(db, "portfolios", id));
+    toast.success("Silindi !");
   } catch (error) {
     console.log(error.message);
     toast.error(

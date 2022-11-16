@@ -10,6 +10,7 @@ import { SingleCoin } from "../../services/Api";
 import { addPortfolyo, updatePorfolyo } from "../../services/firebase";
 import numberWithCommas from "../utils/convertCurrency";
 
+
 function BuyCrypto({ cryptoID }) {
   const { portfolyo } = useSelector((state) => state.portfolios);
   const { user } = useSelector((state) => state.auth);
@@ -26,6 +27,7 @@ function BuyCrypto({ cryptoID }) {
       setCoin(data);
     }
   };
+
 
   useEffect(() => {
     fetchCoin();
@@ -143,8 +145,8 @@ function BuyCrypto({ cryptoID }) {
                     <div className="flex items-center  border rounded-lg">
                       <h1 className="text-2xl p-4">$</h1>
                       <input
-                       max={99999999}
-                       min={1}
+                        max={99999999}
+                        min={1}
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
                         type="number"
@@ -160,7 +162,6 @@ function BuyCrypto({ cryptoID }) {
                         alt=""
                       />
                       <input
-                      
                         value={totalUSD.toFixed(6)}
                         type="number"
                         className="border-l-2 text-gray-600 outline-none p-3  placeholder:uppercase placeholder:text-end w-full"
@@ -188,6 +189,7 @@ function BuyCrypto({ cryptoID }) {
                     )}
                     <div>
                       <button
+                        disabled={!totalUSD}
                         onClick={handleBuy}
                         className=" border w-full p-2 mt-5 text-white rounded-lg bg-green-600 hover:bg-green-800"
                       >

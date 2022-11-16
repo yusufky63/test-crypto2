@@ -1,4 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import React from "react";
+// import Nouislider from "nouislider-react";
+// import "nouislider/distribute/nouislider.css";
+
 
 import { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -32,8 +36,6 @@ function SellCrypto({ cryptoID }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-
   useEffect(() => {
     if (coin) {
       setTotalUSD(amount / coin.market_data.current_price.usd);
@@ -47,7 +49,6 @@ function SellCrypto({ cryptoID }) {
   function openModal() {
     setIsOpen(true);
   }
-
 
   const handleSell = () => {
     const data = portfolyo.find((item) => item.coin === coin.id);
@@ -64,7 +65,7 @@ function SellCrypto({ cryptoID }) {
       console.log(data.buy_total_crypto, amount);
       if (data.buy_total_crypto < totalUSD || totalUSD === 0) {
         toast.warning(
-          "Satılacak miktar portfolyonuzda yok veya Geçerli  Değer Giriniz !"
+          "Satılacak miktar portfolyonuzda yok veya Küsüratları Siliniz !"
         );
       } else {
         updatePorfolyo(data.id, {
@@ -80,6 +81,20 @@ function SellCrypto({ cryptoID }) {
     setTotalUSD(0);
     closeModal();
   };
+
+  // const Slider = () => (
+  //   <Nouislider
+  //   accessibility
+  //   pips={{ mode: "count", values: 5 }}
+  //   clickablePips
+  //   start={0}
+  //   step={10}
+  //   range={{
+  //     min: 0,
+  //     max: 100
+  //   }}
+  // />
+  // );
 
   return (
     <div>
@@ -153,7 +168,6 @@ function SellCrypto({ cryptoID }) {
                     <div className="flex items-center  border rounded-lg">
                       <h1 className="text-2xl p-4">$</h1>
                       <input
-                        max={99999999}
                         min={0.01}
                         type="number"
                         value={
@@ -189,17 +203,9 @@ function SellCrypto({ cryptoID }) {
                           placeholder={coin.symbol}
                         />
                       }
-                    
-                    </div>
-                  
-                    {data && (
-                        <><div className="my-2 justify-center">
-                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md mx-1">% 25</button>
-                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  mx-1">% 50</button>
-                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  mx-1">% 75</button>
-                        <button className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  ">% 100</button>
-                      </div><h1 className="text-start my-2 text-sm text-gray-500 flex justify-between">
+                    </div> <h1 className="text-start my-2 text-sm text-gray-500 flex justify-between">
                           <span>
+                       
                             {" "}
                             Hesaptaki {coin.name} :{" "}
                             {data.buy_total_crypto.toFixed(6)}{" "}
@@ -214,11 +220,39 @@ function SellCrypto({ cryptoID }) {
                             ).toFixed(3)}
                             $
                           </span>
-                        </h1></>
+                        </h1>
+
+                    {data && (
+                      <>
+                        <div className="my-2 justify-center">
+                          <button onClick={()=>setAmount((( data.buy_total_crypto *
+                              coin.market_data.current_price.usd ) * 25) / 100 )} className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md mx-1">
+                            % 25
+                          </button>
+                          <button onClick={()=>setAmount( (( data.buy_total_crypto *
+                              coin.market_data.current_price.usd ) * 50) / 100  )} className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  mx-1">
+                            % 50
+                          </button>
+                          <button onClick={()=>setAmount((( data.buy_total_crypto *
+                              coin.market_data.current_price.usd ) * 75) / 100  )} className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  mx-1">
+                            % 75
+                          </button>
+                          <button onClick={()=>setAmount((( data.buy_total_crypto *
+                              coin.market_data.current_price.usd ) * 100) / 100  )} className="shadow-md hover:bg-gray-300 border p-2 px-6 text-sm rounded-md  ">
+                            % 100
+                          </button>
+                          
+                        </div>
+                        {/* <div className="my-4 mb-8 mx-3">
+                        { Slider()}
+                        </div> */}
+                       
+                      </>
                     )}
 
                     <div>
                       <button
+                      disabled={!totalUSD}
                         onClick={handleSell}
                         className=" border w-full p-2 mt-5 text-white rounded-lg bg-red-600 hover:bg-red-800"
                       >
