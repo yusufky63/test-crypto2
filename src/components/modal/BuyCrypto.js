@@ -7,9 +7,12 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
 
-import { addPortfolyo, updatePorfolyo } from "../../services/firebase";
+import {
+  addPortfolyo,
+  updatePorfolyo,
+  addOrderHistory,
+} from "../../services/firebase";
 import numberWithCommas from "../utils/convertCurrency";
-
 
 function BuyCrypto({ cryptoID }) {
   const { portfolyo } = useSelector((state) => state.portfolios);
@@ -27,7 +30,6 @@ function BuyCrypto({ cryptoID }) {
       setCoin(data);
     }
   };
-
 
   useEffect(() => {
     fetchCoin();
@@ -50,7 +52,7 @@ function BuyCrypto({ cryptoID }) {
 
   const handleBuy = () => {
     const data = portfolyo.find((item) => item.coin === coin.id);
-    if (!data)
+    if (!data) {
       addPortfolyo({
         uid: user.uid,
         coin: coin.id,
@@ -58,7 +60,15 @@ function BuyCrypto({ cryptoID }) {
         buy_total_crypto: totalUSD,
         buy_date: new Date(),
       });
-    else {
+      addOrderHistory({
+        uid: user.uid,
+        order_type: "BUY",
+        order_coin: coin.id,
+        order_coin_price_usd: coin.market_data.current_price.usd,
+        order_coin_price_usd_buy_total_crypto: totalUSD,
+        order_date: new Date(),
+      });
+    } else {
       console.log(portfolyo.id);
       updatePorfolyo(data.id, {
         uid: user.uid,
@@ -67,11 +77,18 @@ function BuyCrypto({ cryptoID }) {
         buy_total_crypto: totalUSD + data.buy_total_crypto,
         buy_date: new Date(),
       });
+      addOrderHistory({
+        uid: user.uid,
+        order_type: "BUY",
+        order_coin: coin.id,
+        order_coin_price_usd: coin.market_data.current_price.usd,
+        order_coin_price_usd_buy_total_crypto: totalUSD,
+        order_date: new Date(),
+      });
     }
     setAmount(0);
     portfolyo();
     setTotalUSD(0);
-
     closeModal();
   };
 

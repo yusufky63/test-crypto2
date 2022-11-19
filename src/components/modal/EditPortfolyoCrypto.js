@@ -1,25 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
-// import Nouislider from "nouislider-react";
-// import "nouislider/distribute/nouislider.css";
-
-import { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import { DialogTitle } from "@mui/material";
+import { Fragment, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
 import { updatePorfolyo, addOrderHistory } from "../../services/firebase";
 import numberWithCommas from "../utils/convertCurrency";
 import { toast } from "react-toastify";
 
-function SellCrypto({ cryptoID }) {
+export default function EditPortfolyoCrypto({ cryptoID }) {
   const { portfolyo } = useSelector((state) => state.portfolios);
   const { user } = useSelector((state) => state.auth);
   const data = portfolyo.find((item) => item.coin === cryptoID);
 
-  console.log(data);
   let [isOpen, setIsOpen] = useState(false);
   const [coin, setCoin] = useState();
   const [amount, setAmount] = useState(0);
@@ -28,6 +22,7 @@ function SellCrypto({ cryptoID }) {
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(cryptoID));
     setCoin(data);
+    totalUSD(data.buy_total_crypto * coin.market_data.current_price.usd);
   };
 
   useEffect(() => {
@@ -39,6 +34,7 @@ function SellCrypto({ cryptoID }) {
     if (coin) {
       setTotalUSD(amount / coin.market_data.current_price.usd);
     }
+   
   }, [amount, coin]);
 
   function closeModal() {
@@ -78,37 +74,37 @@ function SellCrypto({ cryptoID }) {
     closeModal();
   };
 
-  // const Slider = () => (
-  //   <Nouislider
-  //   accessibility
-  //   pips={{ mode: "count", values: 5 }}
-  //   clickablePips
-  //   start={0}
-  //   step={10}
-  //   range={{
-  //     min: 0,
-  //     max: 100
-  //   }}
-  // />
-  // );
-
   return (
-    <div>
-      {
-        <div display={data} className="bg-white text-red-600">
-          {" "}
-          <a className=" w-full " onClick={openModal}>
-            SAT
-            {}
-          </a>
-        </div>
-      }
+    <>
+      <a
+        onClick={openModal}
+        className=" text-black-300 hover:bg-gray-900 hover:text-white lg:pl-5 px-3 py-2 rounded-md  font-medium bg-white"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+          ></path>
+        </svg>
+      </a>
+
+    
       {coin && data && (
         <Transition appear show={isOpen} as={Fragment}>
+          
           <Dialog
             as="div"
-            className="fixed inset-0 z-10 overflow-y-auto w-full bg-gray-500   bg-opacity-50"
+            className="fixed inset-0 z-10 overflow-y-auto w-full bg-gray-500 bg-opacity-50"
             onClose={closeModal}
+            
           >
             <div className="min-h-screen px-4 text-center ">
               <Transition.Child
@@ -139,16 +135,15 @@ function SellCrypto({ cryptoID }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <div className="inline-block w-full max-w-sm p-3 my-4 overflow-hidden  align-middle transition-all transform bg-white shadow-xl rounded-2xl  border border-gray-200 ">
+                <div className="inline-block w-full max-w-md p-6 my-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl  border border-gray-200">
+                  <Dialog.Title
+                    as="h3"
+                    className=" text-center text-2xl my-3 font-bold leading-10 text-gray-600"
+                  >
+                    Düzenle
+                  </Dialog.Title>
+                  <h1 className="my-5 text-4xl text-red-500"> Geliştirme Aşamasında </h1>{" "}
                   <div>
-                    <div>
-                      <DialogTitle
-                        as="div"
-                        className="text-red-700 text-2xl font-bold"
-                      >
-                        SAT
-                      </DialogTitle>
-                    </div>
                     <div className="">
                       <h1 className="text-xl ">
                         {coin.name}
@@ -282,9 +277,9 @@ function SellCrypto({ cryptoID }) {
                       <button
                         disabled={!totalUSD}
                         onClick={handleSell}
-                        className=" border w-full p-2 mt-5 text-white rounded-lg bg-red-600 hover:bg-red-800"
+                        className=" border w-full p-2 mt-5 text-white rounded-lg bg-blue-600 hover:bg-blue-800"
                       >
-                        Sat
+                        Kaydet
                       </button>
                     </div>
                   </div>
@@ -294,8 +289,6 @@ function SellCrypto({ cryptoID }) {
           </Dialog>
         </Transition>
       )}
-    </div>
+    </>
   );
 }
-
-export default SellCrypto;

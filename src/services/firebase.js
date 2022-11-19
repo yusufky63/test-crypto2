@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { toast } from "react-toastify";
 import { setFavorites } from "../components/redux/favorite/favoriteSlice";
 import { setPortfolyo } from "../components/redux/portfolyo/portfolyoSlice";
+import { setOrder } from "../components/redux/portfolyo/orderHistorySlice";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -30,6 +31,7 @@ import {
   updateDoc,
   query,
   where,
+  
 } from "firebase/firestore";
 import {
   login as LoginRedux,
@@ -177,9 +179,24 @@ onAuthStateChanged(auth, (user) => {
         );
       }
     );
+
+    onSnapshot(
+      query(collection(db, "orders"), where("uid", "==", user.uid)),
+      (doc) => {
+        store.dispatch(
+          setOrder(
+            doc.docs.reduce(
+              (orders, order) => [...orders, { ...order.data(), id: order.id }],
+              []
+            )
+          )
+        );
+      }
+    );
   } else {
     store.dispatch(LogoutRedux());
     store.dispatch(setFavorites([]));
+    store.dispatch(setPortfolyo([]));
   }
 });
 
@@ -264,7 +281,7 @@ export const updatePorfolyo = async (id, portfolyo) => {
     if (portfolyo) {
       await updateDoc(doc(db, "portfolios", id), portfolyo);
       if (portfolyo.coin_price_usd * portfolyo.buy_total_crypto <= 0.01) {
-        console.log(id)
+        console.log(id);
         deletePortfolyo(id);
       }
       toast.success("İşlem Gerçekleşti");
@@ -289,6 +306,8 @@ export const deletePortfolyo = async (id) => {
     );
   }
 };
+
+//PROFILE
 
 //UPDATE PROFILE
 export const upProfile = async (photoURL, displayName) => {
@@ -367,4 +386,35 @@ export const reAuth = async (password) => {
   } catch (error) {
     toast.error(error.message);
   }
+};
+
+//ORDER HİSTORY
+
+//DELETE PORTFOLIO
+export const deleteOrderHistory = async (id) => {
+  try {
+    if(id){
+      await deleteDoc(doc(db, "orders", id));
+    }
+  } catch (error) {
+    console.log(error.message);
+    toast.error(
+      error.message === "Missing or insufficient permissions."
+        ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
+        : error.message
+    );
+  }
+};
+
+//ADD PORTFOLIO
+export const addOrderHistory = async (order) => {
+  try {
+    const result = await addDoc(collection(db, "orders"), order);
+ 
+    return result.id;
+  } catch (error) {
+    console.log(error.message)
+  }
+
+  await addDoc(collection(db, "orders"), order);
 };
