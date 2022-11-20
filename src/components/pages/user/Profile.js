@@ -176,7 +176,7 @@ function Profile() {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 type="password"
-                class="form-control
+                className="form-control
       block
       w-full
       px-10

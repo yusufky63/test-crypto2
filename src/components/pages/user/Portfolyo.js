@@ -151,16 +151,16 @@ function Portfolyo() {
                   <div className="">
                     {" "}
                     <svg
-                      class="w-6 h-6"
+                      className="w-6 h-6"
                       fill="none"
                       stroke="gray"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
                       ></path>
                     </svg>
@@ -235,43 +235,43 @@ function Portfolyo() {
                           <tr className="text-center">
                             <th
                               scope="col"
-                              className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 "
+                              className="whitespace-nowrap py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 "
                             >
                               Coin
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Miktar
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Bakiye($)
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900 "
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900 "
                             >
                               Alım Fiyatı
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900 "
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900 "
                             >
                               Güncel Fiyat
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Kar / Zarar Miktarı
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Kar / Zarar (%)
                             </th>
@@ -357,8 +357,8 @@ function Portfolyo() {
                                   )}
                                 </div>
                               </td>
-                              <td>
-                                <div className="text-sm">
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
+                                <div className="text-sm ">
                                   {" "}
                                   {Calculate(
                                     item.id,
@@ -389,16 +389,16 @@ function Portfolyo() {
                                     className=" text-black-300  hover:bg-red-300 hover:text-red-900 lg:pl-5 px-3 py-2 rounded-md text-base font-medium bg-white"
                                   >
                                     <svg
-                                      class="w-6 h-6"
+                                      className="w-6 h-6"
                                       fill="none"
                                       stroke="currentColor"
                                       viewBox="0 0 24 24"
                                       xmlns="http://www.w3.org/2000/svg"
                                     >
                                       <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                       ></path>
                                     </svg>
@@ -416,16 +416,16 @@ function Portfolyo() {
                                       <div className="">
                                         {" "}
                                         <svg
-                                          class="w-6 h-6"
+                                          className="w-6 h-6"
                                           fill="none"
                                           stroke="gray"
                                           viewBox="0 0 24 24"
                                           xmlns="http://www.w3.org/2000/svg"
                                         >
                                           <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
                                             d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
                                           ></path>
                                         </svg>

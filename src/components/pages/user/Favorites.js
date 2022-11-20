@@ -96,16 +96,11 @@ export default function Favorites() {
                       <tr className="text-center">
                         <th
                           scope="col"
-                          className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 0"
+                          className="px-1  py-3.5  text-sm font-semibold text-gray-900"
                         >
                           Favori
                         </th>
-                        {/* <th
-                          scope="col"
-                          className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 "
-                        >
-                          Rank
-                        </th> */}
+                  
                         <th
                           scope="col"
                           className="px-1  py-3.5  text-sm font-semibold text-gray-900"
@@ -120,22 +115,10 @@ export default function Favorites() {
                         </th>
                         <th
                           scope="col"
-                          className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                          className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                         >
                           ( 24S) Değişim
                         </th>
-                        {/* <th
-                          scope="col"
-                          className="px-1  py-3.5  text-sm font-semibold text-gray-900"
-                        >
-                          Piyasa Değeri
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-1  py-3.5  text-sm font-semibold text-gray-900"
-                        >
-                          Toplam Arz
-                        </th> */}
                         <th
                           scope="col"
                           className="px-1  py-3.5 text-center text-sm font-semibold text-gray-900"

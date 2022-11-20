@@ -16,9 +16,5 @@ export const TrendingCoins = (currency) =>
 export const TopExchanges = (per_page) =>
   `https://api.coingecko.com/api/v3/exchanges?per_page=${per_page}`;
 
-
-  export const SingleCoinFavorites = (name,currency) =>
+export const SingleCoinFavorites = (name, currency) =>
   `https://api.coingecko.com/api/v3/simple/price?ids=${name}&vs_currencies=${currency}&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&precision=3`;
-
-
-  

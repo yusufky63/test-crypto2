@@ -31,7 +31,6 @@ import {
   updateDoc,
   query,
   where,
-  
 } from "firebase/firestore";
 import {
   login as LoginRedux,
@@ -40,14 +39,13 @@ import {
 
 import { store } from "../components/redux/store";
 const firebaseConfig = {
-  apiKey: "AIzaSyCFcfAps0FW8omode7E-ebrZQ82L_6RuqI",
-  authDomain: "crypto-app-18330.firebaseapp.com",
-  databaseURL:
-    "https://crypto-app-18330-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "crypto-app-18330",
-  storageBucket: "crypto-app-18330.appspot.com",
-  messagingSenderId: "407357067170",
-  appId: "1:407357067170:web:0accaa52f9cf0eb7a22cfb",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -128,7 +126,7 @@ export const resetPasword = async (email) => {
 
 //LOGOUT
 export const logout = async () => {
-  console.log(auth);
+
   try {
     await signOut(auth);
     toast.success("Çıkış Başarılı");
@@ -139,11 +137,8 @@ export const logout = async () => {
 };
 
 onAuthStateChanged(auth, (user) => {
-  console.log(auth);
   if (user) {
-    console.log(user);
     store.dispatch(LoginRedux(user));
-    console.log("onAuthStateChanged", user);
     //FAVORITES
     onSnapshot(
       query(collection(db, "favorites"), where("uid", "==", user.uid)),
@@ -208,7 +203,6 @@ providerGoogle.setCustomParameters({
 export const googleLogin = async () => {
   await signInWithPopup(auth, providerGoogle)
     .then((result) => {
-      // store.dispatch(LoginRedux(result));
       toast.success("Google İle Giriş Yapıldı");
       window.location.href = "/";
     })
@@ -222,7 +216,6 @@ const providerGithub = new GithubAuthProvider();
 export const githubLogin = async () => {
   await signInWithPopup(auth, providerGithub)
     .then(function (result) {
-      // store.dispatch(LoginRedux(result.user));
       toast.success("Github İle Giriş Yapıldı");
       window.location.href = "/";
     })
@@ -330,14 +323,6 @@ export const UpdatePassword = async (password) => {
       toast.success("Şifre Güncelleme Başarılı");
     })
     .catch((error) => {
-      // if (error.code === "auth/requires-recent-login") {
-      //   store.dispatch(
-      //     openModal({
-      //       name: "re-auth-modal",
-      //     })
-      //   );
-      // }
-
       toast.error(
         error.message === "Firebase: Error (auth/requires-recent-login)."
           ? "Tekrar Giriş Yapın"
@@ -393,7 +378,7 @@ export const reAuth = async (password) => {
 //DELETE PORTFOLIO
 export const deleteOrderHistory = async (id) => {
   try {
-    if(id){
+    if (id) {
       await deleteDoc(doc(db, "orders", id));
     }
   } catch (error) {
@@ -410,10 +395,10 @@ export const deleteOrderHistory = async (id) => {
 export const addOrderHistory = async (order) => {
   try {
     const result = await addDoc(collection(db, "orders"), order);
- 
+
     return result.id;
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
 
   await addDoc(collection(db, "orders"), order);

@@ -19,7 +19,7 @@ function News() {
         lang_ID: "10",
       },
       headers: {
-        "X-RapidAPI-Key": "889a157c0amshd3719aa86b5831fp1a003cjsn2463be379936",
+        "X-RapidAPI-Key": process.env.REACT_APP_NEWS_API_KEY,
         "X-RapidAPI-Host": "investing-cryptocurrency-markets.p.rapidapi.com",
       },
     };

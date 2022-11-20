@@ -75,14 +75,14 @@ export default function DeleteAccount() {
                 <p className="text-center m-3">
                   Bu işlem Tüm Verilerinizi Ve Hesabınızı Silecektir !
                 </p>
-                <div class="flex justify-center">
+                <div className="flex justify-center">
                   <div>
-                    <div class="form-floating mb-3  max-w-md">
+                    <div className="form-floating mb-3  max-w-md">
                       {/* <input
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                         type="password"
-                        class="form-control
+                        className="form-control
       block
     w-80
       px-5

@@ -1,8 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-// import Nouislider from "nouislider-react";
-// import "nouislider/distribute/nouislider.css";
-
 import { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
@@ -19,7 +16,6 @@ function SellCrypto({ cryptoID }) {
   const { user } = useSelector((state) => state.auth);
   const data = portfolyo.find((item) => item.coin === cryptoID);
 
-  console.log(data);
   let [isOpen, setIsOpen] = useState(false);
   const [coin, setCoin] = useState();
   const [amount, setAmount] = useState(0);
@@ -31,7 +27,10 @@ function SellCrypto({ cryptoID }) {
   };
 
   useEffect(() => {
-    fetchCoin();
+    if(cryptoID) {
+      fetchCoin();
+    }
+  
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,19 +77,6 @@ function SellCrypto({ cryptoID }) {
     closeModal();
   };
 
-  // const Slider = () => (
-  //   <Nouislider
-  //   accessibility
-  //   pips={{ mode: "count", values: 5 }}
-  //   clickablePips
-  //   start={0}
-  //   step={10}
-  //   range={{
-  //     min: 0,
-  //     max: 100
-  //   }}
-  // />
-  // );
 
   return (
     <div>
