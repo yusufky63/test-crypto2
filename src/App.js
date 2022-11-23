@@ -3,7 +3,7 @@ import Footer from "./components/Footer";
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
 import Profile from "./components/pages/user/Profile";
-import AllCoins from "./components/pages/AllCoins";
+import Markets from "./components/pages/Markets";
 import CryptoCard from "./components/pages/CryptoCard";
 import Header from "./components/Header";
 import React from "react";
@@ -11,13 +11,13 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Exchanges from "./components/pages/Exchanges";
 import Academia from "./components/pages/Academia";
 import Quiz from "./components/pages/Quiz";
-import AllCoinsWidget from "./components/Widgets/AllCoinsWidget";
+import AllCoinsWidget from "./components/utils/widgets/AllCoinsWidget";
 import Portfolyo from "./components/pages/user/Portfolyo";
 import Settings from "./components/pages/user/Settings";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
-
+import InternetConnection from "./components/utils/InternetConnection";
 function App() {
   const { user } = useSelector((state) => state.auth);
 
@@ -34,14 +34,15 @@ function App() {
         closeOnClick
         rtl={false}
       />
+      <InternetConnection />
       <AllCoinsWidget></AllCoinsWidget>
       {/* <TickerWidget></TickerWidget> */}
       <Header></Header>
 
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/allcoins" element={<AllCoins />} />
-        <Route path="/allcoins/:id" element={<CryptoCard />} />
+        <Route path="/markets" element={<Markets />} />
+        <Route path="/markets/:id" element={<CryptoCard />} />
         <Route path="/news" element={<News />} />
         <Route
           path="/profile"

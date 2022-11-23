@@ -47,7 +47,7 @@ function Header() {
                       <div>
                         <NavLink
                           className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
-                          to="/allcoins"
+                          to="/markets"
                         >
                           Piyasalar
                         </NavLink>
@@ -225,7 +225,7 @@ function Header() {
                     <Disclosure.Button
                       as={NavLink}
                       className="  text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                      to="/allcoins"
+                      to="/markets"
                     >
                       Piyasalar
                     </Disclosure.Button>

@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import CheckPositiveNumber from "../utils/CheckPositiveNumber";
+import CheckPositiveNumber from "../CheckPositiveNumber";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { CryptoState } from "../redux/CryptoContext";
-import { CoinList } from "../../services/Api";
-import WidgetSkeleton from "../utils/design/WidgetSkeleton";
+import { CryptoState } from "../../redux/CryptoContext";
+import { CoinList } from "../../../services/Api";
+import WidgetSkeleton from "../design/WidgetSkeleton";
 
 function AllCoinsWidget() {
   const [crypto, setCrypto] = useState([]);
@@ -51,7 +51,7 @@ function AllCoinsWidget() {
                   key={coin.id}
                   className="border p-1 bg-white"
                 >
-                  <NavLink to={`/allcoins/${coin.id}`}>
+                  <NavLink to={`/markets/${coin.id}`}>
                     <div className="card-body">
                       <div className="flex  items-center justify-center">
                         <img src={coin.image} width="20" alt="coin" />

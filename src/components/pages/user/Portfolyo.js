@@ -116,7 +116,7 @@ function Portfolyo() {
     const data = portfolyo.find((c) => c.coin === id);
     deletePortfolyo(data.id);
   };
-  //jjj
+
 
   return (
     <div className="portfolio-bg">
@@ -307,7 +307,7 @@ function Portfolyo() {
                                   </div>
                                   <div className="ml-4">
                                     <div className="  text-gray-900 font-bold ">
-                                      <Link to={`/allcoins/${item.id}`}>
+                                      <Link to={`/markets/${item.id}`}>
                                         {item.name}
                                         <span className="uppercase text-xs text-gray-500">
                                           {" "}

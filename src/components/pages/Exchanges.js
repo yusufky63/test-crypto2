@@ -7,7 +7,8 @@ function Exchanges() {
   const [exchanges, setExchanges] = useState([]);
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(50);
-
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
   const getExchanges = async () => {
     setLoading(true);
     const { data } = await axios.get(TopExchanges(count));
@@ -19,6 +20,14 @@ function Exchanges() {
     getExchanges();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
+
+  useEffect(() => {
+    setFilter(
+      exchanges.filter((exchange) =>
+        exchange.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, exchanges]);
 
   return (
     <div className="">
@@ -33,9 +42,18 @@ function Exchanges() {
           </span>
         </h1>
       </div>
-      <div className="flex justify-center mb-10">
+
+      <div className="flex justify-center">
+        <input
+          type="text"
+          placeholder="Arama"
+          className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-xl md:4/6 lg:w-3/6  xl:w-2/6 "
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
         <select
-          className="p-2 px-3 border border-gray-300 rounded-lg"
+          className="p-2 px-3   outline-none border rounded-lg shadow-xl"
           onChange={(e) => setCount(e.target.value)}
           value={count}
           name=""
@@ -46,11 +64,14 @@ function Exchanges() {
           <option value={100}>100</option>
         </select>
       </div>
+      <br />
+      <br />
+
       <ul>
         <div className=" flex justify-center  max-w-7xl mx-auto flex-wrap gap-8">
           {loading ? (
             <div role="status">
-               <h1 className="my-2">Yükleniyor...</h1>
+              <h1 className="my-2">Yükleniyor...</h1>
               <svg
                 className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
                 viewBox="0 0 100 101"
@@ -66,16 +87,17 @@ function Exchanges() {
                   fill="currentFill"
                 />
               </svg>
-            
             </div>
           ) : (
-            exchanges.map((exchange) => (
-              <li className="border relative" key={exchange.id}>
-                 <h1 className="absolute  mb-8 border px-4 py-1  rounded-r-full bg-yellow-400">{exchange.trust_score_rank}</h1>
-                <div className="p-1 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
+            filter &&
+            filter.map((exchange) => (
+              <li className="shadow-2xl  relative" key={exchange.id}>
+                <h1 className="absolute  mb-8 border px-4 py-1  rounded-r-full bg-yellow-400">
+                  {exchange.trust_score_rank}
+                </h1>
+                <div className="p-1 max-w-sm bg-white  border-gray-200 ">
                   <div className="flex justify-center mt-5">
                     {" "}
-                  
                     <img className="rounded-full" src={exchange.image} alt="" />
                   </div>
 

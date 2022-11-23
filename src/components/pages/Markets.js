@@ -5,7 +5,7 @@ import axios from "axios";
 import { Pagination, LinearProgress } from "@mui/material";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
-import { CoinList } from "../../services/Api";
+import { CoinList, GlobalData } from "../../services/Api";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
 import numberWithCommas from "../utils/convertCurrency";
 import { addCrypto, deleteCrypto } from "../../services/firebase";
@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import BuyCrypto from "../modal/BuyCrypto";
 import SellCrypto from "../modal/SellCrypto";
 
-function AllCoins() {
+function Markets() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
   const [coins, setCoins] = useState([]);
@@ -23,28 +23,37 @@ function AllCoins() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [filteredCoins, setFilteredCoins] = useState([]);
+  const [globalData, setGlobalData] = useState([]);
+  const [count, setCount] = useState(50);
+  const currencyEdit = currency.toLowerCase();
 
-
+  let err = false;
   const fetchCoins = async () => {
-    setLoading(true);
-    const { data } = await axios.get(CoinList(currency, 100));
+    const { data } = await axios
+      .get(CoinList(currency, count))
+      .catch((err) => (err = true));
     setCoins(data);
-    setLoading(false);
+  };
+  const fetchGlobalData = async () => {
+    const { data } = await axios.get(GlobalData());
+    setGlobalData(data.data);
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchCoins();
+    fetchGlobalData();
+    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency]);
+  }, [count, currency]);
 
-  
   useEffect(() => {
     setFilteredCoins(
       coins.filter((coin) =>
         coin.name.toLowerCase().includes(search.toLowerCase())
       )
     );
-  }, [coins, search]);
+  }, [count, coins, search]);
 
   const handleSavedCoin = (e, id) => {
     e.preventDefault();
@@ -71,27 +80,96 @@ function AllCoins() {
       return <AiOutlineHeart fontSize={25} color="black"></AiOutlineHeart>;
     }
   }
-
+  console.log(globalData);
   return (
     <div>
       <>
-        <header>
-          <h1 className="text-3xl text-center  text-gray-800 my-8">
-            TOP <b>100</b>  COIN
-          </h1>
+        <div className=" px-6  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
+          {err && (
+            <span className="text-red-500 flex justify-end">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"
+                ></path>
+              </svg>
+              <span className="ml-2"> Ağ Hatası</span>
+            </span>
+          )}
+          <header className="flex flex-col justify-center">
+            <div>
+              {" "}
+              <h1 className="text-4xl text-left my-10  p-3 shadow-md rounded-lg flex justify-between items-center ">
+                Piyasa
+                {globalData.active_cryptocurrencies && (
+                  <div className=" whitespace-nowrap justify-around text-xs font-normal text-gray-600 mt-2 hidden md:block">
+                    <span className="p-1">
+                      Coinler :{" "}
+                      <span className="text-indigo-500">
+                        {" "}
+                        {globalData.active_cryptocurrencies}{" "}
+                      </span>
+                    </span>
+                    <span className="p-1">
+                      Borsalar :{" "}
+                      <span className="text-indigo-500">
+                        {globalData.ended_icos}
+                      </span>
+                    </span>
+                    <span className="p-1">
+                      Piyasa Değeri :
+                      <span className="text-indigo-500">
+                        {" "}
+                        {symbol}
+                        {numberWithCommas(
+                          globalData.total_market_cap[currencyEdit]
+                        )}
+                      </span>
+                    </span>
+                    <span className="p-2">
+                      24 Saatlik Hacim :{" "}
+                      <span className="text-indigo-500">
+                        {symbol}
+                        {numberWithCommas(
+                          globalData.total_volume[currencyEdit]
+                        )}
+                      </span>
+                    </span>
+                  </div>
+                )}
+              </h1>
+            </div>
 
-          <div>
-            <input
-              type="text"
-              placeholder="Arama"
-              className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-lg md:4/6 lg:w-3/6  xl:w-2/6  mx-auto"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-        </header>
-
-        <div className=" px-4  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
+            <div className="flex">
+              <input
+                type="text"
+                placeholder="Arama"
+                className=" w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-lg md:4/6 lg:w-3/6  xl:w-2/6  mx-auto"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <select
+                className="p-2 px-3  justify-end  outline-none border rounded-lg shadow-xl"
+                onChange={(e) => setCount(e.target.value)}
+                value={count}
+                name=""
+                id=""
+              >
+                <option value={10}>10</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+                <option value={250}>250</option>
+              </select>
+            </div>
+          </header>
           <div className="mt-8 flex flex-col">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -105,43 +183,41 @@ function AllCoins() {
                           <tr className="text-center">
                             <th
                               scope="col"
-                              className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 0"
-                            >
-                              Favori
-                            </th>
-                            <th
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900 "
+                            ></th>
+                            {/* <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 "
                             >
                               Rank
-                            </th>
+                            </th> */}
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5 text-left pl-8 text-sm font-semibold text-gray-900"
                             >
                               Coin
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Fiyat
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
-                              ( 24S) Değişim
+                              24 Saatlik Değişim
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Piyasa Değeri
                             </th>
                             <th
                               scope="col"
-                              className="px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Toplam Arz
                             </th>
@@ -174,23 +250,23 @@ function AllCoins() {
                                 >
                                   {controlFavorites(item.id)}
                                 </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {/* <td className="whitespace-nowrap px-1 py-4 text-xs text-gray-500">
                                   <div className="text-gray-900">
                                     {item.market_cap_rank}
                                   </div>
-                                </td>
+                                </td> */}
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                   <div className="flex items-center">
-                                    <div className="h-10 w-10 flex-shrink-0">
+                                    <div className="h-8 w-8 flex-shrink-0">
                                       <img
-                                        className="h-10 w-10 rounded-full"
+                                        className="h-8 w-8 rounded-full"
                                         src={item.image}
                                         alt=""
                                       />
                                     </div>
                                     <div className="ml-4">
-                                      <div className="  text-gray-900 font-bold ">
-                                        <Link to={`/allcoins/${item.id}`}>
+                                      <div className=" text-gray-900 font-bold ">
+                                        <Link to={`/markets/${item.id}`}>
                                           {item.name}
                                           <span className="uppercase text-xs text-gray-500">
                                             {" "}
@@ -284,4 +360,4 @@ function AllCoins() {
   );
 }
 
-export default AllCoins;
+export default Markets;

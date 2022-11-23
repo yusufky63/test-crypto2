@@ -160,7 +160,7 @@ export default function Favorites() {
                               </div>
                               <div className="ml-4">
                                 <div className="  text-gray-900 font-bold ">
-                                  <Link to={`/allcoins/${item.id}`}>
+                                  <Link to={`/markets/${item.id}`}>
                                     {item.name}
                                     <span className="uppercase text-xs text-gray-500">
                                       {" "}

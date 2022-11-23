@@ -29,7 +29,7 @@ function TrendCoin({ crypto, symbol }) {
                     alt="coin"
                     className="card-img mr-2"
                   />
-                  <NavLink to={`/allcoins/${coin.id}`}>
+                  <NavLink to={`/markets/${coin.id}`}>
                     <h1 className="sm:text-sm md:text-base lg:text-lg xl:text-lg text-sm">
                       {" "}
                       {coin.name}

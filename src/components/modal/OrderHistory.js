@@ -2,11 +2,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import OrderHistoryDelete from "../modal/OrderHistoryDelete"
+import { Pagination } from "@mui/material";
+import OrderHistoryDelete from "../modal/OrderHistoryDelete";
 export default function OrderHistory() {
   let [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [page, setPage] = useState(1);
   const { order } = useSelector((state) => state.orders);
   useEffect(() => {
     setLoading(true);
@@ -14,7 +15,7 @@ export default function OrderHistory() {
       setLoading(false);
     }, 1000);
   }, [order]);
-  
+
   console.log(order);
   function closeModal() {
     setIsOpen(false);
@@ -128,7 +129,6 @@ export default function OrderHistory() {
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5   md:rounded-lg">
                           {loading ? (
                             <div className="flex  justify-center" role="status">
-                              
                               <svg
                                 className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
                                 viewBox="0 0 100 101"
@@ -193,7 +193,9 @@ export default function OrderHistory() {
                                 </thead>
 
                                 <tbody className=" divide-y divide-gray-200 bg-white  ">
-                                  {order.map((item) => (
+                                  {order
+                                    .slice((page - 1) * 10, (page - 1) * 10 + 10)
+                                    .map((item) => (
                                     <tr
                                       id="priceT"
                                       className="hover:bg-gray-100 hover:px-10 text-center"
@@ -246,9 +248,27 @@ export default function OrderHistory() {
                                   ))}
                                 </tbody>
                               </table>
+                              <Pagination
+                                count={Number(
+                                  (order.length / 10).toFixed(0)
+                                )}
+                                variant="outlined"
+                                shape="rounded"
+                                color="warning"
+                                style={{
+                                  padding: 30,
+
+                                  display: "flex",
+                                  justifyContent: "center",
+                                }}
+                                onChange={(_, value) => {
+                                  setPage(value);
+                                  window.scroll(0, 450);
+                                }}
+                              />
                               <div className="flex justify-end items-center">
                                 {" "}
-                               <OrderHistoryDelete/>
+                                <OrderHistoryDelete />
                               </div>
                             </>
                           )}
