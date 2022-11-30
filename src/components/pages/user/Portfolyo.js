@@ -7,11 +7,11 @@ import { SingleCoin } from "../../../services/Api";
 import { deletePortfolyo } from "../../../services/firebase";
 import BuyCrypto from "../../modal/BuyCrypto";
 import SellCrypto from "../../modal/SellCrypto";
-import { Menu } from "@headlessui/react";
+// import { Menu } from "@headlessui/react";
 import Favorites from "./Favorites";
 import PortfolioChart from "../../utils/PortfolioChart";
 import OrderHistory from "../../modal/OrderHistory";
-import EditPortfolyoCrypto from "../../modal/EditPortfolyoCrypto";
+// import EditPortfolyoCrypto from "../../modal/EditPortfolyoCrypto";
 function Portfolyo() {
   const { portfolyo } = useSelector((state) => state.portfolios);
 
@@ -117,7 +117,6 @@ function Portfolyo() {
     deletePortfolyo(data.id);
   };
 
-
   return (
     <div className="portfolio-bg">
       {" "}
@@ -144,7 +143,7 @@ function Portfolyo() {
               )}
             </span>
             <>
-              <Menu as="div" className=" relative ml-3 ">
+              {/* <Menu as="div" className=" relative ml-3 ">
                 <Menu.Button className="flex rounded-full text-sm ">
                   <span className="sr-only">Open user menu</span>
 
@@ -172,7 +171,7 @@ function Portfolyo() {
                       Düzenle
                     </a>
                   </Menu.Item> */}
-                  <Menu.Item>
+                  {/* <Menu.Item>
                     <a
                       // onClick={(e) => handleDelete(item.id)}
                       className="pl-5 text-black-300  hover:bg-red-300 hover:text-red-900 block px-3 py-2 rounded-md text-base font-medium bg-white"
@@ -181,7 +180,7 @@ function Portfolyo() {
                     </a>
                   </Menu.Item>
                 </Menu.Items>{" "}
-              </Menu>
+              </Menu>  */}
             </>
           </div>
         }
@@ -382,7 +381,7 @@ function Portfolyo() {
                               </td>
                               <td className="  ">
                                 <div className="flex flex-col">
-                                  <EditPortfolyoCrypto cryptoID={item.id} />
+                                  {/* <EditPortfolyoCrypto cryptoID={item.id} /> */}
 
                                   <a
                                     onClick={(e) => handleDelete(item.id)}
