@@ -142,46 +142,7 @@ function Portfolyo() {
                 <span className="text-red-500">{totalRate.toFixed(2)}$</span>
               )}
             </span>
-            <>
-              {/* <Menu as="div" className=" relative ml-3 ">
-                <Menu.Button className="flex rounded-full text-sm ">
-                  <span className="sr-only">Open user menu</span>
-
-                  <div className="">
-                    {" "}
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="gray"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                      ></path>
-                    </svg>
-                  </div>
-                </Menu.Button>
-                <Menu.Items className=" text-left absolute right-5 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  {/* <Menu.Item>
-                    <a className="pl-5 text-black-300 hover:bg-gray-900 hover:text-white block px-1 py-2 rounded-md text-base font-medium bg-white">
-                      Düzenle
-                    </a>
-                  </Menu.Item> */}
-                  {/* <Menu.Item>
-                    <a
-                      // onClick={(e) => handleDelete(item.id)}
-                      className="pl-5 text-black-300  hover:bg-red-300 hover:text-red-900 block px-3 py-2 rounded-md text-base font-medium bg-white"
-                    >
-                      Sıfırla
-                    </a>
-                  </Menu.Item>
-                </Menu.Items>{" "}
-              </Menu>  */}
-            </>
+        
           </div>
         }
         {portfolyo.length > 0 ? (

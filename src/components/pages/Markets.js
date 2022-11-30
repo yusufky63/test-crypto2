@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import BuyCrypto from "../modal/BuyCrypto";
 import SellCrypto from "../modal/SellCrypto";
+import { useMemo } from "react";
 
 function Markets() {
   const { user } = useSelector((state) => state.auth);
@@ -22,38 +23,41 @@ function Markets() {
   const { currency, symbol } = CryptoState();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [filteredCoins, setFilteredCoins] = useState([]);
+  // const [filteredCoins, setFilteredCoins] = useState([]);
   const [globalData, setGlobalData] = useState([]);
   const [count, setCount] = useState(50);
   const currencyEdit = currency.toLowerCase();
+  const [err, setErr] = useState(false);
 
-  let err = false;
   const fetchCoins = async () => {
     const { data } = await axios
       .get(CoinList(currency, count))
-      .catch((err) => (err = true));
+      .catch((err) => setErr(true));
     setCoins(data);
+    setErr(false);
   };
   const fetchGlobalData = async () => {
     const { data } = await axios.get(GlobalData());
     setGlobalData(data.data);
   };
+  useEffect(() => {
+    fetchGlobalData();
+  }, [globalData]);
 
   useEffect(() => {
     setLoading(true);
     fetchCoins();
-    fetchGlobalData();
     setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count, currency]);
+  }, [count, currency, page]);
 
-  useEffect(() => {
-    setFilteredCoins(
-      coins.filter((coin) =>
+  const filteredCoins = useMemo(() => {
+    if (coins) {
+      return coins.filter((coin) =>
         coin.name.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [count, coins, search]);
+      );
+    }
+  }, [coins, search]);
 
   const handleSavedCoin = (e, id) => {
     e.preventDefault();
@@ -80,13 +84,17 @@ function Markets() {
       return <AiOutlineHeart fontSize={25} color="black"></AiOutlineHeart>;
     }
   }
-  console.log(globalData);
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <div>
       <>
         <div className=" px-6  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
           {err && (
-            <span className="text-red-500 flex justify-end">
+            <span className=" items-center text-yellow-500 flex justify-end">
               <svg
                 class="w-6 h-6"
                 fill="none"
@@ -101,7 +109,26 @@ function Markets() {
                   d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"
                 ></path>
               </svg>
-              <span className="ml-2"> Ağ Hatası</span>
+              <span className="m-2">Veri Hatası Sayfayı Yenileyin ! </span>
+              <button
+                onClick={handleRefresh}
+                className="border text-green-500 p-2 shadow-md rounded-lg active:bg-gray-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              </button>
             </span>
           )}
           <header className="flex flex-col justify-center">
@@ -237,117 +264,125 @@ function Markets() {
                         </thead>
 
                         <tbody className=" divide-y divide-gray-200 bg-white ">
-                          {filteredCoins
-                            .slice((page - 1) * 20, (page - 1) * 20 + 20)
-                            .map((item) => (
-                              <tr
-                                id="priceT"
-                                className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 "
-                                key={item.id}
-                              >
-                                <td
-                                  onClick={(e) => handleSavedCoin(e, item.id)}
+                          {filteredCoins &&
+                            filteredCoins
+                              .slice((page - 1) * 20, (page - 1) * 20 + 20)
+                              .map((item) => (
+                                <tr
+                                  id="priceT"
+                                  className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 "
+                                  key={item.id}
                                 >
-                                  {controlFavorites(item.id)}
-                                </td>
-                                {/* <td className="whitespace-nowrap px-1 py-4 text-xs text-gray-500">
+                                  <td
+                                    onClick={(e) => handleSavedCoin(e, item.id)}
+                                  >
+                                    {controlFavorites(item.id)}
+                                  </td>
+                                  {/* <td className="whitespace-nowrap px-1 py-4 text-xs text-gray-500">
                                   <div className="text-gray-900">
                                     {item.market_cap_rank}
                                   </div>
                                 </td> */}
-                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                  <div className="flex items-center">
-                                    <div className="h-8 w-8 flex-shrink-0">
-                                      <img
-                                        className="h-8 w-8 rounded-full"
-                                        src={item.image}
-                                        alt=""
-                                      />
-                                    </div>
-                                    <div className="ml-4">
-                                      <div className=" text-gray-900 font-bold ">
-                                        <Link to={`/markets/${item.id}`}>
-                                          {item.name}
-                                          <span className="uppercase text-xs text-gray-500">
-                                            {" "}
-                                            {item.symbol}
-                                          </span>
-                                        </Link>
+                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div className="flex items-center">
+                                      <div className="h-8 w-8 flex-shrink-0">
+                                        <img
+                                          className="h-8 w-8 rounded-full"
+                                          src={item.image}
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div className="ml-4">
+                                        <div className=" text-gray-900 font-bold ">
+                                          <Link to={`/markets/${item.id}`}>
+                                            {item.name}
+                                            <span className="uppercase text-xs text-gray-500">
+                                              {" "}
+                                              {item.symbol}
+                                            </span>
+                                          </Link>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </td>
-                                <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
-                                  <div className="">
-                                    {" "}
-                                    {symbol}
-                                    {item.current_price}
-                                  </div>
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                  <div className="text-gray-900">
-                                    <CheckPositiveNumber
-                                      number={item.price_change_percentage_24h}
-                                    />
-                                  </div>
-                                </td>
-                                <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                  <div className="text-gray-900">
-                                    {symbol}
-                                    {numberWithCommas(item.market_cap)}
-                                  </div>
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                  <div className="text-gray-900">
-                                    {numberWithCommas(item.total_supply)}
-                                  </div>
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                  <div className="text-gray-900">
-                                    {symbol}
-                                    {numberWithCommas(item.total_volume)}
-                                  </div>
-                                </td>
-                                <td className="px-10 mx-20 py-4">
-                                  <Sparklines
-                                    svgHeight={30}
-                                    width={50}
-                                    height={90}
-                                    margin={-30}
-                                    data={item.sparkline_in_7d.price}
-                                  >
-                                    <SparklinesLine style={{ fill: "" }} />
-                                    <SparklinesSpots />
-                                  </Sparklines>
-                                </td>
-                                <td className="p-1">
-                                  <button className="border bg-white rounded-lg my-1 p-1 px-5 w-full">
-                                    <BuyCrypto cryptoID={item.id}></BuyCrypto>
-                                  </button>
-                                  <button className="border bg-white rounded-lg p-1 my-1 px-5 w-full">
-                                    <SellCrypto cryptoID={item.id}></SellCrypto>
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
+                                  </td>
+                                  <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
+                                    <div className="">
+                                      {" "}
+                                      {symbol}
+                                      {item.current_price}
+                                    </div>
+                                  </td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    <div className="text-gray-900">
+                                      <CheckPositiveNumber
+                                        number={
+                                          item.price_change_percentage_24h
+                                        }
+                                      />
+                                    </div>
+                                  </td>
+                                  <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    <div className="text-gray-900">
+                                      {symbol}
+                                      {numberWithCommas(item.market_cap)}
+                                    </div>
+                                  </td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    <div className="text-gray-900">
+                                      {numberWithCommas(item.total_supply)}
+                                    </div>
+                                  </td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    <div className="text-gray-900">
+                                      {symbol}
+                                      {numberWithCommas(item.total_volume)}
+                                    </div>
+                                  </td>
+                                  <td className="px-10 mx-20 py-4">
+                                    <Sparklines
+                                      svgHeight={30}
+                                      width={50}
+                                      height={90}
+                                      margin={-30}
+                                      data={item.sparkline_in_7d.price}
+                                    >
+                                      <SparklinesLine style={{ fill: "" }} />
+                                      <SparklinesSpots />
+                                    </Sparklines>
+                                  </td>
+                                  <td className="p-1">
+                                    <button className="border bg-white rounded-lg my-1 p-1 px-5 w-full">
+                                      <BuyCrypto cryptoID={item.id}></BuyCrypto>
+                                    </button>
+                                    <button className="border bg-white rounded-lg p-1 my-1 px-5 w-full">
+                                      <SellCrypto
+                                        cryptoID={item.id}
+                                      ></SellCrypto>
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))}
                         </tbody>
                       </table>
-                      <Pagination
-                        count={Number((filteredCoins?.length / 20).toFixed(0))}
-                        variant="outlined"
-                        shape="rounded"
-                        color="warning"
-                        style={{
-                          padding: 30,
-
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                        onChange={(_, value) => {
-                          setPage(value);
-                          window.scroll(0, 450);
-                        }}
-                      />
+                      {filteredCoins && (
+                        <Pagination
+                          count={Number(
+                            (filteredCoins?.length / 20).toFixed(0)
+                          )}
+                          variant="outlined"
+                          shape="rounded"
+                          color="warning"
+                          style={{
+                            padding: 30,
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                          onChange={(_, value) => {
+                            setPage(value);
+                            window.scroll(0, 450);
+                          }}
+                        />
+                      )}
                     </>
                   )}
                 </div>
