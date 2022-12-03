@@ -12,6 +12,6 @@ export const orderHistorySlice = createSlice({
   },
 });
 
-export const orde = (state) => state.orders.order;
+
 
 export const { setOrder} = orderHistorySlice.actions;

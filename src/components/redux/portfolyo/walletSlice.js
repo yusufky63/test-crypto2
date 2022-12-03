@@ -12,6 +12,4 @@ export const walletSlice = createSlice({
   },
 });
 
-export const walle = (state) => state.wallet.wallet;
-
 export const { setWallet} = walletSlice.actions;

@@ -17,7 +17,6 @@ function Portfolyo() {
   const [wallet, setWallet] = useState([]);
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [chart, setChart] = useState([]);
   const [total, setTotal] = useState(0);
   const [totalRate, setTotalRate] = useState(0);
   const [rate, setRate] = useState([0]);
@@ -25,11 +24,10 @@ function Portfolyo() {
   const fetchCoins = () => {
     setLoading(true);
 
-    // eslint-disable-next-line array-callback-return
     portfolyo.map(async (name) => {
       const { data } = await axios(SingleCoin(name.coin));
-      let s = { ...name, ...data };
-      console.log(s);
+      let mergeData = { ...name, ...data };
+
       setCoins((prev) => [...prev, data]);
       setWallet((prev) => [
         ...prev,
@@ -43,8 +41,7 @@ function Portfolyo() {
         ),
       ]);
 
-      setChart(name);
-      setInfo((prev) => [...prev, s]);
+      setInfo((prev) => [...prev, mergeData]);
     });
 
     setLoading(false);
@@ -61,11 +58,12 @@ function Portfolyo() {
     setTotal(0);
     setTotalRate(0);
     setWallet([]);
-    setChart([]);
     setCoins([]);
+    
     fetchCoins();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portfolyo]);
 
   const handleDelete = (id) => {
@@ -76,9 +74,7 @@ function Portfolyo() {
 
   return (
     <div className="portfolio-bg">
-    
       <div className="pt-5 max-w-7xl mx-auto relative mt-10">
-      
         {
           <div className="w-full hover:shadow-xl border shadow-md p-5 rounded-lg font-bold flex items-center justify-between">
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
@@ -107,7 +103,7 @@ function Portfolyo() {
               <OrderHistory />
             </div>
             <div className="flex justify-center">
-              <PortfolioChart chart={chart} width={50} />
+              <PortfolioChart chart={info} width={50} />
             </div>
           </>
         ) : (
@@ -257,8 +253,6 @@ function Portfolyo() {
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {" "}
-                                  
-                                  
                                   {(item.market_data.current_price.usd -
                                     item.coin_price_usd) *
                                     item.buy_total_crypto >=
@@ -285,12 +279,14 @@ function Portfolyo() {
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
                                 <div className="text-sm ">
-                                {
+                                  {
                                     <CheckPositiveNumber
-                                      number={((item.market_data.current_price.usd -
-                                    item.coin_price_usd) *
-                                    100) /
-                                    item.coin_price_usd }
+                                      number={
+                                        ((item.market_data.current_price.usd -
+                                          item.coin_price_usd) *
+                                          100) /
+                                        item.coin_price_usd
+                                      }
                                     />
                                   }
                                 </div>

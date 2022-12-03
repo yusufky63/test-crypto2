@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { addCrypto, deleteCrypto } from "../../../services/firebase";
 import numberWithCommas from "../../utils/convertCurrency";
 import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
@@ -10,7 +9,7 @@ import { CryptoState } from "../../redux/CryptoContext";
 import { SingleCoin } from "../../../services/Api";
 import BuyCrypto from "../../modal/BuyCrypto";
 import SellCrypto from "../../modal/SellCrypto";
-
+import AddFavorites from "../../utils/AddFavorites";
 export default function Favorites() {
   const { currency, symbol } = CryptoState();
   const { user } = useSelector((state) => state.auth);
@@ -22,7 +21,6 @@ export default function Favorites() {
   const fetchCoins = () => {
     setLoading(true);
     favori.map(async (name) => {
-      console.log(name.name);
       await axios
         .get(SingleCoin(name.name))
         .then((res) => {
@@ -51,20 +49,11 @@ export default function Favorites() {
       deleteCrypto(data.id);
     }
   };
-  function controlFavorites(id) {
-    const data = favori.find((item) => item.name === id);
-    if (data) {
-      return <AiTwotoneHeart fontSize={30} color="red"></AiTwotoneHeart>;
-    } else {
-      return <AiOutlineHeart fontSize={30} color="black"></AiOutlineHeart>;
-    }
-  }
 
   const currencyEdit = currency.toLowerCase();
   return (
     <div className="">
       {" "}
-    
       <div className="px-12 mt-4 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -100,7 +89,7 @@ export default function Favorites() {
                         >
                           Favori
                         </th>
-                  
+
                         <th
                           scope="col"
                           className="px-1  py-3.5  text-sm font-semibold text-gray-900"
@@ -142,7 +131,7 @@ export default function Favorites() {
                           key={item.id}
                         >
                           <td onClick={(e) => handleSavedCoin(e, item.id)}>
-                            {controlFavorites(item.id)}
+                            <AddFavorites id={item.id} />
                           </td>
                           {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
@@ -187,7 +176,7 @@ export default function Favorites() {
                               />
                             </div>
                           </td>
-                         
+
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
                               {symbol}

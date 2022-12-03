@@ -1,41 +1,27 @@
 import { Pie } from "@ant-design/plots";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { SingleCoin } from "../../services/Api";
 
-const PortfolioChart = () => {
+const PortfolioChart = ({ chart }) => {
   const { portfolyo } = useSelector((state) => state.portfolios);
 
-  console.log("portfolyo", portfolyo);
   const [data, setData] = useState([]);
   useEffect(() => {
     setData([]);
-   
-    fetchCoins();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [portfolyo]);
-
-  const fetchCoins = () => {
-    // eslint-disable-next-line array-callback-return
-    portfolyo.map(async (name) => {
-      setData([]);
-
-      await axios
-        .get(SingleCoin(name.coin))
-        .then((res) => {
-          setData((prev) => [
-            ...prev,
-            {
-              value:
-                name.buy_total_crypto * res.data.market_data.current_price.usd,
-              type: name.coin.toUpperCase(),
-            },
-          ]);
-        })
-        .catch((err) => console.log(err));
-    });
-  };
+    console.log("chart", chart);
+    if (chart) {
+      // eslint-disable-next-line array-callback-return
+      chart.map((coin) => {
+        setData((prev) => [
+          ...prev,
+          {
+            value: coin.buy_total_crypto * coin.market_data.current_price.usd,
+            type: coin.coin.toUpperCase(),
+          },
+        ]);
+      });
+    }
+  }, [portfolyo, chart]);
 
   console.log(data);
   const config = {

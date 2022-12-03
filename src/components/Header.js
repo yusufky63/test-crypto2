@@ -37,8 +37,8 @@ function Header() {
                       <div>
                         {" "}
                         <NavLink
-                      end 
-                           style={({ isActive }) => ({
+                          end
+                          style={({ isActive }) => ({
                             textDecoration: isActive ? "underline 4px" : "none",
                             textUnderlineOffset: isActive ? "8px" : "none",
                           })}
@@ -102,7 +102,10 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({ isActive }) => ({ textDecoration: isActive ? "underline 4px" : "gray",textUnderlineOffset: isActive ? "8px" : "gray"  })}
+                          style={({ isActive }) => ({
+                            textDecoration: isActive ? "underline 4px" : "gray",
+                            textUnderlineOffset: isActive ? "8px" : "gray",
+                          })}
                           className="mx-2  text-xl  mr-10 text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/quiz"
                         >

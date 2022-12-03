@@ -97,12 +97,12 @@ function CryptoCard() {
                 </h2>
               </div>
               <br />
-              <div className="flex justify-center ">
+              <div className="flex justify-center items-center">
                 <h1 className="text-2xl font-bold mx-2">
                   {symbol}
                   {coin.market_data.current_price[currencyEdit]}
                 </h1>
-                <span className="font-bold ">
+                <span className="font-bold mt-1">
                   {" "}
                   <CheckPositiveNumber
                     number={

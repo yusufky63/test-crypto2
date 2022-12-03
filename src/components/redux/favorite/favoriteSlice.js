@@ -12,6 +12,6 @@ export const favoritesSlice = createSlice({
   },
 });
 
-export const fav = (state) => state.favorites.favori;
+
 
 export const { setFavorites } = favoritesSlice.actions;

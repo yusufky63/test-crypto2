@@ -12,6 +12,6 @@ export const portfolyoSlice = createSlice({
   },
 });
 
-export const portf = (state) => state.portfolios.portfolyo;
+
 
 export const { setPortfolyo } = portfolyoSlice.actions;

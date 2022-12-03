@@ -4,7 +4,6 @@ import { CryptoState } from "../redux/CryptoContext";
 import axios from "axios";
 import { Pagination, LinearProgress } from "@mui/material";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
-import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { CoinList, GlobalData } from "../../services/Api";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
 import numberWithCommas from "../utils/convertCurrency";
@@ -15,6 +14,8 @@ import BuyCrypto from "../modal/BuyCrypto";
 import SellCrypto from "../modal/SellCrypto";
 import { useMemo } from "react";
 
+import AddFavorites from "../utils/AddFavorites";
+import MarketsDataError from "../utils/MarketsDataError";
 function Markets() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
@@ -76,61 +77,11 @@ function Markets() {
     }
   };
 
-  function controlFavorites(id) {
-    const data = favori.find((item) => item.name === id);
-    if (data) {
-      return <AiTwotoneHeart fontSize={25} color="red"></AiTwotoneHeart>;
-    } else {
-      return <AiOutlineHeart fontSize={25} color="black"></AiOutlineHeart>;
-    }
-  }
-
-  const handleRefresh = () => {
-    window.location.reload();
-  };
-
   return (
     <div>
       <>
         <div className=" px-6  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
-          {err && (
-            <span className=" items-center text-yellow-500 flex justify-end">
-              <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"
-                ></path>
-              </svg>
-              <span className="m-2">Veri Hatası Sayfayı Yenileyin ! </span>
-              <button
-                onClick={handleRefresh}
-                className="border text-green-500 p-2 shadow-md rounded-lg active:bg-gray-300"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                  />
-                </svg>
-              </button>
-            </span>
-          )}
+          {err && <MarketsDataError />}
           <header className="flex flex-col justify-center">
             <div>
               {" "}
@@ -276,7 +227,7 @@ function Markets() {
                                   <td
                                     onClick={(e) => handleSavedCoin(e, item.id)}
                                   >
-                                    {controlFavorites(item.id)}
+                                    <AddFavorites id={item.id} />
                                   </td>
                                   {/* <td className="whitespace-nowrap px-1 py-4 text-xs text-gray-500">
                                   <div className="text-gray-900">
