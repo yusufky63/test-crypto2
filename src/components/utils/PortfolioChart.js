@@ -4,22 +4,23 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
 
-const PortfolioChart = ({ chart }) => {
+const PortfolioChart = () => {
   const { portfolyo } = useSelector((state) => state.portfolios);
-  console.log("chart", chart);
+
   console.log("portfolyo", portfolyo);
   const [data, setData] = useState([]);
   useEffect(() => {
     setData([]);
+   
     fetchCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart]);
+  }, [portfolyo]);
 
   const fetchCoins = () => {
     // eslint-disable-next-line array-callback-return
     portfolyo.map(async (name) => {
       setData([]);
-      
+
       await axios
         .get(SingleCoin(name.coin))
         .then((res) => {
@@ -40,7 +41,7 @@ const PortfolioChart = ({ chart }) => {
   const config = {
     appendPadding: 10,
     data,
-    
+
     angleField: "value",
     colorField: "type",
     radius: 0.8,

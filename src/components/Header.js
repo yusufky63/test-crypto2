@@ -37,7 +37,12 @@ function Header() {
                       <div>
                         {" "}
                         <NavLink
-                          className="mx-2 text-xl text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
+                      end 
+                           style={({ isActive }) => ({
+                            textDecoration: isActive ? "underline 4px" : "none",
+                            textUnderlineOffset: isActive ? "8px" : "none",
+                          })}
+                          className="mx-2 text-xl text-black  hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
                           to="/"
                         >
                           Ana Sayfa
@@ -46,6 +51,10 @@ function Header() {
 
                       <div>
                         <NavLink
+                          style={({ isActive }) => ({
+                            textDecoration: isActive ? "underline 4px" : "none",
+                            textUnderlineOffset: isActive ? "8px" : "none",
+                          })}
                           className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/markets"
                         >
@@ -54,6 +63,10 @@ function Header() {
                       </div>
                       <div>
                         <NavLink
+                          style={({ isActive }) => ({
+                            textDecoration: isActive ? "underline 4px" : "gray",
+                            textUnderlineOffset: isActive ? "8px" : "gray",
+                          })}
                           className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/exchanges"
                         >
@@ -63,6 +76,10 @@ function Header() {
 
                       <div>
                         <NavLink
+                          style={({ isActive }) => ({
+                            textDecoration: isActive ? "underline 4px" : "gray",
+                            textUnderlineOffset: isActive ? "8px" : "gray",
+                          })}
                           className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/news"
                         >
@@ -72,6 +89,10 @@ function Header() {
 
                       <div>
                         <NavLink
+                          style={({ isActive }) => ({
+                            textDecoration: isActive ? "underline 4px" : "gray",
+                            textUnderlineOffset: isActive ? "8px" : "gray",
+                          })}
                           className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/academia"
                         >
@@ -81,6 +102,7 @@ function Header() {
 
                       <div>
                         <NavLink
+                          style={({ isActive }) => ({ textDecoration: isActive ? "underline 4px" : "gray",textUnderlineOffset: isActive ? "8px" : "gray"  })}
                           className="mx-2  text-xl  mr-10 text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/quiz"
                         >

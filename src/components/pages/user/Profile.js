@@ -129,14 +129,22 @@ function Profile() {
                 />
               </h1>
               {!user.emailVerified ? (
-                <button
-                  onClick={handleEmailVerified}
-                  className="border p-2 mt-1 text-red-500"
-                >
-                  Emaili Doğrula
-                </button>
+                <div className="flex justify-end">
+                  {" "}
+                  <button
+                    onClick={handleEmailVerified}
+                    className=" border p-2 mt-1 shadow-md rounded-lg hover:bg-gray-200 text-red-500"
+                  >
+                    Emaili Doğrula
+                  </button>
+                </div>
               ) : (
-                <span className="text-green-500">Email Doğrulandı</span>
+                <div className="flex justify-end">
+                  {" "}
+                  <span className="border p-2 mt-1 shadow-md rounded-lg text-green-500">
+                    Email Doğrulandı
+                  </span>
+                </div>
               )}
             </div>
             <br />
@@ -200,13 +208,13 @@ function Profile() {
             <div className="flex justify-between mt-5">
               <button
                 onClick={handleUpdate}
-                className="border text-blue-700 rounded-lg hover:bg-blue-200 p-3 px-8"
+                className="border text-blue-700 shadow-md rounded-lg hover:bg-blue-200 p-3 px-8"
               >
                 Güncelle
               </button>
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="border rounded-lg text-red-600 hover:bg-red-200 p-3 px-8"
+                className="border shadow-md rounded-lg text-red-600 hover:bg-red-200 p-3 px-8"
               >
                 <DeleteAccount />
               </button>

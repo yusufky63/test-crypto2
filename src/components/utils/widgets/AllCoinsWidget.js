@@ -43,13 +43,13 @@ function AllCoinsWidget() {
             responsive={responsive}
           >
             {loading ? (
-              <WidgetSkeleton></WidgetSkeleton>
+              <WidgetSkeleton />
             ) : (
               crypto.map((coin) => (
                 <div
                   data-value={coin.market_cap_rank}
                   key={coin.id}
-                  className="border p-1 bg-white"
+                  className="border py-2 bg-white"
                 >
                   <NavLink to={`/markets/${coin.id}`}>
                     <div className="card-body">
@@ -58,7 +58,7 @@ function AllCoinsWidget() {
                         <h1 className="ml-1 text-sm text-gray-500 uppercase">
                           {coin.symbol}
                         </h1>
-                        <h5 className="mx-3 card-title ">
+                        <h5 className="mx-3 card-title text-sm">
                           {symbol}
                           {coin.current_price}
                         </h5>{" "}

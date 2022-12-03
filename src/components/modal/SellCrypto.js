@@ -27,12 +27,11 @@ function SellCrypto({ cryptoID }) {
   };
 
   useEffect(() => {
-    if(cryptoID) {
+    if (cryptoID) {
       fetchCoin();
     }
-  
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cryptoID]);
 
   useEffect(() => {
     if (coin) {
@@ -77,11 +76,13 @@ function SellCrypto({ cryptoID }) {
     closeModal();
   };
 
-
   return (
     <div>
       {
-        <div display={data} className="bg-white text-red-600">
+        <div
+          display={data}
+          className="hover:bg-red-400 hover:text-white text-red-600"
+        >
           {" "}
           <a className=" w-full " onClick={openModal}>
             SAT
@@ -89,7 +90,7 @@ function SellCrypto({ cryptoID }) {
           </a>
         </div>
       }
-      {coin && data && (
+      {coin && data && user && (
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog
             as="div"

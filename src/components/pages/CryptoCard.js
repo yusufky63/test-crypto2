@@ -74,7 +74,7 @@ function CryptoCard() {
           <div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
             <div className=" ml-10 mr-5">
               <div className="flex items-center relative">
-                <span className=" absolute mb-20 bg-yellow-500  text-black rounded-r-lg px-1 ">
+                <span className=" absolute mb-20 bg-yellow-500 text-md  text-black rounded-r-lg px-1 ">
                   Rank #{coin.market_cap_rank}
                 </span>
 
@@ -87,14 +87,14 @@ function CryptoCard() {
                 <img
                   src={coin.image.small}
                   alt={coin.name}
-                  className="w-16 h-16 mr-4 mt-5"
+                  className="w-12 h-12 mr-4 mt-5"
                 />
-                <h1 className="text-xl font-bold mt-3">
+                <h2 className="text-xl font-bold mt-3">
                   {coin.name}{" "}
                   <span className="text-sm uppercase text-gray-500">
                     {coin.symbol}
                   </span>
-                </h1>
+                </h2>
               </div>
               <br />
               <div className="flex justify-center ">
@@ -224,26 +224,16 @@ function CryptoCard() {
                 )}
               </div>
               <br />
-              <div className="border p-2">  <button className="border bg-white my-1 rounded-lg p-1 px-5 w-full">
-                <BuyCrypto cryptoID={coin.id}></BuyCrypto>
-              </button>
-              <button className="border bg-white rounded-lg  my-1 p-1 px-5 w-full">
-                <SellCrypto cryptoID={coin.id}></SellCrypto>
-              </button></div>
-            
+              <div className="border shadow-lg rounded-lg p-3">
+                {" "}
+                <button className="shadow-lg border hover:bg-green-400   my-1 rounded-lg p-1 px-5 w-full">
+                  <BuyCrypto cryptoID={coin.id}></BuyCrypto>
+                </button>
+                <button className=" shadow-lg border hover:bg-red-400 rounded-lg  my-1 p-1 px-5 w-full">
+                  <SellCrypto cryptoID={coin.id}></SellCrypto>
+                </button>
+              </div>
             </div>
-
-            {/* <div>
-      <select
-        name=""
-        id=""
-        onChange={(e) => setChart(e.target.value)}
-        value={chart}
-      >
-        <option value={1}>TradingView</option>
-        <option value={2}>Custom Chart</option>
-      </select>
-    </div> */}
 
             {symbolTrading && (
               <div id="test" className="container max-w-screen-lg flex ">
@@ -259,18 +249,16 @@ function CryptoCard() {
                   height={550}
                   theme="light"
                 ></AdvancedRealTimeChart>
-
-                {/* <CoinChart id={id}></CoinChart> */}
               </div>
             )}
           </div>
-          <div>
-            <h1 className="text-xl font-semibold mt-8 mb-4">
-              {" "}
-              {coin.name} ({coin.symbol?.toUpperCase()}) Hakkında
-            </h1>
+          <h1 className="text-xl font-semibold mt-8 mb-4">
+            {" "}
+            {coin.name} ({coin.symbol?.toUpperCase()}) Hakkında
+          </h1>
+          <div className="flex justify-center">
             <div
-              className="mx-5 about-text whitespace-pre-wrap  tracking-wide "
+              className="mx-5 about-text text-left  container whitespace-pre-line  "
               dangerouslySetInnerHTML={{ __html: coin.description?.en }}
             ></div>
           </div>

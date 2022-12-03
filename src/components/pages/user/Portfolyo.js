@@ -7,11 +7,10 @@ import { SingleCoin } from "../../../services/Api";
 import { deletePortfolyo } from "../../../services/firebase";
 import BuyCrypto from "../../modal/BuyCrypto";
 import SellCrypto from "../../modal/SellCrypto";
-// import { Menu } from "@headlessui/react";
 import Favorites from "./Favorites";
 import PortfolioChart from "../../utils/PortfolioChart";
 import OrderHistory from "../../modal/OrderHistory";
-// import EditPortfolyoCrypto from "../../modal/EditPortfolyoCrypto";
+import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
 function Portfolyo() {
   const { portfolyo } = useSelector((state) => state.portfolios);
 
@@ -22,31 +21,32 @@ function Portfolyo() {
   const [total, setTotal] = useState(0);
   const [totalRate, setTotalRate] = useState(0);
   const [rate, setRate] = useState([0]);
+  const [info, setInfo] = useState([]);
   const fetchCoins = () => {
     setLoading(true);
 
     // eslint-disable-next-line array-callback-return
     portfolyo.map(async (name) => {
-      await axios
-        .get(SingleCoin(name.coin))
-        .then((res) => {
-          setCoins((prev) => [...prev, res.data]);
-          setWallet((prev) => [
-            ...prev,
-            +(name.buy_total_crypto * res.data.market_data.current_price.usd),
-          ]);
-          setRate((prev) => [
-            ...prev,
-            +(
-              name.buy_total_crypto * res.data.market_data.current_price.usd -
-              name.buy_total_crypto * name.coin_price_usd
-            ),
-          ]);
+      const { data } = await axios(SingleCoin(name.coin));
+      let s = { ...name, ...data };
+      console.log(s);
+      setCoins((prev) => [...prev, data]);
+      setWallet((prev) => [
+        ...prev,
+        +(name.buy_total_crypto * data.market_data.current_price.usd),
+      ]);
+      setRate((prev) => [
+        ...prev,
+        +(
+          name.buy_total_crypto * data.market_data.current_price.usd -
+          name.buy_total_crypto * name.coin_price_usd
+        ),
+      ]);
 
-          setChart(name);
-        })
-        .catch((err) => console.log(err));
+      setChart(name);
+      setInfo((prev) => [...prev, s]);
     });
+
     setLoading(false);
   };
 
@@ -56,6 +56,7 @@ function Portfolyo() {
   }, [coins, wallet, rate]);
 
   useEffect(() => {
+    setInfo([]);
     setRate([]);
     setTotal(0);
     setTotalRate(0);
@@ -67,50 +68,6 @@ function Portfolyo() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portfolyo]);
 
-  //DÜZELTİLECEK
-  function Calculate(id, data, price) {
-    try {
-      if (id && data) {
-        let dataCrypto;
-        // eslint-disable-next-line array-callback-return
-        portfolyo.map((item) => {
-          if (item.coin === id) {
-            dataCrypto = item;
-          }
-        });
-
-        if (data === "buy_total_crypto") {
-          return <h1>{dataCrypto.buy_total_crypto.toFixed(5)}</h1>;
-        } else if (data === "coin_price_usd") {
-          return <>{dataCrypto.coin_price_usd.toFixed(5)}</>;
-        } else if (data === "wallet_total_usd") {
-          return <h1>{(dataCrypto.buy_total_crypto * price).toFixed(2)} $</h1>;
-        } else if (data === "profit_rate") {
-          return (
-            <span>
-              {(
-                dataCrypto.buy_total_crypto * price -
-                dataCrypto.buy_total_crypto * dataCrypto.coin_price_usd
-              ).toFixed(2)}{" "}
-              $
-            </span>
-          );
-        } else if (data === "profit_rate_percent") {
-          return (
-            <span>
-              {(
-                ((price - dataCrypto.coin_price_usd) * 100) /
-                dataCrypto.coin_price_usd
-              ).toFixed(2)}{" "}
-              %
-            </span>
-          );
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   const handleDelete = (id) => {
     console.log(id);
     const data = portfolyo.find((c) => c.coin === id);
@@ -119,9 +76,9 @@ function Portfolyo() {
 
   return (
     <div className="portfolio-bg">
-      {" "}
-      <div className="pt-5 max-w-7xl mx-auto relative">
-        <h1 className="my-5 text-4xl text-red-500"> Geliştirme Aşamasında </h1>{" "}
+    
+      <div className="pt-5 max-w-7xl mx-auto relative mt-10">
+      
         {
           <div className="w-full hover:shadow-xl border shadow-md p-5 rounded-lg font-bold flex items-center justify-between">
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
@@ -142,7 +99,6 @@ function Portfolyo() {
                 <span className="text-red-500">{totalRate.toFixed(2)}$</span>
               )}
             </span>
-        
           </div>
         }
         {portfolyo.length > 0 ? (
@@ -159,7 +115,6 @@ function Portfolyo() {
             Portfolyonuzda Coin Bulunmamaktadır.
           </div>
         )}
-        {/* <BulletChart chart={chart}/>  */}
         <h1 className="text-3xl font-bold    p-3 shadow-md rounded-lg text-left ">
           Porfolyo
         </h1>
@@ -189,7 +144,7 @@ function Portfolyo() {
                   </div>
                 ) : (
                   <>
-                    {portfolyo.length > 0 ? (
+                    {info.length > 0 ? (
                       <table className="min-w-full divide-y divide-gray-300">
                         <thead className="bg-gray-50 ">
                           <tr className="text-center">
@@ -246,16 +201,12 @@ function Portfolyo() {
                         </thead>
 
                         <tbody className=" divide-y divide-gray-200 bg-white ">
-                          {coins.map((item) => (
+                          {info.map((item) => (
                             <tr
                               id="priceT"
                               className=" hover:shadow-md hover:bg-gray-100 "
                               key={item.id}
                             >
-                              {/* <td onClick={(e) => handleSavedCoin(e, item.id)}>
-                          {controlFavorites(item.id)}
-                        </td> */}
-
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                 <div className="flex items-center">
                                   <div className="h-10 w-10">
@@ -281,26 +232,22 @@ function Portfolyo() {
                               <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
                                 <div className="">
                                   {" "}
-                                  <h1>
-                                    {" "}
-                                    {Calculate(item.id, "buy_total_crypto")}
-                                  </h1>
+                                  <h1>{item.buy_total_crypto.toFixed(5)}</h1>
                                 </div>
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   <h1>
-                                    {" "}
-                                    {Calculate(
-                                      item.id,
-                                      "wallet_total_usd",
+                                    {(
+                                      item.buy_total_crypto *
                                       item.market_data.current_price.usd
-                                    )}
+                                    ).toFixed(2)}
+                                    $
                                   </h1>
                                 </div>
                               </td>
                               <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
-                                {Calculate(item.id, "coin_price_usd")}$
+                                {item.coin_price_usd}$
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
                                 <div className="text-gray-900">
@@ -310,31 +257,52 @@ function Portfolyo() {
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {" "}
-                                  {Calculate(
-                                    item.id,
-                                    "profit_rate",
-                                    item.market_data.current_price.usd
+                                  
+                                  
+                                  {(item.market_data.current_price.usd -
+                                    item.coin_price_usd) *
+                                    item.buy_total_crypto >=
+                                  0 ? (
+                                    <span className="text-green-500">
+                                      {(
+                                        (item.market_data.current_price.usd -
+                                          item.coin_price_usd) *
+                                        item.buy_total_crypto
+                                      ).toFixed(2)}{" "}
+                                      $
+                                    </span>
+                                  ) : (
+                                    <span className="text-red-500">
+                                      {(
+                                        (item.market_data.current_price.usd -
+                                          item.coin_price_usd) *
+                                        item.buy_total_crypto
+                                      ).toFixed(2)}{" "}
+                                      $
+                                    </span>
                                   )}
                                 </div>
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
                                 <div className="text-sm ">
-                                  {" "}
-                                  {Calculate(
-                                    item.id,
-                                    "profit_rate_percent",
-                                    item.market_data.current_price.usd
-                                  )}
+                                {
+                                    <CheckPositiveNumber
+                                      number={((item.market_data.current_price.usd -
+                                    item.coin_price_usd) *
+                                    100) /
+                                    item.coin_price_usd }
+                                    />
+                                  }
                                 </div>
                               </td>
 
                               <td className="p-1">
-                                <button className="border bg-white rounded-lg my-1 p-1 px-5 w-full">
+                                <button className="hover:bg-green-400 hover:text-white border bg-white shadow-md rounded-lg my-1 p-1 px-5 w-full">
                                   <BuyCrypto
                                     cryptoID={portfolyo && item.id}
                                   ></BuyCrypto>
                                 </button>
-                                <button className="border bg-white rounded-lg p-1 my-1 px-5 w-full">
+                                <button className="border hover:bg-red-400 hover:text-white shadow-md rounded-lg p-1 my-1 px-5 w-full">
                                   <SellCrypto
                                     cryptoID={portfolyo && item.id}
                                   ></SellCrypto>
@@ -346,7 +314,7 @@ function Portfolyo() {
 
                                   <a
                                     onClick={(e) => handleDelete(item.id)}
-                                    className=" text-black-300  hover:bg-red-300 hover:text-red-900 lg:pl-5 px-3 py-2 rounded-md text-base font-medium bg-white"
+                                    className=" text-black-300  hover:bg-red-300 hover:text-red-900  p-2 rounded-md text-base flex justify-center font-medium "
                                   >
                                     <svg
                                       className="w-6 h-6"
@@ -364,44 +332,6 @@ function Portfolyo() {
                                     </svg>
                                   </a>
                                 </div>
-
-                                {/* <>
-                                  {" "}
-                                  <Menu as="div" className=" relative ml-3 ">
-                                    <Menu.Button className="flex rounded-full text-sm ">
-                                      <span className="sr-only">
-                                        Open user menu
-                                      </span>
-
-                                      <div className="">
-                                        {" "}
-                                        <svg
-                                          className="w-6 h-6"
-                                          fill="none"
-                                          stroke="gray"
-                                          viewBox="0 0 24 24"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                                          ></path>
-                                        </svg>
-                                      </div>
-                                    </Menu.Button>
-                                    <Menu.Items className=" text-left absolute right-5 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                      <Menu.Item
-                                       onClick={(e) => e.stopPropagation(e)}>
-                                       
-                                      </Menu.Item>
-                                      <Menu.Item>
-                                     
-                                      </Menu.Item>
-                                    </Menu.Items>{" "}
-                                  </Menu>
-                                </> */}
                               </td>
                             </tr>
                           ))}
@@ -418,7 +348,9 @@ function Portfolyo() {
             </div>
           </div>
         </div>
-        <h1 className="text-3xl font-bold    p-3 shadow-md rounded-lg text-left ">
+        <br />
+        <br />
+        <h1 className="text-3xl font-bold  p-3 shadow-md rounded-lg text-left ">
           Favoriler
         </h1>
         <Favorites></Favorites>

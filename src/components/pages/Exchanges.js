@@ -47,13 +47,13 @@ function Exchanges() {
         <input
           type="text"
           placeholder="Arama"
-          className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-xl md:4/6 lg:w-3/6  xl:w-2/6 "
+          className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-md md:4/6 lg:w-3/6  xl:w-2/6 "
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
         <select
-          className="p-2 px-3   outline-none border rounded-lg shadow-xl"
+          className="p-2 px-3   outline-none border rounded-lg shadow-md"
           onChange={(e) => setCount(e.target.value)}
           value={count}
           name=""
@@ -91,7 +91,7 @@ function Exchanges() {
           ) : (
             filter &&
             filter.map((exchange) => (
-              <li className="shadow-2xl  relative" key={exchange.id}>
+              <li className="shadow-xl  relative" key={exchange.id}>
                 <h1 className="absolute  mb-8 border px-4 py-1  rounded-r-full bg-yellow-400">
                   {exchange.trust_score_rank}
                 </h1>

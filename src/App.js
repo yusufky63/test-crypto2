@@ -1,4 +1,4 @@
-import "./App.css";
+import "./style/App.css";
 import Footer from "./components/Footer";
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
@@ -40,7 +40,7 @@ function App() {
       <Header></Header>
 
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route end path="/" element={<Home />} />
         <Route path="/markets" element={<Markets />} />
         <Route path="/markets/:id" element={<CryptoCard />} />
         <Route path="/news" element={<News />} />
@@ -71,7 +71,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/settings" element={<Settings />} />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <Settings />{" "}
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <Footer></Footer>
     </div>

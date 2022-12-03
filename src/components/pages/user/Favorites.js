@@ -187,19 +187,7 @@ export default function Favorites() {
                               />
                             </div>
                           </td>
-                          {/* <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            <div className="text-gray-900">
-                              {symbol}
-                              {numberWithCommas(
-                                item.market_data.market_cap[currencyEdit]
-                              )}
-                            </div>
-                          </td> */}
-                          {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            <div className="text-gray-900">
-                              {numberWithCommas(item.market_data.total_supply)}
-                            </div>
-                          </td> */}
+                         
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
                               {symbol}
@@ -209,10 +197,10 @@ export default function Favorites() {
                             </div>
                           </td>
                           <td className="p-1">
-                            <button className="border bg-white rounded-lg my-1 p-1 px-5 w-full">
+                            <button className="border hover:bg-green-400 shadow-md rounded-lg my-1 p-1 px-5 w-full">
                               <BuyCrypto cryptoID={item.id}></BuyCrypto>
                             </button>
-                            <button className="border bg-white rounded-lg p-1 my-1 px-5 w-full">
+                            <button className="border hover:bg-red-400 shadow-md rounded-lg p-1 my-1 px-5 w-full">
                               <SellCrypto cryptoID={item.id}></SellCrypto>
                             </button>
                           </td>

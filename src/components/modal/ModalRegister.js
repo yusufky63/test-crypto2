@@ -89,6 +89,7 @@ export default function ModalRegister() {
                 </button>
                 <br />
                 <br />
+                  {/* OTHER REGISTER */}
                 <div className="flex justify-around mx-10 ">
                   <button
                     onClick={githubLogin}
@@ -135,7 +136,7 @@ export default function ModalRegister() {
                 <div className="flex justify-center my-5 text-sm mx-10 bg-green-100 p-2 rounded-lg">
                   <div className="text-center ">
                     <span className="text-green-600">https://</span>{" "}
-                    test-react-crypo-app/register{" "}
+                    test-react-crypo-app{" "}
                   </div>
                 </div>
                 <div className="flex justify-center">

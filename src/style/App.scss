@@ -3,10 +3,6 @@
 @import "react-alice-carousel/lib/alice-carousel.css";
 body {
     font-family: 'Signika Negative', sans-serif;
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    background-color: #fff;
 }
 
 .App {
@@ -23,7 +19,7 @@ body {
 }
 
 header .search {
-    background: url("./img/search-icon.svg") no-repeat left;
+    background: url("../img/search-icon.svg") no-repeat left;
     background-position: 10px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
@@ -33,14 +29,14 @@ header .search {
 }
 
 .bg {
-    background-image: url("./img/overview-bg.svg");
+    background-image: url("../img/overview-bg.svg");
     margin-top: 80px;
     background-size: cover;
     background-position: center;
 }
 
 .bg-reverse {
-    background-image: url("./img/overview-bg.svg");
+    background-image: url("../img/overview-bg.svg");
     margin-top: 200px;
     background-size: cover;
     background-position: center;

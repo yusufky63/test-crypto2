@@ -95,13 +95,13 @@ function BuyCrypto({ cryptoID }) {
   return (
     <div>
       {" "}
-      <div className="bg-white text-green-500">
+      <div className=" hover:bg-green-400 hover:text-white text-green-600">
         {" "}
         <a className=" w-full " onClick={openModal}>
           AL
         </a>
       </div>
-      {coin && (
+      {coin && user && (
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog
             as="div"

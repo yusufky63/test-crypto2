@@ -10,10 +10,12 @@ import HomeHeader from "./Home/HomeHeader";
 function Home() {
   const [crypto, setCrypto] = useState([]);
   const { currency, symbol } = CryptoState();
-
+const [loading, setLoading] = useState(false);
   const getCoins = async () => {
+    setLoading(true);
     const { data } = await axios.get(TopCoins(currency));
     setCrypto(data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -25,7 +27,7 @@ function Home() {
     <div>
       <HomeHeader />
 
-      <TrendCoin crypto={crypto} currency={currency} symbol={symbol} />
+      <TrendCoin crypto={crypto} currency={currency} symbol={symbol} loading={loading} />
 
       <div className="mt-20">
         <PageLinks />

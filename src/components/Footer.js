@@ -8,34 +8,24 @@ function Footer() {
         <nav className="flex flex-wrap justify-center -mx-5 -my-2">
           <div className="px-5 py-2">
             <a
-             
-             className="text-base leading-6 text-gray-500 hover:text-gray-900"
-            >
-              Hakkımızda
-            </a>
-          </div>
-          <div className="px-5 py-2">
-            <a
-             
+              rel="noreferrer"
+              target={"_blank"}
+              href="https://codexsha.tech"
               className="text-base leading-6 text-gray-500 hover:text-gray-900"
             >
-              Blog
+              Hakkımda
             </a>
           </div>
+        
 
-          <div className="px-5 py-2">
-            <a
-             className="text-base leading-6 text-gray-500 hover:text-gray-900"
-            >
-              İletişim
-            </a>
-          </div>
+       
         </nav>
         <div className="flex justify-center mt-8 space-x-6">
           <a
-          target={"_blank"}
+            target={"_blank"}
             href="https://twitter.com/codexsha"
-            className="text-gray-400 hover:text-gray-500" rel="noreferrer"
+            className="text-gray-400 hover:text-gray-500"
+            rel="noreferrer"
           >
             <span className="sr-only">Twitter</span>
             <svg
@@ -48,9 +38,10 @@ function Footer() {
             </svg>
           </a>
           <a
-          target={"_blank"}
+            target={"_blank"}
             href="https://github.com/yusufky63"
-            className="text-gray-400 hover:text-gray-500" rel="noreferrer"
+            className="text-gray-400 hover:text-gray-500"
+            rel="noreferrer"
           >
             <span className="sr-only">GitHub</span>
             <svg
