@@ -82,7 +82,7 @@ function News() {
           {" "}
           <button
             disabled={page === 1}
-            className="border border-gray-300 rounded-lg  p-3  mx-10 shadow-md hover:bg-gray-900 hover:text-white text-sm lg:text-md"
+            className="border border-gray-300 rounded-lg  p-3  mx-10 shadow-md hover:bg-gray-900 hover:text-white text-xs md:text-sm lg:text-md"
             onClick={() => setPage(page < 0 ? page : page - 1)}
           >
             {" "}
@@ -92,7 +92,7 @@ function News() {
             {page}
           </span>
           <button
-            className="border border-gray-300 rounded-lg  p-3  mx-10 shadow-md hover:bg-gray-900 hover:text-white text-sm lg:text-md"
+            className="border border-gray-300 rounded-lg  p-3  mx-10 shadow-md hover:bg-gray-900 hover:text-white text-xs md:text-sm lg:text-md"
             onClick={() => setPage(page + 1)}
           >
             Sonraki Sayfa <i className="fa-2 fa fa-arrow-right ml-2"></i>
