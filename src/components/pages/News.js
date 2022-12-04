@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NewsDesign from "../utils/design/NewsDesign";
 
 // import parse from "html-react-parser";
 function News() {
@@ -30,29 +31,27 @@ function News() {
       })
       .catch(function (error) {
         console.error(error);
-      });
-
-    setLoading(false);
+      })
+      .finally(() => setLoading(false));
   };
   useEffect(() => {
     fetchNews();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   console.log(news);
   return (
-    <div className="my-10 ">
-      <h1 className=" xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl  font-bold">
+    <div className=" ">
+      <h1 className="my-10 xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl  font-bold">
         Kriptoya Dair Haberler
       </h1>
       <div className=" ">
-        <ul className="flex justify-center flex-wrap mt-5">
+        
           {loading ? (
             <div role="status">
               <h1 className="my-2">Yükleniyor...</h1>
               <svg
-                className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+                className="inline mr-2 w-8 h-8 text-gray-200 animate-spin  fill-red-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,79 +69,30 @@ function News() {
             </div>
           ) : (
             news.map((item) => (
-              <li className="text-left" key={item.id}>
-                <div className="m-5 p-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md  text-gray-700 ">
-                  <img
-                    className="rounded-t-lg"
-                    src={item.related_image_big}
-                    alt=""
-                  />
-                  <div className="p-3">
-                    <span className="inline-block py-1.5 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">
-                      {item.news_provider_name}
-                    </span>
-                  </div>
-                  <div className="p-3">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
-                      {item.HEADLINE}
-                    </h5>
-
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      {/* {(parse(item.BODY))} */}
-                    </p>
-                    <br />
-                    <div className="flex justify-between ">
-                      <div>
-                        <p>Güncelleme Tarihi </p>
-                        <p className="font-normal text-gray-700 dark:text-gray-400">
-                          {item.last_updated}
-                        </p>
-                      </div>
-                      <a
-                        target="_blank"
-                        href={item.third_party_url}
-                        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        rel="noreferrer"
-                      >
-                        Habere Git
-                        <svg
-                          aria-hidden="true"
-                          className="ml-2 -mr-1 w-4 h-4"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </li>
+           <>
+                <NewsDesign news={item}/>
+              
+           </>
             ))
           )}
-        </ul>
+       
       </div>
       {!loading ? (
         <div className=" flex justify-center items-center">
           {" "}
           <button
             disabled={page === 1}
-            className="border border-gray-300 rounded-full  p-3 font-medium mx-10  hover:bg-gray-900 hover:text-white"
+            className="border border-gray-300 rounded-lg  p-3  mx-10 shadow-md hover:bg-gray-900 hover:text-white text-sm lg:text-md"
             onClick={() => setPage(page < 0 ? page : page - 1)}
           >
             {" "}
             <i className="fa-2 fa fa-arrow-left mr-2"></i> Önceki Sayfa
           </button>
-          <span className="border w-10 h-9 py-1 rounded-full hover:bg-gray-700 hover:text-white">
+          <span className="border w-10 h-9 py-1 shadow-md rounded-lg hover:bg-gray-700 hover:text-white">
             {page}
           </span>
           <button
-            className="border border-gray-300 rounded-full  p-3 font-medium mx-10 hover:bg-gray-900 hover:text-white"
+            className="border border-gray-300 rounded-lg  p-3  mx-10 shadow-md hover:bg-gray-900 hover:text-white text-sm lg:text-md"
             onClick={() => setPage(page + 1)}
           >
             Sonraki Sayfa <i className="fa-2 fa fa-arrow-right ml-2"></i>

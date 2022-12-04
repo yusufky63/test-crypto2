@@ -21,7 +21,7 @@ function BuyCrypto({ cryptoID }) {
 
   let [isOpen, setIsOpen] = useState(false);
   const [coin, setCoin] = useState();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(null);
   const [totalUSD, setTotalUSD] = useState(0);
 
   const fetchCoin = async () => {
@@ -86,7 +86,7 @@ function BuyCrypto({ cryptoID }) {
         order_date: new Date(),
       });
     }
-    setAmount(0);
+    setAmount(null);
     portfolyo();
     setTotalUSD(0);
     closeModal();
@@ -148,8 +148,8 @@ function BuyCrypto({ cryptoID }) {
                       </DialogTitle>
                     </div>
                     <div className="">
-                      <h1 className="text-xl ">
-                        {coin.name}
+                      <h1 className=" items-center">
+                        <span className="text-xl"> {coin.name}</span>
                         <span className="text-gray-500 text-xs uppercase px-2">
                           {coin.symbol}
                         </span>
@@ -162,7 +162,6 @@ function BuyCrypto({ cryptoID }) {
                     <div className="flex items-center  border rounded-lg">
                       <h1 className="text-2xl p-4">$</h1>
                       <input
-                        max={99999999}
                         min={1}
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}

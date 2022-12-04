@@ -4,7 +4,7 @@ import Home from "./components/pages/Home";
 import News from "./components/pages/News";
 import Profile from "./components/pages/user/Profile";
 import Markets from "./components/pages/Markets";
-import CryptoCard from "./components/pages/CryptoCard";
+import CryptoCard from "./components/pages/CryptoDetail";
 import Header from "./components/Header";
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -28,6 +28,7 @@ function App() {
   return (
     <div className="App ">
       <ToastContainer
+      className="mt-10"
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
@@ -35,10 +36,8 @@ function App() {
         rtl={false}
       />
       <InternetConnection />
-      <AllCoinsWidget></AllCoinsWidget>
-      {/* <TickerWidget></TickerWidget> */}
-      <Header></Header>
-
+      <AllCoinsWidget/>
+      <Header/>
       <Routes>
         <Route end path="/" element={<Home />} />
         <Route path="/markets" element={<Markets />} />
