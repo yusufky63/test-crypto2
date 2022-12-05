@@ -29,10 +29,33 @@ function Profile() {
 
   return (
     <div className="flex justify-center">
-      <div>
+      <div className="m-5">
         <div className="flex text-left p-2 border shadow-2xl rounded-lg m-10 ">
-          <div className="p-10 ">
-            <h1 className="text-3xl text-center  font-bold mx-14 p-1 drop-shadow-xl">
+          <div className="p-5 ">
+            {!user.emailVerified && (
+              <div className="text-sm rounded-lg text-white flex justify-center mb-5 items-center bg-yellow-400 p-1">
+                {" "}
+                <svg
+                  class="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  ></path>
+                </svg>{" "}
+                <span className="ml-2">
+                  {" "}
+                  Lütfen E-Mail Adresinizi Doğrulayın !
+                </span>
+              </div>
+            )}
+            <h1 className="text-2xl lg:text-3xl text-center  font-bold mx-14 p-1 drop-shadow-xl">
               Profil Güncelleme
             </h1>
             <div className="text-center my-5 ">
@@ -70,7 +93,7 @@ function Profile() {
       ease-in-out
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Resim Url"
+                placeholder="Avatar Url"
               />{" "}
             </div>
             <br />
@@ -107,6 +130,7 @@ function Profile() {
               <h1>
                 <span>Email </span>
                 <input
+                  readOnly
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   type="email"
@@ -118,13 +142,13 @@ function Profile() {
       text-base
       font-normal
       text-gray-700
-      bg-white bg-clip-padding
+      bg-gray-300 bg-clip-padding
       border border-solid border-gray-300
       rounded
       transition
       ease-in-out
       m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+      focus:text-gray-700 focus:bg-gray-300  focus:outline-none"
                   placeholder="adresin@gmail.com"
                 />
               </h1>
@@ -133,7 +157,7 @@ function Profile() {
                   {" "}
                   <button
                     onClick={handleEmailVerified}
-                    className=" border p-2 mt-1 shadow-md rounded-lg hover:bg-gray-200 text-red-500"
+                    className=" border p-2 mt-1 shadow-md rounded-lg hover:bg-gray-200 text-yellow-500"
                   >
                     Emaili Doğrula
                   </button>
@@ -171,7 +195,7 @@ function Profile() {
       ease-in-out
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  placeholder="Şifren"
+                  placeholder="En Az 6 Karakter"
                 />
               </h1>
             </div>

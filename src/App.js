@@ -1,4 +1,5 @@
 import "./style/App.css";
+import "./style/statusStyle/status.css"
 import Footer from "./components/Footer";
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
@@ -18,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import InternetConnection from "./components/utils/InternetConnection";
+import Page404 from "./components/pages/Page404";
 function App() {
   const { user } = useSelector((state) => state.auth);
 
@@ -78,6 +80,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="*" element={<Page404 to="/" />} />
       </Routes>
       <Footer></Footer>
     </div>

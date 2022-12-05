@@ -47,13 +47,11 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-
 };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
-const user = auth.currentUser;
 //REGISTER
 export const register = async (email, password) => {
   try {
@@ -66,24 +64,7 @@ export const register = async (email, password) => {
 
     return user;
   } catch (error) {
-    toast.error(
-      error.message ===
-        "Firebase: Password should be at least 6 characters (auth/weak-password)."
-        ? "Şifre en az 6 karakter olmalıdır."
-        : error.message ||
-          error.message === "Firebase: Error (auth/invalid-email)."
-        ? "Geçersiz E-posta"
-        : error.message ===
-          "Firebase: The email address is already in use by another account. (auth/email-already-in-use)."
-        ? "Bu e-posta adresi zaten kullanımda."
-        : error.message ===
-          "Firebase: The email address is badly formatted. (auth/invalid-email)."
-        ? "Geçersiz E-posta"
-        : error.message ===
-          "Firebase: Password should be at least 6 characters (auth/weak-password)."
-        ? "Şifre en az 6 karakter olmalıdır."
-        : error.message
-    );
+    errorMessages(error);
   }
 };
 
@@ -128,7 +109,6 @@ export const resetPasword = async (email) => {
 
 //LOGOUT
 export const logout = async () => {
-
   try {
     await signOut(auth);
     toast.success("Çıkış Başarılı");
@@ -320,7 +300,7 @@ export const upProfile = async (photoURL, displayName) => {
 
 //UPDATE PASSWORD
 export const UpdatePassword = async (password) => {
-  updatePassword(user, password)
+  updatePassword(auth.currentUser, password)
     .then(() => {
       toast.success("Şifre Güncelleme Başarılı");
     })
@@ -338,7 +318,7 @@ export const UpdatePassword = async (password) => {
 //SEND EMAIL VERIFICATION
 export const emailVerified = async () => {
   try {
-    sendEmailVerification(user).then(() => {
+    sendEmailVerification(auth.currentUser).then(() => {
       toast.success("Onay Linki Gönderildi !");
     });
   } catch (error) {
@@ -404,4 +384,37 @@ export const addOrderHistory = async (order) => {
   }
 
   await addDoc(collection(db, "orders"), order);
+};
+//Error Handling
+const errorMessages = (error) => {
+  toast.error(
+    error.message ===
+      "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      ? "Şifre en az 6 karakter olmalıdır."
+      : error.message ||
+        error.message === "Firebase: Error (auth/invalid-email)."
+      ? "Geçersiz E-posta"
+      : error.message ===
+        "Firebase: The email address is already in use by another account. (auth/email-already-in-use)."
+      ? "Bu e-posta adresi zaten kullanımda."
+      : error.message ===
+        "Firebase: The email address is badly formatted. (auth/invalid-email)."
+      ? "Geçersiz E-posta"
+      : error.message ===
+        "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      ? "Şifre en az 6 karakter olmalıdır."
+      : error.message === "Firebase: Error (auth/user-not-found)."
+      ? "Kullanıcı Bulunamadı"
+      : error.message === "Firebase: Error (auth/wrong-password)."
+      ? "Şifre Yanlış"
+      : error.message === "Firebase: Error (auth/too-many-requests)."
+      ? "Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin."
+      : error.message === "Missing or insufficient permissions."
+      ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
+      : error.message === "Firebase: Error (auth/requires-recent-login)."
+      ? "Tekrar Giriş Yapın"
+      : error.message || error.message === "auth/weak-password"
+      ? "Şifre En Az 6 Karakter Olmalıdır"
+      : error.message
+  );
 };
