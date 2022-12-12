@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { addCrypto, deleteCrypto } from "../../../services/firebase";
-import numberWithCommas from "../../utils/convertCurrency";
+import NumberWithCommas from "../../utils/NumberWithCommas";
 import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -180,7 +180,7 @@ export default function Favorites() {
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             <div className="text-gray-900">
                               {symbol}
-                              {numberWithCommas(
+                              {NumberWithCommas(
                                 item.market_data.total_volume[currencyEdit]
                               )}
                             </div>

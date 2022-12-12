@@ -9,7 +9,7 @@ import { SingleCoin } from "../../services/Api";
 import { CryptoState } from "../redux/CryptoContext";
 // import HistoryChart from "../utils/HistoryChart";
 
-import numberWithCommas from "../utils/convertCurrency";
+import NumberWithCommas from "../utils/NumberWithCommas";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
 
 import { addCrypto, deleteCrypto } from "../../services/firebase";
@@ -151,14 +151,14 @@ function CryptoCard() {
               <div className="flex items-center  justify-between">
                 <h1 className=" font-bold mr-10">24H Market Cap Change: </h1>
                 <span className="flex justify-end text-sm bg-yellow-400 rounded-lg  px-2">
-                  {numberWithCommas(coin.market_data.market_cap_change_24h)}
+                  {NumberWithCommas(coin.market_data.market_cap_change_24h)}
                 </span>
               </div>
 
               <div className="flex items-center  justify-between">
                 <h1 className="font-bold mr-10">Max Supply: </h1>
                 <span className="  text-sm bg-yellow-400 rounded-lg px-2">
-                  {numberWithCommas(coin.market_data.max_supply)}
+                  {NumberWithCommas(coin.market_data.max_supply)}
                 </span>
               </div>
 
@@ -166,7 +166,7 @@ function CryptoCard() {
                 <h1 className="font-bold  mr-10">Total Volume: </h1>
                 <span className="text-sm bg-yellow-400 rounded-lg  px-2">
                   {symbol}{" "}
-                  {numberWithCommas(
+                  {NumberWithCommas(
                     coin.market_data.total_volume[currencyEdit]
                   )}
                 </span>

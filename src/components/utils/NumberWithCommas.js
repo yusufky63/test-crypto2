@@ -1,4 +1,4 @@
-function numberWithCommas(value) {
+function NumberWithCommas(value) {
   if(value!==Number && value!==null){
     var parts = value.toString().split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -6,4 +6,4 @@ function numberWithCommas(value) {
   }
 }
 
-export default numberWithCommas;
+export default NumberWithCommas;

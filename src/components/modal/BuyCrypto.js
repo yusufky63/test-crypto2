@@ -12,7 +12,7 @@ import {
   updatePorfolyo,
   addOrderHistory,
 } from "../../services/firebase";
-import numberWithCommas from "../utils/convertCurrency";
+import numberWithCommas from "../utils/NumberWithCommas";
 
 function BuyCrypto({ cryptoID }) {
   const { portfolyo } = useSelector((state) => state.portfolios);

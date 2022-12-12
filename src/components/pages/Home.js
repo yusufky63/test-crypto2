@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 import axios from "axios";
 import { CryptoState } from "../redux/CryptoContext";
 import { TopCoins } from "../../services/Api";
-import TrendCoin from "./Home/TrendCoin";
-import PageLinks from "./Home/PageLinks";
-import React from "react";
-import Contact from "./Home/Contact";
-import HomeHeader from "./Home/HomeHeader";
+
+import {
+  HomeHeader,
+  Contact,
+  PageLinks,
+  TrendCoin,
+} from "./HomeComp";
+
 function Home() {
   const [crypto, setCrypto] = useState([]);
   const { currency, symbol } = CryptoState();

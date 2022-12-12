@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { TopExchanges } from "../../services/Api";
-import convertCurrency from "../utils/convertCurrency";
+import NumberWithCommas from "../utils/NumberWithCommas";
 
 function Exchanges() {
   const [exchanges, setExchanges] = useState([]);
@@ -12,7 +12,7 @@ function Exchanges() {
   const getExchanges = async () => {
     setLoading(true);
     const { data } = await axios.get(TopExchanges(count));
-    console.log(data);
+
     setExchanges(data);
     setLoading(false);
   };
@@ -71,7 +71,6 @@ function Exchanges() {
         <div className=" flex justify-center  max-w-7xl mx-auto flex-wrap gap-8">
           {loading ? (
             <div role="status">
-          
               <svg
                 className="inline mr-2 w-8 h-8 text-gray-200 animate-spin fill-red-600"
                 viewBox="0 0 100 101"
@@ -114,7 +113,7 @@ function Exchanges() {
                     <br />
                     <div className="text-xl">24 Saatlik İşlem Hacmi</div>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      Btc : {convertCurrency(exchange.trade_volume_24h_btc)}
+                      Btc : {NumberWithCommas(exchange.trade_volume_24h_btc)}
                     </p>
 
                     <div className="my-3 text-xl">Trust Score </div>

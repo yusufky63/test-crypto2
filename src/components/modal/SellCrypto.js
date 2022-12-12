@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
 import { updatePorfolyo, addOrderHistory } from "../../services/firebase";
-import numberWithCommas from "../utils/convertCurrency";
+import numberWithCommas from "../utils/NumberWithCommas";
 import { toast } from "react-toastify";
 
 function SellCrypto({ cryptoID }) {

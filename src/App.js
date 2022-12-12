@@ -1,5 +1,5 @@
 import "./style/App.css";
-import "./style/statusStyle/status.css"
+import "./style/statusStyle/status.css";
 import Footer from "./components/Footer";
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import InternetConnection from "./components/utils/InternetConnection";
-import Page404 from "./components/pages/Page404";
+import Page404 from "./components/utils/Page404";
 function App() {
   const { user } = useSelector((state) => state.auth);
 
@@ -30,7 +30,7 @@ function App() {
   return (
     <div className="App ">
       <ToastContainer
-      className="mt-10"
+        className="mt-10"
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
@@ -38,8 +38,8 @@ function App() {
         rtl={false}
       />
       <InternetConnection />
-      <AllCoinsWidget/>
-      <Header/>
+      <AllCoinsWidget />
+      <Header />
       <Routes>
         <Route end path="/" element={<Home />} />
         <Route path="/markets" element={<Markets />} />

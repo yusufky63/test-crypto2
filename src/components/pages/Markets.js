@@ -1,21 +1,42 @@
-import { useEffect, useState } from "react";
+import {
+  CheckPositiveNumber,
+  NumberWithCommas,
+  DataGlobal,
+  MarketsDataError,
+  AddFavorites,
+} from "../utils";
+
+import {
+  BuyCrypto,
+  SellCrypto,
+} from "../modal";
+
+import {
+  useEffect,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { CryptoState } from "../redux/CryptoContext";
 import axios from "axios";
 import { Pagination } from "@mui/material";
-import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
-import { CoinList, GlobalData } from "../../services/Api";
-import CheckPositiveNumber from "../utils/CheckPositiveNumber";
-import numberWithCommas from "../utils/convertCurrency";
-import { addCrypto, deleteCrypto } from "../../services/firebase";
+import {
+  Sparklines,
+  SparklinesLine,
+  SparklinesSpots,
+} from "react-sparklines";
+import {
+  CoinList,
+  GlobalData,
+} from "../../services/Api";
+
+import {
+  addCrypto,
+  deleteCrypto,
+} from "../../services/firebase";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import BuyCrypto from "../modal/BuyCrypto";
-import SellCrypto from "../modal/SellCrypto";
-import { useMemo } from "react";
 
-import AddFavorites from "../utils/AddFavorites";
-import MarketsDataError from "../utils/MarketsDataError";
+import { useMemo } from "react";
 function Markets() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
@@ -87,40 +108,17 @@ function Markets() {
               <h1 className="text-4xl text-left my-10  p-3 shadow-md rounded-lg flex justify-between items-center ">
                 Piyasa
                 {globalData.active_cryptocurrencies && (
-                  <div className=" whitespace-nowrap justify-around text-xs font-normal text-gray-600 mt-2 hidden md:block">
-                    <span className="p-1">
-                      Coinler :{" "}
-                      <span className="text-indigo-500">
-                        {" "}
-                        {globalData.active_cryptocurrencies}{" "}
-                      </span>
-                    </span>
-                    <span className="p-1">
-                      Borsalar :{" "}
-                      <span className="text-indigo-500">
-                        {globalData.ended_icos}
-                      </span>
-                    </span>
-                    <span className="p-1">
-                      Piyasa Değeri :
-                      <span className="text-indigo-500">
-                        {" "}
-                        {symbol}
-                        {numberWithCommas(
-                          globalData.total_market_cap[currencyEdit]
-                        )}
-                      </span>
-                    </span>
-                    <span className="p-2">
-                      24 Saatlik Hacim :{" "}
-                      <span className="text-indigo-500">
-                        {symbol}
-                        {numberWithCommas(
-                          globalData.total_volume[currencyEdit]
-                        )}
-                      </span>
-                    </span>
-                  </div>
+                  <DataGlobal
+                    globalData={
+                      globalData
+                    }
+                    currencyEdit={
+                      currencyEdit
+                    }
+                    symbol={
+                      symbol
+                    }
+                  />
                 )}
               </h1>
             </div>
@@ -287,18 +285,18 @@ function Markets() {
                                 <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                   <div className="text-gray-900">
                                     {symbol}
-                                    {numberWithCommas(item.market_cap)}
+                                    {NumberWithCommas(item.market_cap)}
                                   </div>
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                   <div className="text-gray-900">
-                                    {numberWithCommas(item.total_supply)}
+                                    {NumberWithCommas(item.total_supply)}
                                   </div>
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                   <div className="text-gray-900">
                                     {symbol}
-                                    {numberWithCommas(item.total_volume)}
+                                    {NumberWithCommas(item.total_volume)}
                                   </div>
                                 </td>
                                 <td className="px-10 mx-20 py-4">

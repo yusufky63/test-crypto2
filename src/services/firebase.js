@@ -76,15 +76,7 @@ export const login = async (email, password) => {
 
     return user;
   } catch (error) {
-    toast.error(
-      error.message === "Firebase: Error (auth/user-not-found)."
-        ? "Kullanıcı Bulunamadı"
-        : error.message === "Firebase: Error (auth/wrong-password)."
-        ? "Şifre Yanlış"
-        : error.message === "Firebase: Error (auth/invalid-email)."
-        ? "Geçersiz E-posta"
-        : error.message
-    );
+    errorMessages(error)
   }
 };
 
@@ -95,13 +87,7 @@ export const resetPasword = async (email) => {
     toast.success("Şifre Sıfırlama Maili Gönderildi");
     return true;
   } catch (error) {
-    toast.error(
-      error.message === "Firebase: Error (auth/user-not-found)."
-        ? "Kullanıcı Bulunamadı"
-        : error.message === "Firebase: Error (auth/invalid-email)."
-        ? "Geçersiz E-posta"
-        : error.message
-    );
+    errorMessages(error)
 
     return false;
   }
@@ -114,7 +100,7 @@ export const logout = async () => {
     toast.success("Çıkış Başarılı");
     return true;
   } catch (error) {
-    toast.error(error.message);
+    errorMessages(error)
   }
 };
 
@@ -190,6 +176,7 @@ export const googleLogin = async () => {
     })
     .catch((error) => {
       toast.error("Google ile giriş yapılamadı!", error.message);
+      errorMessages(error)
     });
 };
 
@@ -203,7 +190,7 @@ export const githubLogin = async () => {
     })
     .catch(function (error) {
       toast.error("Github ile giriş yapılamadı!", error.message);
-      console.log(error.message);
+      errorMessages(error)
     });
 };
 
@@ -217,7 +204,6 @@ export const addCrypto = async (favorite) => {
   } catch (error) {
     toast.warning("Lütfen Giriş Yapınız !", error.message);
   }
-
   await addDoc(collection(db, "favorites"), favorite);
 };
 
@@ -226,12 +212,7 @@ export const deleteCrypto = async (id) => {
   try {
     await deleteDoc(doc(db, "favorites", id));
   } catch (error) {
-    console.log(error.message);
-    toast.error(
-      error.message === "Missing or insufficient permissions."
-        ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
-        : error.message
-    );
+    errorMessages(error)
   }
 };
 
@@ -262,7 +243,7 @@ export const updatePorfolyo = async (id, portfolyo) => {
       toast.success("İşlem Gerçekleşti");
     }
   } catch (error) {
-    console.log(error.message);
+    errorMessages(error)
     toast.error("İşlem Gerçekleşmedi", error.message);
   }
 };
@@ -273,12 +254,7 @@ export const deletePortfolyo = async (id) => {
     await deleteDoc(doc(db, "portfolios", id));
     toast.success("Silindi !");
   } catch (error) {
-    console.log(error.message);
-    toast.error(
-      error.message === "Missing or insufficient permissions."
-        ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
-        : error.message
-    );
+    errorMessages(error)
   }
 };
 
@@ -293,8 +269,7 @@ export const upProfile = async (photoURL, displayName) => {
     });
     toast.success("Profil Güncellendi");
   } catch (error) {
-    console.log(error.message);
-    toast.error(error.message);
+    errorMessages(error)
   }
 };
 
@@ -305,13 +280,7 @@ export const UpdatePassword = async (password) => {
       toast.success("Şifre Güncelleme Başarılı");
     })
     .catch((error) => {
-      toast.error(
-        error.message === "Firebase: Error (auth/requires-recent-login)."
-          ? "Tekrar Giriş Yapın"
-          : error.message || error.message === "auth/weak-password"
-          ? "Şifre En Az 6 Karakter Olmalıdır"
-          : error.message
-      );
+      errorMessages(error)
     });
 };
 
@@ -322,7 +291,7 @@ export const emailVerified = async () => {
       toast.success("Onay Linki Gönderildi !");
     });
   } catch (error) {
-    toast.error(error);
+    errorMessages(error)
   }
 };
 
@@ -333,7 +302,7 @@ export const deletAccount = async () => {
       toast.success("Hesabınız Silindi !");
     })
     .catch((error) => {
-      toast.warning(error.message);
+      errorMessages(error)
     });
 };
 
@@ -351,7 +320,7 @@ export const reAuth = async (password) => {
     toast.success("Onaylandı !");
     return user;
   } catch (error) {
-    toast.error(error.message);
+    errorMessages(error)
   }
 };
 
@@ -364,12 +333,7 @@ export const deleteOrderHistory = async (id) => {
       await deleteDoc(doc(db, "orders", id));
     }
   } catch (error) {
-    console.log(error.message);
-    toast.error(
-      error.message === "Missing or insufficient permissions."
-        ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
-        : error.message
-    );
+    errorMessages(error)
   }
 };
 
@@ -380,7 +344,7 @@ export const addOrderHistory = async (order) => {
 
     return result.id;
   } catch (error) {
-    console.log(error.message);
+    errorMessages(error)
   }
 
   await addDoc(collection(db, "orders"), order);
@@ -391,30 +355,32 @@ const errorMessages = (error) => {
     error.message ===
       "Firebase: Password should be at least 6 characters (auth/weak-password)."
       ? "Şifre en az 6 karakter olmalıdır."
-      : error.message ||
-        error.message === "Firebase: Error (auth/invalid-email)."
-      ? "Geçersiz E-posta"
-      : error.message ===
-        "Firebase: The email address is already in use by another account. (auth/email-already-in-use)."
-      ? "Bu e-posta adresi zaten kullanımda."
-      : error.message ===
-        "Firebase: The email address is badly formatted. (auth/invalid-email)."
-      ? "Geçersiz E-posta"
-      : error.message ===
-        "Firebase: Password should be at least 6 characters (auth/weak-password)."
-      ? "Şifre en az 6 karakter olmalıdır."
-      : error.message === "Firebase: Error (auth/user-not-found)."
-      ? "Kullanıcı Bulunamadı"
-      : error.message === "Firebase: Error (auth/wrong-password)."
-      ? "Şifre Yanlış"
-      : error.message === "Firebase: Error (auth/too-many-requests)."
-      ? "Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin."
-      : error.message === "Missing or insufficient permissions."
-      ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
-      : error.message === "Firebase: Error (auth/requires-recent-login)."
-      ? "Tekrar Giriş Yapın"
-      : error.message || error.message === "auth/weak-password"
-      ? "Şifre En Az 6 Karakter Olmalıdır"
-      : error.message
+      : error.message === "Firebase: Error (auth/invalid-email)."
+        ? "Geçersiz E-posta" === "Firebase: Error (auth/user-not-found)."
+        : error.message === "Firebase: Error (auth/email-already-in-use)."
+          ? "Bu e-posta adresi zaten kullanımda."
+          : error.message ===
+            "Firebase: The email address is badly formatted. (auth/invalid-email)."
+            ? "Geçersiz E-posta"
+            : error.message ===
+              "Firebase: Password should be at least 6 characters (auth/weak-password)."
+              ? "Şifre en az 6 karakter olmalıdır."
+              : error.message === "Firebase: Error (auth/user-not-found)."
+                ? "Kullanıcı Bulunamadı"
+                : error.message === "Firebase: Error (auth/wrong-password)."
+                  ? "Şifre Yanlış"
+                  : error.message === "Firebase: Error (auth/too-many-requests)."
+                    ? "Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin."
+                    : error.message === "Missing or insufficient permissions."
+                      ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
+                      : error.message === "Firebase: Error (auth/requires-recent-login)."
+                        ? "Tekrar Giriş Yapın"
+                        : error.message === "auth/weak-password"
+                          ? "Şifre En Az 6 Karakter Olmalıdır"
+                          : error.message === "Firebase: Error (auth/user-disabled)."
+                            ? "Kullanıcı Engellendi"
+                            : error.message
+
   );
+  console.log(error.message)
 };

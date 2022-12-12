@@ -5,7 +5,7 @@ export default function HomeHeader() {
     <div className="flex justify-center bg-home-header">
       <div className="max-w-7xl container ">
         {" "}
-        <h1 className="font-bold   lg:text-3xl xl:text-4xl text-2xl  my-16">
+        <h1 className="font-bold   lg:text-3xl xl:text-5xl text-2xl  my-16">
           Kripto Dünyasına Hoşgeldiniz
         </h1>
         <div className=" flex sm:flex-row flex-col justify-around items-center  mb-14  ">
