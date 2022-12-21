@@ -142,7 +142,7 @@ onAuthStateChanged(auth, (user) => {
         );
       }
     );
-
+    //ORDERS
     onSnapshot(
       query(collection(db, "orders"), where("uid", "==", user.uid)),
       (doc) => {
@@ -379,7 +379,9 @@ const errorMessages = (error) => {
                           ? "Şifre En Az 6 Karakter Olmalıdır"
                           : error.message === "Firebase: Error (auth/user-disabled)."
                             ? "Kullanıcı Engellendi"
-                            : error.message
+                            : error.message === "Firebase: Error (auth/account-exists-with-different-credential)."
+                              ? "Bu E-posta Adresi Zaten Kullanımda"
+                              : error.message
 
   );
   console.log(error.message)

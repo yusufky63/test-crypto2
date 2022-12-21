@@ -8,7 +8,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -36,7 +36,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -51,7 +51,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -79,7 +79,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -94,7 +94,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -122,7 +122,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -137,7 +137,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -165,7 +165,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -180,7 +180,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -208,7 +208,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -223,7 +223,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -251,7 +251,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -266,7 +266,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -294,7 +294,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -309,7 +309,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -337,7 +337,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -352,7 +352,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -380,7 +380,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -395,7 +395,7 @@ function TrendSkeleton() {
         <div className="flex items-center">
           {" "}
           <svg
-            class="w-12 h-12 text-gray-200"
+            className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"
@@ -423,7 +423,7 @@ function TrendSkeleton() {
 
         <div className=" flex justify-center sm:m-6 md:m-8 lg:m-10 xl:m-10 m-10 mb-6">
           <svg
-            class="w-16 h-16 text-gray-200"
+            className="w-16 h-16 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
             fill="currentColor"

@@ -1,7 +1,7 @@
 import React from "react";
 import numberWithCommas from "./NumberWithCommas"
 
-function DataGlobal({ globalData ,symbol,currencyEdit}) {
+function DataGlobal({ globalData ,symbol,currency}) {
   return (
     <div>
       {" "}
@@ -22,14 +22,14 @@ function DataGlobal({ globalData ,symbol,currencyEdit}) {
           <span className="text-indigo-500">
             {" "}
             {symbol}
-            {numberWithCommas(globalData.total_market_cap[currencyEdit])}
+            {numberWithCommas(globalData.total_market_cap[currency])}
           </span>
         </span>
         <span className="p-2">
           24 Saatlik Hacim :{" "}
           <span className="text-indigo-500">
             {symbol}
-            {numberWithCommas(globalData.total_volume[currencyEdit])}
+            {numberWithCommas(globalData.total_volume[currency])}
           </span>
         </span>
       </div>

@@ -11,10 +11,7 @@ import {
   SellCrypto,
 } from "../modal";
 
-import {
-  useEffect,
-  useState,
-} from "react";
+
 import { Link } from "react-router-dom";
 import { CryptoState } from "../redux/CryptoContext";
 import axios from "axios";
@@ -35,19 +32,22 @@ import {
 } from "../../services/firebase";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
-import { useMemo } from "react";
+import {
+  useEffect,
+  useState,useMemo
+} from "react";
 function Markets() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
-  const [coins, setCoins] = useState([]);
-  const [loading, setLoading] = useState(false);
+
+
   const { currency, symbol } = CryptoState();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [globalData, setGlobalData] = useState([]);
   const [count, setCount] = useState(50);
-  const currencyEdit = currency.toLowerCase();
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(false);
 
   const fetchCoins = async () => {
@@ -63,9 +63,12 @@ function Markets() {
     const { data } = await axios(GlobalData());
     setGlobalData(data.data);
   };
+
+
   useEffect(() => {
     fetchGlobalData();
   }, [globalData]);
+
 
   useEffect(() => {
     fetchCoins();
@@ -79,6 +82,7 @@ function Markets() {
       );
     }
   }, [coins, search]);
+
 
   const handleSavedCoin = (e, id) => {
     e.preventDefault();
@@ -97,6 +101,7 @@ function Markets() {
     }
   };
 
+
   return (
     <div>
       <>
@@ -112,8 +117,8 @@ function Markets() {
                     globalData={
                       globalData
                     }
-                    currencyEdit={
-                      currencyEdit
+                    currency={
+                      currency
                     }
                     symbol={
                       symbol

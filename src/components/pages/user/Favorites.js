@@ -50,7 +50,7 @@ export default function Favorites() {
     }
   };
 
-  const currencyEdit = currency.toLowerCase();
+
   return (
     <div className="">
       {" "}
@@ -164,7 +164,7 @@ export default function Favorites() {
                             <div className="">
                               {" "}
                               {symbol}
-                              {item.market_data.current_price[currencyEdit]}
+                              {item.market_data.current_price[currency]}
                             </div>
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -181,7 +181,7 @@ export default function Favorites() {
                             <div className="text-gray-900">
                               {symbol}
                               {NumberWithCommas(
-                                item.market_data.total_volume[currencyEdit]
+                                item.market_data.total_volume[currency]
                               )}
                             </div>
                           </td>

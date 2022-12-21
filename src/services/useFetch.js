@@ -1,18 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useAxios = (param) => {
+const useFetch = (url) => {
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  console.log(url)
 
-  axios.defaults.baseURL = "https://api.coingecko.com/api/v3";
-
-  const fetchData = async (param) => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const result = await axios(param);
-      setResponse(result.data);
+      const {data : responseData} = await axios.get(url+"sad");
+      setResponse(responseData);
     } catch (err) {
       setError(err);
     } finally {
@@ -21,7 +20,7 @@ const useAxios = (param) => {
   };
 
   useEffect(() => {
-    fetchData(param);
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -32,4 +31,4 @@ const useAxios = (param) => {
   };
 };
 
-export default useAxios;
+export default useFetch;

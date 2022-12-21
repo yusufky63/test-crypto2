@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import Chart from "../utils/Chart";
-
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
-
 import { CryptoState } from "../redux/CryptoContext";
-// import HistoryChart from "../utils/HistoryChart";
-
 import NumberWithCommas from "../utils/NumberWithCommas";
 import CheckPositiveNumber from "../utils/CheckPositiveNumber";
 
 import { addCrypto, deleteCrypto } from "../../services/firebase";
 import { useSelector } from "react-redux";
-import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
+
+import AddFavorites from "../utils/AddFavorites";
 import BuyCrypto from "../modal/BuyCrypto";
 import SellCrypto from "../modal/SellCrypto";
 function CryptoCard() {
@@ -38,7 +34,7 @@ function CryptoCard() {
     setSymbolTrading(id.symbol);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  const currencyEdit = currency.toLowerCase();
+
 
   const handleSavedCoin = (e, id) => {
     e.preventDefault();
@@ -52,14 +48,7 @@ function CryptoCard() {
       deleteCrypto(data.id);
     }
   };
-  function controlFavorites(id) {
-    const data = favori.find((item) => item.name === id);
-    if (data) {
-      return <AiTwotoneHeart fontSize={30} color="red"></AiTwotoneHeart>;
-    } else {
-      return <AiOutlineHeart fontSize={30} color="black"></AiOutlineHeart>;
-    }
-  }
+
   console.log(coin);
 
   return (
@@ -80,7 +69,7 @@ function CryptoCard() {
 
                 <span className=" absolute mb-16 right-0 text-black rounded-r-lg px-1 ">
                   <button onClick={(e) => handleSavedCoin(e, coin.id)}>
-                    {controlFavorites(coin.id)}
+                  <AddFavorites id={coin.id} />
                   </button>
                 </span>
 
@@ -100,14 +89,14 @@ function CryptoCard() {
               <div className="flex justify-center items-center">
                 <h1 className="text-2xl font-bold mx-2">
                   {symbol}
-                  {coin.market_data.current_price[currencyEdit]}
+                  {coin.market_data.current_price[currency]}
                 </h1>
                 <span className="font-bold mt-1">
                   {" "}
                   <CheckPositiveNumber
                     number={
                       coin.market_data.price_change_percentage_24h_in_currency[
-                        currencyEdit
+                        currency
                       ]
                     }
                   />
@@ -116,7 +105,7 @@ function CryptoCard() {
               <br />
               <div className="flex justify-center ">
                 <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-red-600 text-white rounded-full">
-                  {symbol} {coin.market_data.low_24h[currencyEdit]}
+                  {symbol} {coin.market_data.low_24h[currency]}
                 </h1>
 
                 <span className="text-xs inline-block py-2 px-2 leading-none text-center whitespace-nowrap align-baseline  bg-yellow-500 text-black rounded-lg mx-5 ">
@@ -124,7 +113,7 @@ function CryptoCard() {
                 </span>
 
                 <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-green-600 text-white rounded-full">
-                  {symbol} {coin.market_data.high_24h[currencyEdit]}
+                  {symbol} {coin.market_data.high_24h[currency]}
                 </h1>
               </div>
               <br />
@@ -137,7 +126,7 @@ function CryptoCard() {
                 <h1 className=" font-bold mr-10"> ATH: </h1>
                 <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
                   {symbol}
-                  {coin.market_data.ath[currencyEdit]}
+                  {coin.market_data.ath[currency]}
                 </span>
               </div>
 
@@ -167,7 +156,7 @@ function CryptoCard() {
                 <span className="text-sm bg-yellow-400 rounded-lg  px-2">
                   {symbol}{" "}
                   {NumberWithCommas(
-                    coin.market_data.total_volume[currencyEdit]
+                    coin.market_data.total_volume[currency]
                   )}
                 </span>
               </div>
