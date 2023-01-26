@@ -6,42 +6,24 @@ import {
   AddFavorites,
 } from "../utils";
 
-import {
-  BuyCrypto,
-  SellCrypto,
-} from "../modal";
+import {BuyCrypto, SellCrypto} from "../modal";
 
-
-import { Link } from "react-router-dom";
-import { CryptoState } from "../redux/CryptoContext";
+import {Link} from "react-router-dom";
+import {CryptoState} from "../redux/CryptoContext";
 import axios from "axios";
-import { Pagination } from "@mui/material";
-import {
-  Sparklines,
-  SparklinesLine,
-  SparklinesSpots,
-} from "react-sparklines";
-import {
-  CoinList,
-  GlobalData,
-} from "../../services/Api";
+import {Pagination} from "@mui/material";
+import {Sparklines, SparklinesLine, SparklinesSpots} from "react-sparklines";
+import {CoinList, GlobalData} from "../../services/Api";
 
-import {
-  addCrypto,
-  deleteCrypto,
-} from "../../services/firebase";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import {
-  useEffect,
-  useState,useMemo
-} from "react";
+import {addCrypto, deleteCrypto} from "../../services/firebase";
+import {useSelector} from "react-redux";
+import {toast} from "react-toastify";
+import {useEffect, useState, useMemo} from "react";
 function Markets() {
-  const { user } = useSelector((state) => state.auth);
-  const { favori } = useSelector((state) => state.favorites);
+  const {user} = useSelector((state) => state.auth);
+  const {favori} = useSelector((state) => state.favorites);
 
-
-  const { currency, symbol } = CryptoState();
+  const {currency, symbol} = CryptoState();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [globalData, setGlobalData] = useState([]);
@@ -49,31 +31,32 @@ function Markets() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(false);
+  const currencyEdit = currency.toLowerCase();
 
   const fetchCoins = async () => {
+    console.log(currency);
     setLoading(true);
-    const { data } = await axios
-      .get(CoinList(currency, count))
-      .catch((err) => setErr(true))
+    const {data} = await axios
+      .get(CoinList(currencyEdit, count))
+      .catch((err) => console.log(err))
       .finally(() => setLoading(false));
+    console.log(data);
     setCoins(data);
     setErr(false);
   };
   const fetchGlobalData = async () => {
-    const { data } = await axios(GlobalData());
+    const {data} = await axios(GlobalData());
     setGlobalData(data.data);
   };
-
 
   useEffect(() => {
     fetchGlobalData();
   }, [globalData]);
 
-
   useEffect(() => {
     fetchCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count, currency, page]);
+  }, [count, currencyEdit, page]);
 
   const filteredCoins = useMemo(() => {
     if (coins) {
@@ -82,7 +65,6 @@ function Markets() {
       );
     }
   }, [coins, search]);
-
 
   const handleSavedCoin = (e, id) => {
     e.preventDefault();
@@ -101,7 +83,6 @@ function Markets() {
     }
   };
 
-
   return (
     <div>
       <>
@@ -114,15 +95,9 @@ function Markets() {
                 Piyasa
                 {globalData.active_cryptocurrencies && (
                   <DataGlobal
-                    globalData={
-                      globalData
-                    }
-                    currency={
-                      currency
-                    }
-                    symbol={
-                      symbol
-                    }
+                    globalData={globalData}
+                    currencyEdit={currencyEdit}
+                    symbol={symbol}
                   />
                 )}
               </h1>
@@ -312,7 +287,7 @@ function Markets() {
                                     margin={-30}
                                     data={item.sparkline_in_7d.price}
                                   >
-                                    <SparklinesLine style={{ fill: "" }} />
+                                    <SparklinesLine style={{fill: ""}} />
                                     <SparklinesSpots />
                                   </Sparklines>
                                 </td>

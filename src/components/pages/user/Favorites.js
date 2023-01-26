@@ -17,7 +17,7 @@ export default function Favorites() {
 
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-
+const currencyEdit = currency.toLowerCase();
   const fetchCoins = () => {
     setLoading(true);
     favori.map(async (name) => {
@@ -164,7 +164,7 @@ export default function Favorites() {
                             <div className="">
                               {" "}
                               {symbol}
-                              {item.market_data.current_price[currency]}
+                              {item.market_data.current_price[currencyEdit]}
                             </div>
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -181,7 +181,7 @@ export default function Favorites() {
                             <div className="text-gray-900">
                               {symbol}
                               {NumberWithCommas(
-                                item.market_data.total_volume[currency]
+                                item.market_data.total_volume[currencyEdit]
                               )}
                             </div>
                           </td>

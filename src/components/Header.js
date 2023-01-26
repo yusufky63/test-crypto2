@@ -1,21 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink } from "react-router-dom";
-import { CryptoState } from "./redux/CryptoContext";
+import {Fragment} from "react";
+import {Disclosure, Menu, Transition} from "@headlessui/react";
+import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
+import {NavLink} from "react-router-dom";
+import {CryptoState} from "./redux/CryptoContext";
 import ModalLogin from "./modal/ModalLogin";
 import ModalRegister from "./modal/ModalRegister";
-import { logout } from "../services/firebase";
-import { useSelector } from "react-redux";
+import {logout} from "../services/firebase";
+import {useSelector} from "react-redux";
 function Header() {
-  const { user } = useSelector((state) => state.auth);
-  const { currency, setCurrency } = CryptoState();
+  const {user} = useSelector((state) => state.auth);
+  const {currency, setCurrency} = CryptoState();
 
   return (
     <>
       <Disclosure as="nav" className="bg-white navbar ">
-        {({ open }) => (
+        {({open}) => (
           <>
             <div className="mx-auto  max-w-7xl px-2 sm:px-6 ">
               <div className="relative flex h-20 items-center justify-between ">
@@ -38,11 +38,11 @@ function Header() {
                         {" "}
                         <NavLink
                           end
-                          style={({ isActive }) => ({
+                          style={({isActive}) => ({
                             textDecoration: isActive ? "underline 4px" : "none",
                             textUnderlineOffset: isActive ? "8px" : "none",
                           })}
-                          className="mx-2 text-xl text-black  hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
+                          className="mx-2 text-lg text-black  hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md  "
                           to="/"
                         >
                           Ana Sayfa
@@ -51,11 +51,11 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({ isActive }) => ({
+                          style={({isActive}) => ({
                             textDecoration: isActive ? "underline 4px" : "none",
                             textUnderlineOffset: isActive ? "8px" : "none",
                           })}
-                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          className="mx-2  text-lg  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/markets"
                         >
                           Piyasalar
@@ -63,11 +63,11 @@ function Header() {
                       </div>
                       <div>
                         <NavLink
-                          style={({ isActive }) => ({
+                          style={({isActive}) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
-                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          className="mx-2  text-lg  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/exchanges"
                         >
                           Borsalar
@@ -76,11 +76,11 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({ isActive }) => ({
+                          style={({isActive}) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
-                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          className="mx-2  text-lg  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/news"
                         >
                           Haberler
@@ -89,11 +89,11 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({ isActive }) => ({
+                          style={({isActive}) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
-                          className="mx-2  text-xl  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          className="mx-2  text-lg  text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/academia"
                         >
                           Akademi
@@ -102,11 +102,11 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({ isActive }) => ({
+                          style={({isActive}) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
-                          className="mx-2  text-xl  mr-10 text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
+                          className="mx-2  text-lg  mr-10 text-black hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md "
                           to="/quiz"
                         >
                           Quiz
@@ -125,17 +125,19 @@ function Header() {
                     </div>
                   </div>
                 </div>
+    {/* Profile dropdown */}
                 <div className=" absolute inset-y-0 right-0 flex  items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <select
                     value={currency}
                     className=" rounded-lg  p-2 border  outline-none"
                     onChange={(e) => setCurrency(e.target.value)}
                   >
-                    <option value={"USD"}>USD</option>
+                    {" "}
                     <option value={"TRY"}>TRY</option>
+                    <option value={"USD"}>USD</option>
                   </select>
 
-                  {/* Profile dropdown */}
+              
                   <Menu as="div" className=" relative ml-3 ">
                     <div>
                       <Menu.Button className="flex rounded-full text-sm ">

@@ -21,7 +21,7 @@ function CryptoCard() {
   const [coin, setCoin] = useState();
   const { currency, symbol } = CryptoState();
   const [symbolTrading, setSymbolTrading] = useState();
-
+  const currencyEdit = currency.toLowerCase();
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(id));
     console.log(symbolTrading);
@@ -89,14 +89,14 @@ function CryptoCard() {
               <div className="flex justify-center items-center">
                 <h1 className="text-2xl font-bold mx-2">
                   {symbol}
-                  {coin.market_data.current_price[currency]}
+                  {coin.market_data.current_price[currencyEdit]}
                 </h1>
                 <span className="font-bold mt-1">
                   {" "}
                   <CheckPositiveNumber
                     number={
                       coin.market_data.price_change_percentage_24h_in_currency[
-                        currency
+                        currencyEdit
                       ]
                     }
                   />
@@ -105,7 +105,7 @@ function CryptoCard() {
               <br />
               <div className="flex justify-center ">
                 <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-red-600 text-white rounded-full">
-                  {symbol} {coin.market_data.low_24h[currency]}
+                  {symbol} {coin.market_data.low_24h[currencyEdit]}
                 </h1>
 
                 <span className="text-xs inline-block py-2 px-2 leading-none text-center whitespace-nowrap align-baseline  bg-yellow-500 text-black rounded-lg mx-5 ">
@@ -113,7 +113,7 @@ function CryptoCard() {
                 </span>
 
                 <h1 className="text-xs inline-block py-2 px-2.5 leading-none text-center whitespace-nowrap align-baseline  bg-green-600 text-white rounded-full">
-                  {symbol} {coin.market_data.high_24h[currency]}
+                  {symbol} {coin.market_data.high_24h[currencyEdit]}
                 </h1>
               </div>
               <br />
@@ -156,7 +156,7 @@ function CryptoCard() {
                 <span className="text-sm bg-yellow-400 rounded-lg  px-2">
                   {symbol}{" "}
                   {NumberWithCommas(
-                    coin.market_data.total_volume[currency]
+                    coin.market_data.total_volume[currencyEdit]
                   )}
                 </span>
               </div>

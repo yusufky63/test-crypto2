@@ -1,25 +1,18 @@
-import {
-  useEffect,
-  useState,
-} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import { CryptoState } from "../redux/CryptoContext";
-import { TopCoins } from "../../services/Api";
+import {CryptoState} from "../redux/CryptoContext";
+import {TopCoins} from "../../services/Api";
 
-import {
-  HomeHeader,
-  Contact,
-  PageLinks,
-  TrendCoin,
-} from "./HomeComp";
+import {HomeHeader, Contact, PageLinks, TrendCoin} from "./HomeComp";
 
 function Home() {
   const [crypto, setCrypto] = useState([]);
-  const { currency, symbol } = CryptoState();
+  const {currency, symbol} = CryptoState();
   const [loading, setLoading] = useState(false);
+  const currencyEdit = currency.toLowerCase();
   const getCoins = async () => {
     setLoading(true);
-    const { data } = await axios.get(TopCoins(currency));
+    const {data} = await axios.get(TopCoins(currencyEdit));
     setCrypto(data);
     setLoading(false);
   };
@@ -27,15 +20,15 @@ function Home() {
   useEffect(() => {
     getCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency]);
-
+  }, [currencyEdit]);
+console.log(symbol);
   return (
     <div>
       <HomeHeader />
 
       <TrendCoin
         crypto={crypto}
-        currency={currency}
+        currencyEdit={currencyEdit}
         symbol={symbol}
         loading={loading}
       />

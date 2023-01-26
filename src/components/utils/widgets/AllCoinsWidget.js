@@ -13,9 +13,10 @@ function AllCoinsWidget() {
   const [crypto, setCrypto] = useState([]);
   const { currency, symbol } = CryptoState();
   const [loading, setLoading] = useState(false);
+const currencyEdit = currency.toLowerCase();
   const fetchCoins = async () => {
     setLoading(true);
-    const { data } = await axios.get(CoinList(currency, 50));
+    const { data } = await axios.get(CoinList(currencyEdit, 50));
 
     setCrypto(data);
     setLoading(false);
@@ -25,7 +26,7 @@ function AllCoinsWidget() {
     fetchCoins();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency]);
+  }, [currencyEdit]);
 
   return (
     <div>

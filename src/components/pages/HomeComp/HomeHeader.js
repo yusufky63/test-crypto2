@@ -32,7 +32,7 @@ export default function HomeHeader() {
           <img
             className="mt-10 sm:mt-0 "
             width={"35%"}
-            src={require("../../../img/svg-1.png")}
+            src={require("../../../assets/img/svg-1.png")}
             alt="resim"
           />
         </div>

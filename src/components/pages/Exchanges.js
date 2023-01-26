@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import axios from "axios";
-import { TopExchanges } from "../../services/Api";
+import {TopExchanges} from "../../services/Api";
 import NumberWithCommas from "../utils/NumberWithCommas";
 
 function Exchanges() {
@@ -9,10 +9,10 @@ function Exchanges() {
   const [count, setCount] = useState(50);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
+
   const getExchanges = async () => {
     setLoading(true);
-    const { data } = await axios.get(TopExchanges(count));
-
+    const {data} = await axios.get(TopExchanges(count));
     setExchanges(data);
     setLoading(false);
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import myLogo from "../../../img/pageLinks.svg";
+import myLogo from "../../../assets/img/pageLinks.svg";
 function PageLinks() {
   return (
     <div className="flex justify-center ">
