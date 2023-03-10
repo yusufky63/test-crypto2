@@ -28,11 +28,11 @@ function Exchanges() {
       )
     );
   }, [search, exchanges]);
-
+  console.log(exchanges);
   return (
     <div className="">
       <div>
-        <h1 className="font-bold xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl my-10 flex justify-center items-center">
+        <h1 className="font-bold xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl my-10 flex justify-center  items-center">
           Borsalar TOP{" "}
           <span
             className="inline-flex items-center py-2 px-3 mx-2 xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-xl font-medium text-center text-white bg-red-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-red-800"
@@ -66,96 +66,175 @@ function Exchanges() {
       </div>
       <br />
       <br />
-
-      <ul>
-        <div className=" flex justify-center  max-w-7xl mx-auto flex-wrap gap-8">
-          {loading ? (
-            <div role="status">
-              <svg
-                className="inline mr-2 w-8 h-8 text-gray-200 animate-spin fill-red-600"
-                viewBox="0 0 100 101"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                  fill="currentFill"
-                />
-              </svg>
-            </div>
-          ) : (
-            filter &&
-            filter.map((exchange) => (
-              <li className="shadow-xl  relative" key={exchange.id}>
-                <h1 className="absolute  mb-8 border px-4 py-1  rounded-r-full bg-yellow-400">
-                  {exchange.trust_score_rank}
-                </h1>
-                <div className="p-1 max-w-sm bg-white  border-gray-200 ">
-                  <div className="flex justify-center mt-5">
-                    {" "}
-                    <img className="rounded-full" src={exchange.image} alt="" />
-                  </div>
-
-                  <div className="p-5">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                      {exchange.name}
-                    </h5>
-
-                    <div className="text-xl ">Ülke </div>
-                    <span className="mb-3  font-normal text-gray-700">
-                      {exchange.country}
-                    </span>
-                    <br />
-                    <br />
-                    <div className="text-xl">24 Saatlik İşlem Hacmi</div>
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      Btc : {NumberWithCommas(exchange.trade_volume_24h_btc)}
-                    </p>
-
-                    <div className="my-3 text-xl">Trust Score </div>
-                    {exchange.trust_score < 7 ? (
-                      <span className=" p-2  h-10 bg-red-600 rounded-full text-white">
-                        {exchange.trust_score}
-                      </span>
-                    ) : (
-                      <span className=" p-2  h-10 bg-green-600 rounded-full text-white">
-                        {exchange.trust_score}
-                      </span>
-                    )}
-                    <br />
-                    <br />
-                    <a
-                      target={"_blank"}
-                      href={exchange.url}
-                      className="inline-flex items-center py-3 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      rel="noreferrer"
+      <div className=" px-6  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
+        <div className="mt-8 flex flex-col">
+          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+              <div className="overflow-hidden shadow   md:rounded-lg">
+                {loading ? (
+                  <div role="status">
+                    <svg
+                      className="inline mr-2 w-8 h-8 text-gray-200 animate-spin fill-red-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      Borsaya Git
-                      <svg
-                        aria-hidden="true"
-                        className="ml-2 -mr-1 w-4 h-4"
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                         fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </a>
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
                   </div>
-                </div>
-              </li>
-            ))
-          )}
+                ) : (
+                  <table className="min-w-full divide-y divide-gray-300">
+                    <thead className="bg-gray-50 ">
+                      <tr className="text-center">
+                        <th
+                          scope="col"
+                          className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900 "
+                        ></th>
+
+                        <th
+                          scope="col"
+                          className="whitespace-nowrap px-1  py-3.5 text-left pl-8 text-sm font-semibold text-gray-900"
+                        >
+                          Borsa
+                        </th>
+                        <th
+                          scope="col"
+                          className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                        >
+                          Trust Score
+                        </th>
+                        <th
+                          scope="col"
+                          className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                        >
+                          24 Saatlik BTC Hacmi
+                        </th>
+                        <th
+                          scope="col"
+                          className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                        >
+                          Kuruluş Tarihi
+                        </th>
+                        <th
+                          scope="col"
+                          className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                        >
+                          Bulunduğu Ülke
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Ayrıntılar
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody className=" divide-y divide-gray-200 bg-white ">
+                      {filter &&
+                        filter.map((item) => (
+                          <tr
+                            id="priceT"
+                            className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 "
+                            key={item.id}
+                          >
+                            {" "}
+                            <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-500">
+                              <div className="text-gray-900">
+                                {item.trust_score_rank}
+                              </div>
+                            </td>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                              <div className="flex items-center">
+                                <div className="h-8 w-8 flex-shrink-0">
+                                  <img
+                                    className="h-8 w-8 rounded-full"
+                                    src={item.image}
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="ml-4">
+                                  <div className=" text-gray-900 font-bold ">
+                                    {" "}
+                                    {item.name}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
+                              {item.trust_score < 7 ? (
+                                <span className=" p-1 px-4  bg-red-600 rounded-lg text-white">
+                                  {item.trust_score}
+                                </span>
+                              ) : (
+                                <span className=" p-1  px-4   bg-green-600 rounded-lg text-white">
+                                  {item.trust_score}
+                                </span>
+                              )}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <div className="text-gray-900">
+                                <span className="text-yellow-400">฿</span>{" "}
+                                {NumberWithCommas(item.trade_volume_24h_btc)}
+                              </div>
+                            </td>
+                            <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <div className="text-gray-900">
+                                {" "}
+                                {item.year_established}
+                              </div>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <div className="text-gray-900">
+                                {" "}
+                                {item.country}
+                              </div>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <div className="text-gray-900">
+                                <a
+                                  href={item.url}
+                                  rel="noreferrer"
+                                  target="_blank"
+                                  className="flex justify-between bg-gray-600 text-white text-center p-2  hover:bg-gray-300 hover:text-black lg:indent-0  -indent-96 shadow-lg rounded-md   "
+                                >
+                                  <span>Git</span>
+                                  <span className="text-end">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                                      />
+                                    </svg>
+                                  </span>
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-      </ul>
+      </div>
     </div>
   );
 }

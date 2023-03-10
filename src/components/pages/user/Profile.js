@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import {useState} from "react";
+import {useSelector} from "react-redux";
 import {
   upProfile,
   UpdatePassword,
@@ -8,7 +8,7 @@ import {
 import DeleteAccount from "../../modal/DeleteAccount";
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  const {user} = useSelector((state) => state.auth);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState(user.displayName);
@@ -29,8 +29,8 @@ function Profile() {
 
   return (
     <div className="flex justify-center">
-      <div className="m-5">
-        <div className="flex text-left p-2 border shadow-2xl rounded-lg m-10 ">
+      <div className="m-2">
+        <div className="flex text-left p-2 border shadow-lg rounded-lg m-10 ">
           <div className="p-5 ">
             {!user.emailVerified && (
               <div className="text-sm rounded-lg text-white flex justify-center mb-5 items-center bg-yellow-400 p-1">
@@ -157,7 +157,7 @@ function Profile() {
                   {" "}
                   <button
                     onClick={handleEmailVerified}
-                    className=" border p-2 mt-1 shadow-md rounded-lg hover:bg-gray-200 text-yellow-500"
+                    className=" border p-2 mt-1 shadow-sm rounded-lg hover:bg-gray-200 text-yellow-500"
                   >
                     Emaili Doğrula
                   </button>
@@ -165,7 +165,7 @@ function Profile() {
               ) : (
                 <div className="flex justify-end">
                   {" "}
-                  <span className="border p-2 mt-1 shadow-md rounded-lg text-green-500">
+                  <span className="border p-2 mt-1 shadow-sm rounded-lg text-green-500">
                     Email Doğrulandı
                   </span>
                 </div>

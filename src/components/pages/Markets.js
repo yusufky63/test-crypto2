@@ -27,23 +27,23 @@ function Markets() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [globalData, setGlobalData] = useState([]);
-  const [count, setCount] = useState(50);
+  const [count, setCount] = useState(10);
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(false);
   const currencyEdit = currency.toLowerCase();
 
   const fetchCoins = async () => {
-    console.log(currency);
     setLoading(true);
     const {data} = await axios
       .get(CoinList(currencyEdit, count))
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-    console.log(data);
+      .catch((err) => console.log(err));
+
     setCoins(data);
+    setLoading(false);
     setErr(false);
   };
+
   const fetchGlobalData = async () => {
     const {data} = await axios(GlobalData());
     setGlobalData(data.data);
@@ -51,14 +51,16 @@ function Markets() {
 
   useEffect(() => {
     fetchGlobalData();
-  }, [globalData]);
+  }, []);
 
   useEffect(() => {
     fetchCoins();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count, currencyEdit, page]);
+  }, [count, currency, page]);
 
   const filteredCoins = useMemo(() => {
+
     if (coins) {
       return coins.filter((coin) =>
         coin.name.toLowerCase().includes(search.toLowerCase())
@@ -82,7 +84,7 @@ function Markets() {
       toast.warning("Lütfen Giriş Yapınız !");
     }
   };
-
+  console.log(currencyEdit);
   return (
     <div>
       <>

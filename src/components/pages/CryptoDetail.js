@@ -126,7 +126,7 @@ function CryptoCard() {
                 <h1 className=" font-bold mr-10"> ATH: </h1>
                 <span className=" text-sm bg-yellow-400 rounded-lg  px-2">
                   {symbol}
-                  {coin.market_data.ath[currency]}
+                  {coin.market_data.ath[currencyEdit]}
                 </span>
               </div>
 
@@ -215,10 +215,10 @@ function CryptoCard() {
               <br />
               <div className="border shadow-lg rounded-lg p-3">
                 {" "}
-                <button className="shadow-lg border hover:bg-green-400   my-1 rounded-lg p-1 px-5 w-full">
+                <button className="shadow-md  hover:bg-green-400   my-1 rounded-lg p-1 px-5 w-full">
                   <BuyCrypto cryptoID={coin.id}></BuyCrypto>
                 </button>
-                <button className=" shadow-lg border hover:bg-red-400 rounded-lg  my-1 p-1 px-5 w-full">
+                <button className=" shadow-md  hover:bg-red-400 rounded-lg  my-1 p-1 px-5 w-full">
                   <SellCrypto cryptoID={coin.id}></SellCrypto>
                 </button>
               </div>
@@ -247,7 +247,7 @@ function CryptoCard() {
           </h1>
           <div className="flex justify-center">
             <div
-              className="mx-5 about-text text-left  container whitespace-pre-line  "
+              className="mx-5 about-text text-left  container whitespace-pre-line"
               dangerouslySetInnerHTML={{ __html: coin.description?.en }}
             ></div>
           </div>

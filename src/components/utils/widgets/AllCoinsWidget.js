@@ -1,36 +1,41 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import CheckPositiveNumber from "../CheckPositiveNumber";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { CryptoState } from "../../redux/CryptoContext";
-import { CoinList } from "../../../services/Api";
+import {useEffect, useState} from "react";
+import {CryptoState} from "../../redux/CryptoContext";
+import {CoinList} from "../../../services/Api";
 import WidgetSkeleton from "../design/WidgetSkeleton";
 
 function AllCoinsWidget() {
   const [crypto, setCrypto] = useState([]);
-  const { currency, symbol } = CryptoState();
+  const {currency, symbol} = CryptoState();
   const [loading, setLoading] = useState(false);
-const currencyEdit = currency.toLowerCase();
+
   const fetchCoins = async () => {
     setLoading(true);
-    const { data } = await axios.get(CoinList(currencyEdit, 50));
-
+    setCrypto([]);
+    const {data} = await axios
+      .get(CoinList(currency.toLowerCase(), 20))
+      .finally(() => {
+        setLoading(false);
+      });
     setCrypto(data);
-    setLoading(false);
   };
 
   useEffect(() => {
     fetchCoins();
-
+    if (crypto > 0) {
+      setLoading(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currencyEdit]);
+  }, [currency]);
 
   return (
     <div>
-      <div className=" flex justify-center flex-wrap  ">
+      <div className="flex justify-center flex-wrap">
         {
           <AliceCarousel
             autoPlay
@@ -85,11 +90,11 @@ const currencyEdit = currency.toLowerCase();
 export default AllCoinsWidget;
 
 const responsive = {
-  0: { items: 2 },
-  680: { items: 3 },
-  940: { items: 4 },
-  1280: { items: 6 },
-  1480: { items: 6 },
-  1536: { items: 8 },
-  1920: { items: 10 },
+  0: {items: 2},
+  680: {items: 3},
+  940: {items: 4},
+  1280: {items: 6},
+  1480: {items: 6},
+  1536: {items: 8},
+  1920: {items: 10},
 };

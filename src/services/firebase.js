@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { setFavorites } from "../components/redux/favorite/favoriteSlice";
 import { setPortfolyo } from "../components/redux/portfolyo/portfolyoSlice";
 import { setOrder } from "../components/redux/portfolyo/orderHistorySlice";
+import { setLastLogin } from "../components/redux/portfolyo/lastLoginSlice";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -150,6 +151,20 @@ onAuthStateChanged(auth, (user) => {
           setOrder(
             doc.docs.reduce(
               (orders, order) => [...orders, { ...order.data(), id: order.id }],
+              []
+            )
+          )
+        );
+      }
+    );
+  //lAST LOGINS
+    onSnapshot(
+      query(collection(db, "lastlogins"), where("uid", "==", user.uid)),
+      (doc) => {
+        store.dispatch(
+          setLastLogin(
+            doc.docs.reduce(
+              (lastLogins, lastLogin) => [...lastLogins, { ...lastLogin.data(), id: lastLogin.id }],
               []
             )
           )
@@ -324,9 +339,9 @@ export const reAuth = async (password) => {
   }
 };
 
-//ORDER HİSTORY
 
-//DELETE PORTFOLIO
+
+//DELETE HISTORY
 export const deleteOrderHistory = async (id) => {
   try {
     if (id) {
@@ -337,18 +352,30 @@ export const deleteOrderHistory = async (id) => {
   }
 };
 
-//ADD PORTFOLIO
+//ADD HISTORY
 export const addOrderHistory = async (order) => {
   try {
     const result = await addDoc(collection(db, "orders"), order);
-
     return result.id;
   } catch (error) {
     errorMessages(error)
   }
-
   await addDoc(collection(db, "orders"), order);
 };
+
+
+
+//ADD LOGIN HISTORY
+export const lastLoginIP = async (logindata) => {
+  try {
+    const result = await addDoc(collection(db, "lastlogins"), logindata);
+    return result.id;
+  } catch (error) {
+    errorMessages(error)
+  }
+  await addDoc(collection(db, "lastlogins"), logindata);
+};
+
 //Error Handling
 const errorMessages = (error) => {
   toast.error(

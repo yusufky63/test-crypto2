@@ -25,6 +25,10 @@ export default function OrderHistory() {
     setIsOpen(true);
   }
 
+ const sortedOrder = [...order].sort((a, b) => {
+    return  b.order_date.toDate() - a.order_date.toDate();
+  });
+
   return (
     <>
       <button
@@ -193,7 +197,7 @@ export default function OrderHistory() {
                                 </thead>
 
                                 <tbody className=" divide-y divide-gray-200 bg-white  ">
-                                  {order
+                                  {sortedOrder
                                     .slice((page - 1) * 10, (page - 1) * 10 + 10)
                                     .map((item) => (
                                     <tr
@@ -267,7 +271,6 @@ export default function OrderHistory() {
                                 }}
                               />
                               <div className="flex justify-end items-center">
-                                {" "}
                                 <OrderHistoryDelete />
                               </div>
                             </>

@@ -77,7 +77,7 @@ function Portfolyo() {
     <div className="portfolio-bg">
       <div className="pt-5 max-w-7xl mx-auto relative mt-10">
         {
-          <div className="w-full hover:shadow-xl border shadow-md p-5 rounded-lg font-bold flex items-center justify-between">
+          <div className="w-full border shadow-md p-5 rounded-lg font-bold flex items-center justify-between">
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
               {" "}
               Hesap Bakiyesi :{" "}
