@@ -32,7 +32,7 @@ function Exchanges() {
   return (
     <div className="">
       <div>
-        <h1 className="font-bold xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-2xl my-10 flex justify-center  items-center">
+        <h1 className="font-bold xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-3xl my-8 flex justify-center  items-center">
           Borsalar TOP{" "}
           <span
             className="inline-flex items-center py-2 px-3 mx-2 xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-xl font-medium text-center text-white bg-red-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-red-800"
@@ -47,7 +47,7 @@ function Exchanges() {
         <input
           type="text"
           placeholder="Arama"
-          className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-md md:4/6 lg:w-3/6  xl:w-2/6 "
+          className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-md lg:w-3/6  xl:w-2/6 "
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -64,10 +64,9 @@ function Exchanges() {
           <option value={100}>100</option>
         </select>
       </div>
-      <br />
-      <br />
+
       <div className=" px-6  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
-        <div className="mt-8 flex flex-col">
+        <div className="mt-4 flex flex-col">
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden shadow   md:rounded-lg">
@@ -203,7 +202,7 @@ function Exchanges() {
                                   href={item.url}
                                   rel="noreferrer"
                                   target="_blank"
-                                  className="flex justify-between bg-gray-600 text-white text-center p-2  hover:bg-gray-300 hover:text-black lg:indent-0  -indent-96 shadow-lg rounded-md   "
+                                  className="flex justify-between bg-gray-600 text-white text-center p-2  hover:bg-gray-300 hover:text-black  shadow-lg rounded-md   "
                                 >
                                   <span>Git</span>
                                   <span className="text-end">

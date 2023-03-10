@@ -5,15 +5,14 @@ function LastLogins() {
   const {lastLogin} = useSelector((state) => state.lastLogins);
   const [page, setPage] = React.useState(1);
 
-  const browserVersion = window.navigator.appVersion;
-  const isMobile = window.innerWidth <= 768;
+
   const sortedLastLogin = [...lastLogin].sort((a, b) => {
     return b.date.toDate() - a.date.toDate();
   });
   return (
     <div>
       {" "}
-      <li className="border p-2 rounded-lg shadow-sm my-3 ">
+      <li className="border p-2 rounded-lg shadow-sm my-3 text-sm">
         <h1 className="text-2xl font-bold mb-5">Son Girişler </h1>
         <span className="flex items-center justify-between text-center">
           <table className="w-full">
@@ -35,10 +34,10 @@ function LastLogins() {
                     </td>
                     <td className="border px-4 py-2">{item.ip}</td>
                     <td className="border px-4 py-2">
-                      {isMobile ? "Mobil" : "Masaüstü"}
+                      {item.isMobile ? "Mobil" : "Masaüstü"}
                     </td>
                     <td className="w-full border px-4 py-2 text-xs max-w-xs">
-                      {browserVersion}
+                      {item.userAgent}
                     </td>
                   </tr>
                 ))}
