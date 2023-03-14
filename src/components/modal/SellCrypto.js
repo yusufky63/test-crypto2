@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import { DialogTitle } from "@mui/material";
-import { useSelector } from "react-redux";
+import {useEffect} from "react";
+import {Dialog, Transition} from "@headlessui/react";
+import {Fragment, useState} from "react";
+import {DialogTitle} from "@mui/material";
+import {useSelector} from "react-redux";
 import axios from "axios";
-import { SingleCoin } from "../../services/Api";
-import { updatePorfolyo, addOrderHistory } from "../../services/firebase";
+import {SingleCoin} from "../../services/Api";
+import {updatePorfolyo, addOrderHistory} from "../../services/firebase";
 import numberWithCommas from "../utils/NumberWithCommas";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
-function SellCrypto({ cryptoID }) {
-  const { portfolyo } = useSelector((state) => state.portfolios);
-  const { user } = useSelector((state) => state.auth);
+function SellCrypto({cryptoID}) {
+  const {portfolyo} = useSelector((state) => state.portfolios);
+  const {user} = useSelector((state) => state.auth);
   const data = portfolyo.find((item) => item.coin === cryptoID);
 
   let [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ function SellCrypto({ cryptoID }) {
   const [totalUSD, setTotalUSD] = useState(0);
 
   const fetchCoin = async () => {
-    const { data } = await axios.get(SingleCoin(cryptoID));
+    const {data} = await axios.get(SingleCoin(cryptoID));
     setCoin(data);
   };
 
@@ -81,12 +81,13 @@ function SellCrypto({ cryptoID }) {
       {
         <div
           display={data}
-          className="hover:bg-red-400 hover:text-white text-red-600"
+          className="hover:bg-red-400 hover:text-white text-red-600  rounded-lg"
         >
-          {" "}
-          <a className=" w-full " onClick={openModal}>
+          <a
+            className="w-full  px-5 flex justify-center"
+            onClick={openModal}
+          >
             SAT
-            {}
           </a>
         </div>
       }

@@ -15,7 +15,7 @@ function NewsDesign({ news }) {
               <span className="inline-block p-1 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded  md:text-xl sm:text-sm text-[12px]">
                 {news.news_provider_name}
               </span>
-              <h1 className="  lg:text-2xl md:text-xl sm:text-sm text-[14px]  font-bold tracking-tight text-gray-900 ">
+              <h1 className="  lg:text-xl md:text-lg sm:text-sm text-[14px]  font-bold  text-gray-900 ">
                 {news.HEADLINE}
               </h1>
 
@@ -29,7 +29,7 @@ function NewsDesign({ news }) {
                   <a
                     target="_blank"
                     href={news.third_party_url}
-                    className="flex items-center hover:bg-gray-300 p-2 border rounded-lg shadow-md "
+                    className="flex items-center hover:bg-gray-300 p-2 border rounded-lg  "
                     rel="noreferrer"
                   >
                     Habere Git

@@ -95,9 +95,9 @@ function BuyCrypto({ cryptoID }) {
   return (
     <div>
       {" "}
-      <div className=" hover:bg-green-400 hover:text-white text-green-600">
+      <div className=" hover:bg-green-400 hover:text-white text-green-600  rounded-lg">
         {" "}
-        <a className=" w-full " onClick={openModal}>
+        <a className=" w-full  px-5 flex justify-center rounded-lg " onClick={openModal}>
           AL
         </a>
       </div>

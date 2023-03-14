@@ -19,10 +19,10 @@ function AllCoinsWidget() {
     setCrypto([]);
     const {data} = await axios
       .get(CoinList(currency.toLowerCase(), 20))
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch((err) => console.log(err));
     setCrypto(data);
+
+    setLoading(false);
   };
 
   useEffect(() => {

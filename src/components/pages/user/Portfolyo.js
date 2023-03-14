@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 import axios from "axios";
-import { SingleCoin } from "../../../services/Api";
-import { deletePortfolyo } from "../../../services/firebase";
+import {SingleCoin} from "../../../services/Api";
+import {deletePortfolyo} from "../../../services/firebase";
 import BuyCrypto from "../../modal/BuyCrypto";
 import SellCrypto from "../../modal/SellCrypto";
 import Favorites from "./Favorites";
 
 import OrderHistory from "../../modal/OrderHistory";
 
-import { PortfolioChart, CheckPositiveNumber } from "../../utils"
+import {PortfolioChart, CheckPositiveNumber} from "../../utils";
 function Portfolyo() {
-  const { portfolyo } = useSelector((state) => state.portfolios);
+  const {portfolyo} = useSelector((state) => state.portfolios);
 
   const [wallet, setWallet] = useState([]);
   const [coins, setCoins] = useState([]);
@@ -26,8 +26,8 @@ function Portfolyo() {
     setLoading(true);
 
     portfolyo.map(async (name) => {
-      const { data } = await axios(SingleCoin(name.coin));
-      let mergeData = { ...name, ...data };
+      const {data} = await axios(SingleCoin(name.coin));
+      let mergeData = {...name, ...data};
 
       setCoins((prev) => [...prev, data]);
       setWallet((prev) => [
@@ -53,17 +53,18 @@ function Portfolyo() {
     setTotalRate(rate.reduce((a, b) => a + b, 0));
   }, [coins, wallet, rate]);
 
-  useEffect(() => {
+  function reset() {
     setInfo([]);
     setRate([]);
     setTotal(0);
     setTotalRate(0);
     setWallet([]);
     setCoins([]);
+  }
 
+  useEffect(() => {
+    reset();
     fetchCoins();
-
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portfolyo]);
 
@@ -201,7 +202,7 @@ function Portfolyo() {
                           {info.map((item) => (
                             <tr
                               id="priceT"
-                              className=" hover:shadow-md hover:bg-gray-100 "
+                              className=" hover:shadow-md hover:bg-gray-100 duration-300 ease-in-out"
                               key={item.id}
                             >
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
@@ -257,7 +258,7 @@ function Portfolyo() {
                                   {(item.market_data.current_price.usd -
                                     item.coin_price_usd) *
                                     item.buy_total_crypto >=
-                                    0 ? (
+                                  0 ? (
                                     <span className="text-green-500">
                                       {(
                                         (item.market_data.current_price.usd -
@@ -294,12 +295,12 @@ function Portfolyo() {
                               </td>
 
                               <td className="p-1">
-                                <button className="hover:bg-green-400 hover:text-white border bg-white shadow-md rounded-lg my-1 p-1 px-5 w-full">
+                                <button className="hover:bg-green-400 hover:text-white border bg-white shadow-md rounded-lg my-1  w-full">
                                   <BuyCrypto
                                     cryptoID={portfolyo && item.id}
                                   ></BuyCrypto>
                                 </button>
-                                <button className="border hover:bg-red-400 hover:text-white shadow-md rounded-lg p-1 my-1 px-5 w-full">
+                                <button className="border hover:bg-red-400 hover:text-white shadow-md rounded-lg  my-1 w-full">
                                   <SellCrypto
                                     cryptoID={portfolyo && item.id}
                                   ></SellCrypto>
@@ -350,7 +351,7 @@ function Portfolyo() {
         <h1 className="text-3xl font-bold  p-3 shadow-md rounded-lg text-left ">
           Favoriler
         </h1>
-        <Favorites></Favorites>
+        <Favorites/>
       </div>
     </div>
   );

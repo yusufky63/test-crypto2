@@ -1,11 +1,11 @@
 import React from "react";
-import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
+import {Sparklines, SparklinesLine, SparklinesSpots} from "react-sparklines";
 import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import TrendSkeleton from "../../utils/design/TrendSkeleton";
 import "react-alice-carousel/lib/alice-carousel.css";
 
-function TrendCoin({ crypto, symbol, loading }) {
+function TrendCoin({crypto, symbol, loading}) {
   return (
     <>
       <h1 className=" font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl text-2xl mt-20 ">
@@ -13,12 +13,12 @@ function TrendCoin({ crypto, symbol, loading }) {
       </h1>
       <div className="flex justify-center bg">
         <div>
-          <div className="slide-in-left flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-8 xl:gap-20 lg:gap-16 md:gap-12 mb-10">
+          <div className="slide-in-left flex justify-center max-w-7xl mx-auto flex-wrap  grid-cols-3 gap-8 xl:gap-20 lg:gap-16 md:gap-12 mb-10  ">
             {!loading ? (
               crypto.map((coin) => (
                 <div
                   key={coin.id}
-                  className="top-coins rounded-lg p-7 w-48 bg-white  relative "
+                  className="top-coins rounded-lg p-7 w-48 bg-white  relative  duration-500 ease-in-out transform hover:scale-105"
                 >
                   <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2">
                     {coin.market_cap_rank}
@@ -59,7 +59,7 @@ function TrendCoin({ crypto, symbol, loading }) {
                       margin={-40}
                       data={coin.sparkline_in_7d.price}
                     >
-                      <SparklinesLine style={{ fill: "none" }} />
+                      <SparklinesLine style={{fill: "none"}} />
                       <SparklinesSpots />
                     </Sparklines>
                   </div>

@@ -60,7 +60,6 @@ function Markets() {
   }, [count, currency, page]);
 
   const filteredCoins = useMemo(() => {
-
     if (coins) {
       return coins.filter((coin) =>
         coin.name.toLowerCase().includes(search.toLowerCase())
@@ -215,7 +214,7 @@ function Markets() {
                             .map((item) => (
                               <tr
                                 id="priceT"
-                                className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 "
+                                className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100  duration-300 ease-in-out  "
                                 key={item.id}
                               >
                                 <td
@@ -294,10 +293,10 @@ function Markets() {
                                   </Sparklines>
                                 </td>
                                 <td className="p-1">
-                                  <button className="border hover:bg-green-400 hover:text-white text-white shadow-md rounded-lg my-1 p-1 px-5 w-full">
+                                  <button className="border hover:bg-green-400 hover:text-white text-white shadow-md rounded-lg my-1  w-full">
                                     <BuyCrypto cryptoID={item.id}></BuyCrypto>
                                   </button>
-                                  <button className="border hover:bg-red-400 hover:text-white text-red-900 shadow-md rounded-lg p-1 my-1 px-5 w-full">
+                                  <button className="border hover:bg-red-400 hover:text-white text-red-900 shadow-md rounded-lg  my-1 w-full">
                                     <SellCrypto cryptoID={item.id}></SellCrypto>
                                   </button>
                                 </td>

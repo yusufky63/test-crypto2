@@ -57,7 +57,7 @@ const currencyEdit = currency.toLowerCase();
       <div className="px-12 mt-4 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5   md:rounded-lg">
+            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
               {loading ? (
                 <div role="status">
                   <h1 className="my-2">Yükleniyor...</h1>
@@ -127,7 +127,7 @@ const currencyEdit = currency.toLowerCase();
                       {coins.map((item) => (
                         <tr
                           id="priceT"
-                          className="hover:bg-gray-100 hover:px-10 "
+                          className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100  duration-300 ease-in-out "
                           key={item.id}
                         >
                           <td onClick={(e) => handleSavedCoin(e, item.id)}>
@@ -186,10 +186,10 @@ const currencyEdit = currency.toLowerCase();
                             </div>
                           </td>
                           <td className="p-1">
-                            <button className="border hover:bg-green-400 shadow-md rounded-lg my-1 p-1 px-5 w-full">
+                            <button className="border hover:bg-green-400 shadow-md rounded-lg my-1 w-2/3">
                               <BuyCrypto cryptoID={item.id}></BuyCrypto>
                             </button>
-                            <button className="border hover:bg-red-400 shadow-md rounded-lg p-1 my-1 px-5 w-full">
+                            <button className="border hover:bg-red-400 shadow-md rounded-lg  my-1   w-2/3">
                               <SellCrypto cryptoID={item.id}></SellCrypto>
                             </button>
                           </td>

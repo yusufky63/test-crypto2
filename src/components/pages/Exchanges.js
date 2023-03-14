@@ -6,7 +6,7 @@ import NumberWithCommas from "../utils/NumberWithCommas";
 function Exchanges() {
   const [exchanges, setExchanges] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(50);
+  const [count, setCount] = useState(10);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
