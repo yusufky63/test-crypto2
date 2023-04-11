@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState} from "react";
 import {AddAcademyBlog, AddAcademyBlogPhoto} from "../../../services/firebase";
 import {useSelector} from "react-redux";

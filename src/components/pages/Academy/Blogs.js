@@ -2,11 +2,8 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 
-import {deleteBlog} from "../../../services/firebase";
-
 function Blogs() {
   const {blog} = useSelector((state) => state.blogs);
-  const {user} = useSelector((state) => state.auth);
   const readTime = (blogData) => {
     if (blogData.content) {
       const wordsPerMinute = 200;
@@ -17,11 +14,6 @@ function Blogs() {
     }
   };
 
-  const handleDelete = (id) => {
-    deleteBlog(id);
-  };
-
-console.log(blog);
   return (
     <div className="flex justify-center mt-10">
       <div className="w-full max-w-7xl">

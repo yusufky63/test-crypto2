@@ -1,21 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Pagination } from "@mui/material";
+import {Dialog, Transition} from "@headlessui/react";
+import {Fragment, useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {Pagination} from "@mui/material";
 import OrderHistoryDelete from "../modal/OrderHistoryDelete";
 export default function OrderHistory() {
   let [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const { order } = useSelector((state) => state.orders);
+  const {order} = useSelector((state) => state.orders);
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   }, [order]);
-
 
   function closeModal() {
     setIsOpen(false);
@@ -25,8 +24,8 @@ export default function OrderHistory() {
     setIsOpen(true);
   }
 
- const sortedOrder = [...order].sort((a, b) => {
-    return  b.order_date.toDate() - a.order_date.toDate();
+  const sortedOrder = [...order].sort((a, b) => {
+    return b.order_date.toDate() - a.order_date.toDate();
   });
 
   return (
@@ -92,7 +91,6 @@ export default function OrderHistory() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                   
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -118,11 +116,10 @@ export default function OrderHistory() {
                     Geçmiş Emirler
                   </Dialog.Title>
                   <div className="">
-                     
-                    Kayıt Sayısı : 
+                    Kayıt Sayısı :
                     <span className="rounded-lg text-sm text-white  p-1 bg-gray-600">
                       {order && order.length}
-                    </span> 
+                    </span>
                   </div>
                 </div>
                 <div className="my-5">
@@ -198,64 +195,65 @@ export default function OrderHistory() {
 
                                 <tbody className=" divide-y divide-gray-200 bg-white  ">
                                   {sortedOrder
-                                    .slice((page - 1) * 10, (page - 1) * 10 + 10)
+                                    .slice(
+                                      (page - 1) * 10,
+                                      (page - 1) * 10 + 10
+                                    )
                                     .map((item) => (
-                                    <tr
-                                      id="priceT"
-                                      className="hover:bg-gray-100 hover:px-10 text-center"
-                                      key={item.id}
-                                    >
-                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <div className="text-gray-900">
-                                          {item.id}
-                                        </div>
-                                      </td>
-                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <div className="text-gray-900">
-                                          {item.order_type === "BUY" ? (
-                                            <span className="text-green-500">
-                                              {item.order_type}
-                                            </span>
-                                          ) : (
-                                            <span className="text-red-500">
-                                              {item.order_type}
-                                            </span>
-                                          )}
-                                        </div>
-                                      </td>
-                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <div className="text-gray-900 uppercase">
-                                          {item.order_coin}
-                                        </div>
-                                      </td>
-                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <div className="text-gray-900">
-                                          {item.order_coin_price_usd} $
-                                        </div>
-                                      </td>
-                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <div className="text-gray-900">
-                                          {item.order_coin_price_usd_buy_total_crypto.toFixed(
-                                            5
-                                          )} 
-                                        </div>
-                                      </td>
+                                      <tr
+                                        id="priceT"
+                                        className="hover:bg-gray-100 hover:px-10 text-center"
+                                        key={item.id}
+                                      >
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                          <div className="text-gray-900">
+                                            {item.id}
+                                          </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                          <div className="text-gray-900">
+                                            {item.order_type === "BUY" ? (
+                                              <span className="text-green-500">
+                                                {item.order_type}
+                                              </span>
+                                            ) : (
+                                              <span className="text-red-500">
+                                                {item.order_type}
+                                              </span>
+                                            )}
+                                          </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                          <div className="text-gray-900 uppercase">
+                                            {item.order_coin}
+                                          </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                          <div className="text-gray-900">
+                                            {item.order_coin_price_usd} $
+                                          </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                          <div className="text-gray-900">
+                                            {item.order_coin_price_usd_buy_total_crypto.toFixed(
+                                              5
+                                            )}
+                                          </div>
+                                        </td>
 
-                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <div className="text-gray-900">
-                                          {new Date(
-                                            item.order_date.toDate()
-                                          ).toLocaleString()}
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))}
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                          <div className="text-gray-900">
+                                            {new Date(
+                                              item.order_date.toDate()
+                                            ).toLocaleString()}
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    ))}
                                 </tbody>
                               </table>
                               <Pagination
-                                count={Number(
-                                  (order.length / 10).toFixed(0)
-                                )}
+                                count={Number((order.length / 10).toFixed(0))}
                                 variant="outlined"
                                 shape="rounded"
                                 color="warning"

@@ -1,22 +1,21 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
+import {Dialog, Transition} from "@headlessui/react";
+import {Fragment, useState} from "react";
+import {useSelector} from "react-redux";
 
-import { deleteOrderHistory } from "../../services/firebase";
+import {deleteOrderHistory} from "../../services/firebase";
 
 export default function OrderHistoryDelete() {
   let [isOpen, setIsOpen] = useState(false);
-  const {order} = useSelector((state)=> state.orders)
+  const {order} = useSelector((state) => state.orders);
 
   //   const [password, setPassword] = useState("");
   const handleDelete = () => {
-    order.map((item)=>{
-        deleteOrderHistory(item.id);
-        closeModal()
-    })
-    
+    order.map((item) => {
+      deleteOrderHistory(item.id);
+      closeModal();
+    });
   };
 
   function closeModal() {
@@ -84,7 +83,6 @@ export default function OrderHistoryDelete() {
                   Tüm Kayıtları Silmek istediğinizden emin misiniz?
                 </Dialog.Description>
 
-               
                 <div className="flex justify-center">
                   <div>
                     <div className="form-floating mb-3  max-w-md">
@@ -120,7 +118,7 @@ export default function OrderHistoryDelete() {
                     type="button"
                     className="inline-flex justify-center  py-2 w-3/4  text-white bg-red-600 border border-transparent rounded-md hover:bg-red-900 duration-300"
                   >
-                     Sil
+                    Sil
                   </button>
                 </div>
                 <div className="mt-4 text-center flex justify-around">

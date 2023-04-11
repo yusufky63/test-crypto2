@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-unused-vars */
 import React from "react";
 import {Dialog, Transition} from "@headlessui/react";
 import {Fragment, useState} from "react";
@@ -180,7 +183,6 @@ function Auth2FALogin() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                   
                   <svg
                     className="w-6 h-6"
                     fill="none"

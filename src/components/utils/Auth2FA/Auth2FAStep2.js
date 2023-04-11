@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import QRCode from "qrcode.react";
 import {toast} from "react-toastify";

@@ -8,7 +8,6 @@ import {
   githubLogin,
   googleLogin,
 } from "../../services/firebase";
-import Auth2FALogin from "./Auth2FALogin";
 import IpLogger from "../utils/IpLogger";
 
 export default function ModalLogin() {
@@ -27,16 +26,14 @@ export default function ModalLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
     login(email, password);
-    IpLogger()
-   
+    IpLogger();
   };
 
   return (
     <>
       <a className="w-full " onClick={openModal}>
         Giriş Yap
-      </a>    
-
+      </a>
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
@@ -78,7 +75,6 @@ export default function ModalLogin() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                   
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -141,8 +137,8 @@ export default function ModalLogin() {
                 </Dialog.Title>
                 <div className="flex justify-center my-5 text-sm mx-10 bg-green-100 p-2 rounded-lg">
                   <div className="text-center ">
-                    <span className="text-green-600">https://</span> 
-                   cryptoxchain/login 
+                    <span className="text-green-600">https://</span>
+                    cryptoxchain/login
                   </div>
                 </div>
                 <div className="flex justify-center">
