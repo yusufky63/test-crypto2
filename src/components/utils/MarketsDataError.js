@@ -6,7 +6,7 @@ function MarketsDataError() {
   };
   return (
     <div>
-      {" "}
+       
       <span className=" items-center text-yellow-500 flex justify-end">
         <svg
           className="w-6 h-6"

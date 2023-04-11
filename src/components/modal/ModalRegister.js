@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import { register as registerFirebase } from "../../services/firebase";
-import { githubLogin, googleLogin } from "../../services/firebase";
+import {Dialog, Transition} from "@headlessui/react";
+import {Fragment, useState} from "react";
+import {register as registerFirebase} from "../../services/firebase";
+import {githubLogin, googleLogin} from "../../services/firebase";
 export default function ModalRegister() {
   let [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ export default function ModalRegister() {
   const handleRegister = (e) => {
     e.preventDefault();
     const user = registerFirebase(email, password);
-    console.log("register", user);
+
     if (user.email || user.photoURL) {
       closeModal();
     }
@@ -71,7 +71,6 @@ export default function ModalRegister() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                  {" "}
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -89,13 +88,13 @@ export default function ModalRegister() {
                 </button>
                 <br />
                 <br />
-                  {/* OTHER REGISTER */}
+                {/* OTHER REGISTER */}
                 <div className="flex justify-around mx-10 ">
                   <button
                     onClick={githubLogin}
                     type="button"
                     className="inline-block px-12 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  active:shadow-lg transition duration-150 ease-in-out"
-                    style={{ backgroundColor: "#333" }}
+                    style={{backgroundColor: "#333"}}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +111,7 @@ export default function ModalRegister() {
                     onClick={googleLogin}
                     type="button"
                     className="inline-block px-12 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  active:shadow-lg transition duration-150 ease-in-out"
-                    style={{ backgroundColor: "#ea4335" }}
+                    style={{backgroundColor: "#ea4335"}}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -135,8 +134,8 @@ export default function ModalRegister() {
                 </Dialog.Title>
                 <div className="flex justify-center my-5 text-sm mx-10 bg-green-100 p-2 rounded-lg">
                   <div className="text-center ">
-                    <span className="text-green-600">https://</span>{" "}
-                    test-react-crypo-app{" "}
+                    <span className="text-green-600">https://</span>
+                    cryptoxchain/register
                   </div>
                 </div>
                 <div className="flex justify-center">
@@ -195,9 +194,9 @@ export default function ModalRegister() {
                         placeholder="Şifre"
                       />
                     </div>
-                    <span className="text-indigo-500 flex justify-end mb-2 text-sm">
+                    {/* <span className="text-indigo-500 flex justify-end mb-2 text-sm">
                       Şifremi Unuttum
-                    </span>
+                    </span> */}
                   </div>
                 </div>
 

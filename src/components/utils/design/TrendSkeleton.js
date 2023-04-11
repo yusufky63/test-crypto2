@@ -6,7 +6,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -49,7 +49,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -92,7 +92,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -135,7 +135,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +158,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -178,7 +178,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +201,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -221,7 +221,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -244,7 +244,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -264,7 +264,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -287,7 +287,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -307,7 +307,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -330,7 +330,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -350,7 +350,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -373,7 +373,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>
@@ -393,7 +393,7 @@ function TrendSkeleton() {
       <div className="top-coins rounded-lg p-7 w-48 bg-white  relative animate-pulse">
         <span className="absolute left-0 top-0 bg-yellow-500 text-white  rounded text-sm px-2"></span>
         <div className="flex items-center">
-          {" "}
+           
           <svg
             className="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -416,7 +416,7 @@ function TrendSkeleton() {
         <br />
         <div className="flex items-center justify-between max-w-sm"></div>
         <div className="flex ">
-          {" "}
+           
           <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-400 w-24 mb-2.5"></div>
           <div className="h-2.5 ml-2 bg-gray-300 rounded-full dark:bg-gray-400 w-12 mb-2.5"></div>
         </div>

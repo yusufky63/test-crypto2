@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 
 function InternetConnection() {
   // Online state
@@ -22,7 +22,7 @@ function InternetConnection() {
       window.removeEventListener("offline", handleStatusChange);
     };
   }, [isOnline]);
-
+  console.log(isOnline);
   return (
     <div className="">
       {!isOnline && (

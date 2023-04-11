@@ -21,7 +21,7 @@ function Home() {
     getCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currencyEdit]);
-console.log(symbol);
+
   return (
     <div>
       <HomeHeader />
@@ -38,7 +38,7 @@ console.log(symbol);
       </div>
       <hr />
 
-      <Contact></Contact>
+      <Contact />
     </div>
   );
 }

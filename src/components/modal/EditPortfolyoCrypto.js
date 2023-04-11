@@ -142,7 +142,7 @@ export default function EditPortfolyoCrypto({ cryptoID }) {
                   >
                     Düzenle
                   </Dialog.Title>
-                  <h1 className="my-5 text-4xl text-red-500"> Geliştirme Aşamasında </h1>{" "}
+                  <h1 className="my-5 text-4xl text-red-500"> Geliştirme Aşamasında </h1> 
                   <div>
                     <div className="">
                       <h1 className="text-xl ">
@@ -194,17 +194,17 @@ export default function EditPortfolyoCrypto({ cryptoID }) {
                           placeholder={coin.symbol}
                         />
                       }
-                    </div>{" "}
+                    </div> 
                     <h1 className="text-start my-2 text-sm text-gray-500 flex justify-between">
                       <span>
-                        {" "}
-                        Hesaptaki {coin.name} :{" "}
-                        {data.buy_total_crypto.toFixed(6)}{" "}
+                         
+                        Hesaptaki {coin.name} : 
+                        {data.buy_total_crypto.toFixed(6)} 
                       </span>
 
                       <span>
-                        {" "}
-                        Fiyatı :{" "}
+                         
+                        Fiyatı : 
                         {(
                           data.buy_total_crypto *
                           coin.market_data.current_price.usd

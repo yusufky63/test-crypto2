@@ -19,19 +19,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  -webkit-animation: pulse 1.5s infinite ease-in;
-          animation: pulse 1.5s infinite ease-in;
-}
-
-@-webkit-keyframes pulse {
-  from {
-    transform: scale(0.5);
-    opacity: 1;
-  }
-  to {
-    transform: scale(1.5);
-    opacity: 0;
-  }
+  animation: pulse 1.5s infinite ease-in;
 }
 
 @keyframes pulse {

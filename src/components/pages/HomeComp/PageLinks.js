@@ -1,83 +1,125 @@
 import React from "react";
+import {motion} from "framer-motion";
 import myLogo from "../../../assets/img/pageLinks.svg";
-function PageLinks() {
-  return (
-    <div className="flex justify-center ">
-      <div className="max-w-6xl flex flex-wrap md:flex-nowrap items-center ">
-        <div>
-          {" "}
-          <img className="  " width={"90%"} src={myLogo} alt="resim" />
-        </div>
 
-        <div className="ml-3 text-start">
+function PageLinks() {
+  const containerVariants = {
+    hidden: {opacity: 0},
+    visible: {opacity: 1, transition: {delay: 0.5, duration: 1}},
+  };
+
+  const itemVariants = {
+    hidden: {opacity: 0, y: -20},
+    visible: {opacity: 1, y: 0, transition: {duration: 0.5}},
+  };
+
+  return (
+    <motion.div
+      className="flex justify-center"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <div className="max-w-6xl flex flex-wrap md:flex-nowrap items-center">
+        <motion.div className="" variants={itemVariants}>
+          <img className="" width={"90%"} src={myLogo} alt="resim" />
+        </motion.div>
+        <motion.div className="ml-3 text-start" variants={itemVariants}>
           <div>
-            <h1 className="font-bold  sm:text-lg  lg:text-xl xl:text-2xl text-md ">
+            <motion.h1
+              className="font-bold sm:text-lg lg:text-xl xl:text-2xl text-md"
+              variants={itemVariants}
+            >
               Tüm Kriptolar Tek Yerde
-            </h1>
-            <p className="mb-1  sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm">
+            </motion.h1>
+            <motion.p
+              className="mb-1 sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm"
+              variants={itemVariants}
+            >
               200'den fazla Kripto parayı tek yerden inceleyin.
-            </p>
-            <a
-              className="  md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
+            </motion.p>
+            <motion.a
+              className="md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
               href="/markets"
+              variants={itemVariants}
             >
               Kripto Paralar <i className="fa fa-arrow-right-long"></i>
-            </a>
+            </motion.a>
           </div>
           <br />
           <br />
           <div className="">
-            <h1 className="font-bold   sm:text-lg  lg:text-xl xl:text-2xl text-md">
+            <motion.h1
+              className="font-bold sm:text-lg lg:text-xl xl:text-2xl text-md"
+              variants={itemVariants}
+            >
               Kripto Piyasasını Takip Edin.
-            </h1>
-            <p className="mb-1  sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm">
+            </motion.h1>
+            <motion.p
+              className="mb-1 sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm"
+              variants={itemVariants}
+            >
               Tüm Kripto Haberlerini güncel olarak alın ve Kripto gelişmelerini
               takip edin.
-            </p>
-            <a
+            </motion.p>
+            <motion.a
               className="md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
               href="/news"
+              variants={itemVariants}
             >
               Haberler <i className="fa fa-arrow-right-long"></i>
-            </a>
+            </motion.a>
           </div>
           <br />
           <br />
           <div>
-            <h1 className="font-bold   sm:text-lg  lg:text-xl xl:text-2xl text-md">
+            <motion.h1
+              className="font-bold sm:text-lg lg:text-xl xl:text-2xl text-md"
+              variants={itemVariants}
+            >
               Size Uygun 100'den Fazla Borsayı İnceleyin
-            </h1>
-            <p className="mb-1  sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm">
-              Alım-Satım yapacağınız Kripto Borsasımı Arıyorsunuz işte burdalar
-              hemen inceleyin.
-            </p>
-            <a
-              className="  md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
+            </motion.h1>
+            <motion.p
+              className="mb-1 sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm"
+              variants={itemVariants}
+            >
+              Alım-Satım yapacağını
+            </motion.p>
+            <motion.a
+              className="md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
               href="/exchanges"
+              variants={itemVariants}
             >
               Borsalar <i className="fa fa-arrow-right-long"></i>
-            </a>
+            </motion.a>
           </div>
           <br />
           <br />
-
           <div className="">
-            <h1 className="font-bold   sm:text-lg  lg:text-xl xl:text-2xl text-md">
-              Blokzincir Ve Kripto Akademisi
-            </h1>
-            <p className="mb-1  sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm">
+            <motion.h1
+              className="font-bold sm:text-lg lg:text-xl xl:text-2xl text-md"
+              variants={itemVariants}
+            >
+              Blokzincir ve Kripto Akademisi
+            </motion.h1>
+
+            <motion.p
+              className="mb-1 sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm"
+              variants={itemVariants}
+            >
               Blokzincir ve Kripto hakkında 10'larca Akademik bilgi burda.
-            </p>
-            <a
+            </motion.p>
+
+            <motion.a
               className="  md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
               href="/academia"
             >
               Akademi <i className="fa fa-arrow-right-long"></i>
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

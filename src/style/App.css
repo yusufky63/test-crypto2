@@ -66,4 +66,13 @@ svg {
   cursor: pointer;
   overflow: visible;
   width: 50px;
+}
+
+.quiz {
+  background-image: url("../assets/img/Concept-cryptocurrency-bitcoin-on-transparent-background-PNG.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 90vh;
+  width: 100%;
 }/*# sourceMappingURL=App.css.map */

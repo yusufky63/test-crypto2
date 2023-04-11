@@ -10,8 +10,8 @@ function LastLogins() {
   });
   return (
     <div>
-      {" "}
-      <li className="border p-2 rounded-lg shadow-sm my-3 text-xs">
+       
+      <li className=" p-2 rounded-lg shadow-sm my-3 text-xs">
         <h1 className="text-2xl font-bold mb-5">Son Girişler </h1>
         <span className="flex items-center justify-between text-center">
           <table className="w-full">

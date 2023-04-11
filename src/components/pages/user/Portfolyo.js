@@ -80,17 +80,17 @@ function Portfolyo() {
         {
           <div className="w-full border shadow-md p-5 rounded-lg font-bold flex items-center justify-between">
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
-              {" "}
-              Hesap Bakiyesi :{" "}
+               
+              Hesap Bakiyesi : 
               <span className="text-gray-500">
                 {total && total.toFixed(2)}$
-              </span>{" "}
+              </span> 
             </span>
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
-              Kar/Zarar :{" "}
+              Kar/Zarar : 
               {totalRate > 0 ? (
                 <span className="text-green-400">
-                  {" "}
+                   
                   {totalRate.toFixed(2)} $
                 </span>
               ) : (
@@ -219,7 +219,7 @@ function Portfolyo() {
                                       <Link to={`/markets/${item.id}`}>
                                         {item.name}
                                         <span className="uppercase text-xs text-gray-500">
-                                          {" "}
+                                           
                                           {item.symbol}
                                         </span>
                                       </Link>
@@ -229,7 +229,7 @@ function Portfolyo() {
                               </td>
                               <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
                                 <div className="">
-                                  {" "}
+                                   
                                   <h1>{item.buy_total_crypto.toFixed(5)}</h1>
                                 </div>
                               </td>
@@ -254,7 +254,7 @@ function Portfolyo() {
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
-                                  {" "}
+                                   
                                   {(item.market_data.current_price.usd -
                                     item.coin_price_usd) *
                                     item.buy_total_crypto >=
@@ -264,7 +264,7 @@ function Portfolyo() {
                                         (item.market_data.current_price.usd -
                                           item.coin_price_usd) *
                                         item.buy_total_crypto
-                                      ).toFixed(2)}{" "}
+                                      ).toFixed(2)} 
                                       $
                                     </span>
                                   ) : (
@@ -273,7 +273,7 @@ function Portfolyo() {
                                         (item.market_data.current_price.usd -
                                           item.coin_price_usd) *
                                         item.buy_total_crypto
-                                      ).toFixed(2)}{" "}
+                                      ).toFixed(2)} 
                                       $
                                     </span>
                                   )}
@@ -312,7 +312,7 @@ function Portfolyo() {
 
                                   <a
                                     onClick={(e) => handleDelete(item.id)}
-                                    className=" text-black-300  hover:bg-red-300 hover:text-red-900  p-2 rounded-md text-base flex justify-center font-medium "
+                                    className="   hover:bg-red-300 hover:text-red-900  p-2 rounded-md text-base flex justify-center font-medium "
                                   >
                                     <svg
                                       className="w-6 h-6"

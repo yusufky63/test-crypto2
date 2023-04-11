@@ -91,7 +91,7 @@ function Markets() {
           {err && <MarketsDataError />}
           <header className="flex flex-col justify-center">
             <div>
-              {" "}
+               
               <h1 className="text-4xl text-left my-10  p-3 shadow-md rounded-lg flex justify-between items-center ">
                 Piyasa
                 {globalData.active_cryptocurrencies && (
@@ -241,7 +241,7 @@ function Markets() {
                                         <Link to={`/markets/${item.id}`}>
                                           {item.name}
                                           <span className="uppercase text-xs text-gray-500">
-                                            {" "}
+                                             
                                             {item.symbol}
                                           </span>
                                         </Link>
@@ -251,7 +251,7 @@ function Markets() {
                                 </td>
                                 <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
                                   <div className="">
-                                    {" "}
+                                     
                                     {symbol}
                                     {item.current_price}
                                   </div>

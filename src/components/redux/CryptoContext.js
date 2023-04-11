@@ -3,14 +3,11 @@ const Crypto = createContext();
 
 const CryptoContext = ({ children }) => {
   const [currency, setCurrency] = useState("TRY");
-
   const [symbol, setSymbol] = useState("₺");
 
   useEffect(() => {
-
     if (currency === "TRY") {setSymbol("₺");}
    if (currency === "USD") {setSymbol("$");}
-   console.log("context",symbol,currency);
   }, [currency, symbol]);
 
   return (

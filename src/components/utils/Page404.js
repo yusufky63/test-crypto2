@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 function Page404() {
   return (
     <div className="flex justify-center">
-      {" "}
+       
       <div className="grid h-96 w-4/6 justify-center place-items-center bg-white border rounded-lg shadow-lg my-20">
         <div className="">
-          {" "}
+           
           <span className=" text-6xl  lg:text-8xl text-red-500 lg:hover:text-9xl hover:text-7xl">
             4
-          </span>{" "}
+          </span> 
           <span className=" text-6xl  lg:text-8xl text-red-500 lg:hover:text-9xl hover:text-7xl">
             0
           </span>

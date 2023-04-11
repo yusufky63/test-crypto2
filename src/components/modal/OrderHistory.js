@@ -16,7 +16,7 @@ export default function OrderHistory() {
     }, 1000);
   }, [order]);
 
-  console.log(order);
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -92,7 +92,7 @@ export default function OrderHistory() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                  {" "}
+                   
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -118,11 +118,11 @@ export default function OrderHistory() {
                     Geçmiş Emirler
                   </Dialog.Title>
                   <div className="">
-                    {" "}
-                    Kayıt Sayısı :{" "}
+                     
+                    Kayıt Sayısı : 
                     <span className="rounded-lg text-sm text-white  p-1 bg-gray-600">
                       {order && order.length}
-                    </span>{" "}
+                    </span> 
                   </div>
                 </div>
                 <div className="my-5">
@@ -237,7 +237,7 @@ export default function OrderHistory() {
                                         <div className="text-gray-900">
                                           {item.order_coin_price_usd_buy_total_crypto.toFixed(
                                             5
-                                          )}{" "}
+                                          )} 
                                         </div>
                                       </td>
 

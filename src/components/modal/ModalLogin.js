@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import {Dialog, Transition} from "@headlessui/react";
+import {Fragment, useState} from "react";
 
 import {
   login,
@@ -8,6 +8,8 @@ import {
   githubLogin,
   googleLogin,
 } from "../../services/firebase";
+import Auth2FALogin from "./Auth2FALogin";
+import IpLogger from "../utils/IpLogger";
 
 export default function ModalLogin() {
   let [isOpen, setIsOpen] = useState(false);
@@ -24,17 +26,17 @@ export default function ModalLogin() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const user = login(email, password);
-    if (user.email || user.photoURL) {
-      closeModal();
-    }
+    login(email, password);
+    IpLogger()
+   
   };
 
   return (
     <>
-      <a className=" w-full " onClick={openModal}>
+      <a className="w-full " onClick={openModal}>
         Giriş Yap
-      </a>
+      </a>    
+
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
@@ -76,7 +78,7 @@ export default function ModalLogin() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                  {" "}
+                   
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -99,7 +101,7 @@ export default function ModalLogin() {
                     onClick={githubLogin}
                     type="button"
                     className="inline-block px-12 py-2.5 mb-2 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                    style={{ backgroundColor: "#333" }}
+                    style={{backgroundColor: "#333"}}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +118,7 @@ export default function ModalLogin() {
                     onClick={googleLogin}
                     type="button"
                     className="inline-block px-12 py-2.5 mb-2 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                    style={{ backgroundColor: "#ea4335" }}
+                    style={{backgroundColor: "#ea4335"}}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -139,8 +141,8 @@ export default function ModalLogin() {
                 </Dialog.Title>
                 <div className="flex justify-center my-5 text-sm mx-10 bg-green-100 p-2 rounded-lg">
                   <div className="text-center ">
-                    <span className="text-green-600">https://</span>{" "}
-                    test-react-crypo-app/login{" "}
+                    <span className="text-green-600">https://</span> 
+                   cryptoxchain/login 
                   </div>
                 </div>
                 <div className="flex justify-center">

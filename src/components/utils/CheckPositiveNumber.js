@@ -18,8 +18,8 @@ function CheckPositiveNumber({ number }) {
         </svg>
 
         <span className="text-xs font-medium">
-          {" "}
-          {parseFloat(number).toFixed(2)}%{" "}
+           
+          {parseFloat(number).toFixed(2)}% 
         </span>
       </div>
     );

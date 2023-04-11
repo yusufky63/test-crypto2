@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import React, {useState, useEffect} from "react";
+
 import {Fragment} from "react";
 import {Disclosure, Menu, Transition} from "@headlessui/react";
 import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
@@ -9,9 +11,19 @@ import ModalRegister from "./modal/ModalRegister";
 import {logout} from "../services/firebase";
 import {useSelector} from "react-redux";
 function Header() {
-  const {user} = useSelector((state) => state.auth);
   const {currency, setCurrency} = CryptoState();
 
+  const {admins} = useSelector((state) => state.admins);
+  const {user} = useSelector((state) => state.auth);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+
+  useEffect(() => {
+  if (user) {
+    const admin = admins.find((admin) => admin.id === user.uid);
+    setIsAdmin(admin);
+  }
+  }, [user, admins]);
   return (
     <>
       <Disclosure as="nav" className="bg-white navbar ">
@@ -35,7 +47,6 @@ function Header() {
                   <div className="hidden sm:ml-6 lg:block ">
                     <div className="flex space-x-4  justify-center items-center  ">
                       <div>
-                        {" "}
                         <NavLink
                           end
                           style={({isActive}) => ({
@@ -125,26 +136,38 @@ function Header() {
                     </div>
                   </div>
                 </div>
-    {/* Profile dropdown */}
+
+                { isAdmin && (
+                  <div className=" absolute inset-y-0 right-36 flex  items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 shadow-sm border-black rounded ">
+                    <NavLink
+                      style={({isActive}) => ({
+                        textDecoration: isActive ? "underline 4px" : "none",
+                        textUnderlineOffset: isActive ? "8px" : "none",
+                      })}
+                      className="mx-2  text-lg  text-black hover:bg-gray-900 hover:text-white  px-3 py-2 rounded-md "
+                      to="/admin"
+                    >
+                      Admin
+                    </NavLink>
+                  </div>
+                )}
+
                 <div className=" absolute inset-y-0 right-0 flex  items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <select
                     value={currency}
                     className=" rounded-lg  p-2 border  outline-none"
                     onChange={(e) => setCurrency(e.target.value)}
                   >
-                    {" "}
                     <option value={"TRY"}>TRY</option>
                     <option value={"USD"}>USD</option>
                   </select>
 
-              
                   <Menu as="div" className=" relative ml-3 ">
                     <div>
                       <Menu.Button className="flex rounded-full text-sm ">
                         <span className="sr-only">Open user menu</span>
                         {!user.photoURL ? (
                           <div className="">
-                            {" "}
                             <i className=" fa-regular fa-2x fa-user-circle"></i>
                           </div>
                         ) : (
@@ -162,7 +185,6 @@ function Header() {
                     </div>
                     {user && (
                       <>
-                        {" "}
                         <Transition
                           as={Fragment}
                           enter="transition ease-out duration-100"
@@ -202,7 +224,6 @@ function Header() {
                                 ) : (
                                   <span className="absolute right-3 top-1.5 bg-green-400 text-white text-xs p-1 px-2 rounded-md ">
                                     <span className="flex justify-between items-center">
-                                      {" "}
                                       <svg
                                         className="w-5 h-5 mr-1"
                                         fill="none"
@@ -216,7 +237,7 @@ function Header() {
                                           strokeWidth="2"
                                           d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                                         ></path>
-                                      </svg>{" "}
+                                      </svg>
                                       <span> Onaylı</span>
                                     </span>
                                   </span>

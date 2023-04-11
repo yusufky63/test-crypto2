@@ -1,14 +1,14 @@
-import { Pie } from "@ant-design/plots";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import {Pie} from "@ant-design/plots";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
-const PortfolioChart = ({ chart }) => {
-  const { portfolyo } = useSelector((state) => state.portfolios);
+const PortfolioChart = ({chart}) => {
+  const {portfolyo} = useSelector((state) => state.portfolios);
 
   const [data, setData] = useState([]);
   useEffect(() => {
     setData([]);
-    console.log("chart", chart);
+
     if (chart) {
       // eslint-disable-next-line array-callback-return
       chart.map((coin) => {
@@ -23,7 +23,6 @@ const PortfolioChart = ({ chart }) => {
     }
   }, [portfolyo, chart]);
 
-  console.log(data);
   const config = {
     appendPadding: 10,
     data,

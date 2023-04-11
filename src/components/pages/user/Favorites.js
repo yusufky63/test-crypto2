@@ -53,7 +53,7 @@ const currencyEdit = currency.toLowerCase();
 
   return (
     <div className="">
-      {" "}
+       
       <div className="px-12 mt-4 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -152,7 +152,7 @@ const currencyEdit = currency.toLowerCase();
                                   <Link to={`/markets/${item.id}`}>
                                     {item.name}
                                     <span className="uppercase text-xs text-gray-500">
-                                      {" "}
+                                       
                                       {item.symbol}
                                     </span>
                                   </Link>
@@ -162,7 +162,7 @@ const currencyEdit = currency.toLowerCase();
                           </td>
                           <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
                             <div className="">
-                              {" "}
+                               
                               {symbol}
                               {item.market_data.current_price[currencyEdit]}
                             </div>

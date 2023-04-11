@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
+import Blogs from "./Academy/Blogs";
 function Academia() {
   return (
-    <div>   <h1 className='my-20 text-4xl text-red-500'> Geliştirme Aşamasında </h1></div>
-  )
+    <div>
+      <Blogs />
+    </div>
+  );
 }
 
-export default Academia
+export default Academia;

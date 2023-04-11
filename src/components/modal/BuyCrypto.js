@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import { DialogTitle } from "@mui/material";
-import { useSelector } from "react-redux";
+import {useEffect} from "react";
+import {Dialog, Transition} from "@headlessui/react";
+import {Fragment, useState} from "react";
+import {DialogTitle} from "@mui/material";
+import {useSelector} from "react-redux";
 import axios from "axios";
-import { SingleCoin } from "../../services/Api";
+import {SingleCoin} from "../../services/Api";
 
 import {
   addPortfolyo,
@@ -14,9 +14,9 @@ import {
 } from "../../services/firebase";
 import numberWithCommas from "../utils/NumberWithCommas";
 
-function BuyCrypto({ cryptoID }) {
-  const { portfolyo } = useSelector((state) => state.portfolios);
-  const { user } = useSelector((state) => state.auth);
+function BuyCrypto({cryptoID}) {
+  const {portfolyo} = useSelector((state) => state.portfolios);
+  const {user} = useSelector((state) => state.auth);
   const data = portfolyo.find((item) => item.coin === cryptoID);
 
   let [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,7 @@ function BuyCrypto({ cryptoID }) {
 
   const fetchCoin = async () => {
     if (cryptoID) {
-      const { data } = await axios.get(SingleCoin(cryptoID));
+      const {data} = await axios.get(SingleCoin(cryptoID));
       setCoin(data);
     }
   };
@@ -69,7 +69,6 @@ function BuyCrypto({ cryptoID }) {
         order_date: new Date(),
       });
     } else {
-      console.log(portfolyo.id);
       updatePorfolyo(data.id, {
         uid: user.uid,
         coin: coin.id,
@@ -94,10 +93,11 @@ function BuyCrypto({ cryptoID }) {
 
   return (
     <div>
-      {" "}
       <div className=" hover:bg-green-400 hover:text-white text-green-600  rounded-lg">
-        {" "}
-        <a className=" w-full  px-5 flex justify-center rounded-lg " onClick={openModal}>
+        <a
+          className=" w-full  px-5 flex justify-center rounded-lg "
+          onClick={openModal}
+        >
           AL
         </a>
       </div>
@@ -187,14 +187,12 @@ function BuyCrypto({ cryptoID }) {
                     {data && (
                       <h1 className="text-start my-2 text-sm text-gray-500 flex justify-between">
                         <span>
-                          {" "}
-                          Hesaptaki {coin.name} :{" "}
-                          {data.buy_total_crypto.toFixed(6)}{" "}
+                          Hesaptaki {coin.name} :
+                          {data.buy_total_crypto.toFixed(6)}
                         </span>
 
                         <span>
-                          {" "}
-                          Fiyatı :{" "}
+                          Fiyatı :
                           {(
                             data.buy_total_crypto *
                             coin.market_data.current_price.usd

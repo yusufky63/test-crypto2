@@ -7,25 +7,46 @@ import Profile from "./components/pages/user/Profile";
 import Markets from "./components/pages/Markets";
 import CryptoCard from "./components/pages/CryptoDetail";
 import Header from "./components/Header";
-import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Route, Routes, Navigate} from "react-router-dom";
 import Exchanges from "./components/pages/Exchanges";
 import Academia from "./components/pages/Academia";
 import Quiz from "./components/pages/Quiz";
 import AllCoinsWidget from "./components/utils/widgets/AllCoinsWidget";
 import Portfolyo from "./components/pages/user/Portfolyo";
-import Settings from "./components/pages/user/Settings";
+import Settings from "./components/pages/Settings";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
+import {ToastContainer} from "react-toastify";
+import {useSelector} from "react-redux";
 import InternetConnection from "./components/utils/InternetConnection";
 import Page404 from "./components/utils/Page404";
 import IpLogger from "./components/utils/IpLogger";
+import AddBlogAcademy from "./components/pages/Academy/AddBlogAcademy";
+import Blog from "./components/pages/Academy/Blog";
+import Auth2FASetup from "./components/utils/Auth2FA/Auth2FASetup";
+import Auth2FAChecker from "./components/utils/Auth2FA/Auth2FAChecker";
+import CreateQuestion from "./components/pages/Quiz/CreateQuestion";
+import QuizQuestions from "./components/pages/Quiz/QuizQuestions";
+import Admin from "./components/pages/Admin/Admin";
+import AddAdmin from "./components/pages/Admin/AddAdmin";
 function App() {
-  const { user } = useSelector((state) => state.auth);
+  const {admins} = useSelector((state) => state.admins);
+  const {user} = useSelector((state) => state.auth);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const PrivateRoute = ({ children }) => {
+  useEffect(() => {
+    if (user) {
+      const admin = admins.find((admin) => admin.id === user.uid);
+      setIsAdmin(admin);
+    }
+  }, [user, admins]);
+
+  const PrivateRoute = ({children}) => {
     return !user ? <Navigate to="/" /> : children;
+  };
+
+  const AdminRoute = ({children}) => {
+    return isAdmin ? children : <Navigate to="/" />;
   };
 
   return (
@@ -33,13 +54,13 @@ function App() {
       <ToastContainer
         className="mt-10"
         position="top-right"
-        autoClose={1000}
+        autoClose={1500}
         hideProgressBar={false}
         closeOnClick
         rtl={false}
       />
       <InternetConnection />
-      {user && <IpLogger />}
+
       <AllCoinsWidget />
       <Header />
       <Routes>
@@ -56,16 +77,9 @@ function App() {
           }
         />
         <Route path="/academia" element={<Academia />} />
+        <Route path="/academia/:id" element={<Blog />} />
         <Route path="/exchanges" element={<Exchanges />} />
-        <Route
-          path="/quiz"
-          element={
-            <PrivateRoute>
-              {" "}
-              <Quiz />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/quiz" element={<Quiz />} />
         <Route
           path="/portfolyo"
           element={
@@ -78,13 +92,69 @@ function App() {
           path="/settings"
           element={
             <PrivateRoute>
-              <Settings />{" "}
+              <Settings />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/auth-checker"
+          element={
+            <PrivateRoute>
+              <Auth2FAChecker />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings/auth2fa"
+          element={
+            <PrivateRoute>
+              <Auth2FASetup />
+            </PrivateRoute>
+          }
+        />{" "}
+        <Route
+          path="/quiz/question"
+          element={
+            <PrivateRoute>
+              <QuizQuestions />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/add-admin"
+          element={
+            <AdminRoute>
+              <AddAdmin />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/add-question"
+          element={
+            <AdminRoute>
+              <CreateQuestion />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/add-blog"
+          element={
+            <AdminRoute>
+              <AddBlogAcademy />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
           }
         />
         <Route path="*" element={<Page404 to="/" />} />
       </Routes>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }

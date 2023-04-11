@@ -67,9 +67,9 @@ function AllCoinsWidget() {
                         <h5 className="mx-3 card-title text-sm">
                           {symbol}
                           {coin.current_price}
-                        </h5>{" "}
+                        </h5> 
                         <span className="text-sm  ">
-                          {" "}
+                           
                           <CheckPositiveNumber
                             number={coin.price_change_percentage_24h}
                           />
