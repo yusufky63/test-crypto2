@@ -20,7 +20,7 @@ import {ToastContainer} from "react-toastify";
 import {useSelector} from "react-redux";
 import InternetConnection from "./components/utils/InternetConnection";
 import Page404 from "./components/utils/Page404";
-import IpLogger from "./components/utils/IpLogger";
+
 import AddBlogAcademy from "./components/pages/Academy/AddBlogAcademy";
 import Blog from "./components/pages/Academy/Blog";
 import Auth2FASetup from "./components/utils/Auth2FA/Auth2FASetup";
