@@ -139,7 +139,6 @@ function Settings() {
           </li>
           <li>
             <LastLogins />
-<TextAnalyzer />
           </li>
         </ul>
       </div>
