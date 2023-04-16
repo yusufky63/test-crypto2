@@ -4,6 +4,7 @@ import LastLogins from "./user/LastLogins";
 import {Link} from "react-router-dom";
 import {delete2FA, getUsers} from "../../services/firebase";
 import {useSelector} from "react-redux";
+import TextAnalyzer from "../utils/TextAnalyzer";
 
 function Settings() {
   const [authCheck, setAuthCheck] = useState(false);
@@ -138,6 +139,7 @@ function Settings() {
           </li>
           <li>
             <LastLogins />
+<TextAnalyzer />
           </li>
         </ul>
       </div>

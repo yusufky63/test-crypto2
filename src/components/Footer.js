@@ -16,9 +16,6 @@ function Footer() {
               Hakkımda
             </a>
           </div>
-        
-
-       
         </nav>
         <div className="flex justify-center mt-8 space-x-6">
           <a
@@ -59,7 +56,7 @@ function Footer() {
           </a>
         </div>
         <p className="mt-8 text-base leading-6 text-center text-gray-400">
-          © 2022 Yusuf, Inc. All rights reserved.
+          © 2022 CodeXSha, Inc. All rights reserved.
         </p>
       </div>
     </section>

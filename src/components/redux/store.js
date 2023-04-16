@@ -8,6 +8,7 @@ import {blogSlice} from "./blog/blogSlice";
 import {adminsSlice} from "./user/adminsSlice";
 import {usersSlice} from "./user/usersSlice";
 import { questionSlice } from "./question/questionSlice";
+
 import auth from "./auth";
 
 export const store = configureStore({
@@ -22,5 +23,7 @@ export const store = configureStore({
     wallet: walletSlice.reducer,
     admins: adminsSlice.reducer,
     users: usersSlice.reducer,
+
+
   },
 });
