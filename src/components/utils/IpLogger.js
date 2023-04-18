@@ -13,7 +13,7 @@ function IpLogger() {
   const fetchScan = async () => {
     const {data} = await axios.get("https://api.ipify.org?format=json");
     console.log(lastLogin);
-    if (data.ip !== lastLogin.map((item) => item.ip)) {
+    if (user && data.ip) {
       lastLoginIP({
         uid: user.uid,
         user: user.email && user.email,

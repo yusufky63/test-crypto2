@@ -1,20 +1,37 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, {useState} from "react";
-import {AddAcademyBlog, AddAcademyBlogPhoto} from "../../../services/firebase";
+import {EditAcademyBlog, AddAcademyBlogPhoto} from "../../../services/firebase";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {Editor} from "react-draft-wysiwyg";
-import {EditorState, convertToRaw} from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import {useParams} from "react-router-dom";
 
-const AddBlogAcademy = () => {
-  const [header, setHeader] = useState("");
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+const EditBlogAcademy = () => {
+  const {id} = useParams();
+  const {blog} = useSelector((state) => state.blogs);
+  const filteredBlog = blog.filter((item) => item.id === id);
+
+  const [header, setHeader] = useState(filteredBlog[0].header);
+  const [editorState, setEditorState] = useState(
+    filteredBlog[0]?.content
+      ? EditorState.createWithContent(
+          ContentState.createFromBlockArray(
+            convertFromHTML(filteredBlog[0]?.content)
+          )
+        )
+      : EditorState.createEmpty()
+  );
 
   const {user} = useSelector((state) => state.auth);
-  const [downloadUrl, setDownloadUrl] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState(filteredBlog[0].image);
 
   const handleUpload = async (event) => {
     const file = event.target.files[0];
@@ -33,17 +50,16 @@ const AddBlogAcademy = () => {
     event.preventDefault();
     const htmlContent = getHtmlFromEditorState(editorState);
     if (header && htmlContent && downloadUrl) {
-      await AddAcademyBlog({
+      await EditAcademyBlog(filteredBlog[0].id, {
         mail: user.email,
-        displayName: user.displayName && user.displayName,
+        displayName: user.displayName,
         header,
         content: htmlContent,
         date: new Date(),
         image: downloadUrl,
         uid: user.uid,
       });
-      setHeader("");
-      setEditorState(EditorState.createEmpty());
+      window.location.href = "/academia";
     } else {
       toast.warning("Lütfen tüm alanları doldurunuz!");
     }
@@ -67,6 +83,7 @@ const AddBlogAcademy = () => {
               placeholder="Başlık"
               value={header}
               onChange={(event) => setHeader(event.target.value)}
+              required
             />
           </div>
         </div>
@@ -82,7 +99,6 @@ const AddBlogAcademy = () => {
               placeholder="İçerik"
               editorState={editorState}
               onEditorStateChange={setEditorState}
-            
               toolbar={{
                 options: [
                   "inline",
@@ -140,7 +156,7 @@ const AddBlogAcademy = () => {
             className="w-full bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={handleSubmit}
           >
-            Ekle
+            Güncelle
           </button>
         </div>
       </div>
@@ -148,4 +164,4 @@ const AddBlogAcademy = () => {
   );
 };
 
-export default AddBlogAcademy;
+export default EditBlogAcademy;

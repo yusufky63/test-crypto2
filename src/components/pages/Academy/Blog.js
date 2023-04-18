@@ -29,8 +29,8 @@ function Blog() {
                 key={blogData.id}
                 className="bg-white rounded-lg overflow-hidden "
               >
-                <h3 className="font-semibold text-4xl m-5 text-left">
-                  {blogData.header}
+                <h3 className="font-semibold text-4xl m-5 text-left" dangerouslySetInnerHTML={{__html: blogData.header}}>
+               
                 </h3>
 
                 <img

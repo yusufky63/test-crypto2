@@ -20,7 +20,7 @@ import {ToastContainer} from "react-toastify";
 import {useSelector} from "react-redux";
 import InternetConnection from "./components/utils/InternetConnection";
 import Page404 from "./components/utils/Page404";
-
+import IpLogger from "./components/utils/IpLogger";
 import AddBlogAcademy from "./components/pages/Academy/AddBlogAcademy";
 import Blog from "./components/pages/Academy/Blog";
 import Auth2FASetup from "./components/utils/Auth2FA/Auth2FASetup";
@@ -29,6 +29,8 @@ import CreateQuestion from "./components/pages/Quiz/CreateQuestion";
 import QuizQuestions from "./components/pages/Quiz/QuizQuestions";
 import Admin from "./components/pages/Admin/Admin";
 import AddAdmin from "./components/pages/Admin/AddAdmin";
+import EditBlogAcademy from "./components/pages/Academy/EditBlogAcademy";
+import EditQuestion from "./components/pages/Quiz/EditQuestion";
 function App() {
   const {admins} = useSelector((state) => state.admins);
   const {user} = useSelector((state) => state.auth);
@@ -60,7 +62,7 @@ function App() {
         rtl={false}
       />
       <InternetConnection />
-
+      <IpLogger />
       <AllCoinsWidget />
       <Header />
       <Routes>
@@ -137,10 +139,26 @@ function App() {
           }
         />
         <Route
+          path="/admin/edit-question/:id"
+          element={
+            <AdminRoute>
+              <EditQuestion />
+            </AdminRoute>
+          }
+        />
+        <Route
           path="/admin/add-blog"
           element={
             <AdminRoute>
               <AddBlogAcademy />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/edit-blog/:id"
+          element={
+            <AdminRoute>
+              <EditBlogAcademy />
             </AdminRoute>
           }
         />

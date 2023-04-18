@@ -1,19 +1,71 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {motion} from "framer-motion";
 import quizIcon from "../../assets/img/blockchain.png";
 import {useSelector} from "react-redux";
 import {ModalLogin, ModalRegister} from "../modal";
-
+import {getScoreTop3} from "../../services/firebase";
 const Quiz = () => {
+  const [topScore, setTopScore] = useState([]);
   const {user} = useSelector((state) => state.auth);
   const variants = {
     initial: {opacity: 0},
     animate: {opacity: 1, transition: {duration: 1}},
   };
 
+  useEffect(() => {
+    getScoreTop3()
+      .then((res) => {
+        res.sort((a, b) => {
+          if (a.score > b.score) {
+            return -1;
+          } else if (b.score > a.score) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        setTopScore(res.slice(0, 3));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Altın, gümüş ve bronz madalyaların sırası
+  const medals = ["🥇", "🥈", "🥉"];
+
   return (
-    <>
+    <div className="flex flex-col-reverse md:flex-col">
+  
+      {topScore && (
+        <motion.div
+          className="md:mt-5  flex flex-col justify-center items-center px-4 py-2 sm:px-6 lg:px-8  lg:absolute "
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+        >
+          <h2 className="text-center text-lg font-bold text-gray-900">
+            Skor Tablosu
+          </h2>
+          <ul className="mt-4 space-y-4 w-full">
+            {topScore.map((result, index) => (
+              <motion.li
+                key={result.id}
+                className="flex items-center text-sm flex-row justify-between px-4 py-2 border border-transparent rounded-md shadow-md font-medium text-gray-900 bg-gray-100"
+                initial={{opacity: 0, y: 20 * index}}
+                animate={{opacity: 1, y: 0}}
+              >
+                <span className="mr-2 text-xl">{medals[index]}</span>
+                <span className="mr-2 ">{result.email}</span>
+                <span className="flex justify-center shadow-lg rounded-lg w-8 border bg-gray-300  p-1">
+                  {result.score}
+                </span>
+              </motion.li>
+            ))}
+          </ul>
+        </motion.div>
+      )}
       {user ? (
         <motion.div
           className="mt-20 flex flex-col justify-center items-center px-4 py-8 sm:px-6 lg:px-8"
@@ -62,17 +114,6 @@ const Quiz = () => {
               >
                 <Link to="/quiz/question">Quiz Başlat</Link>
               </motion.div>
-              {/* <motion.div
-                whileHover={{scale: 1.05}}
-                whileTap={{scale: 0.95}}
-                className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-green-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-              >
-                {user.email === "codexsha@gmail.com" && (
-                  <Link to="/quiz/create-question">
-                    Soru Ekle (Yalnızca yönetici kullanıcılar)
-                  </Link>
-                )}
-              </motion.div> */}
             </motion.div>
           </motion.div>
         </motion.div>
@@ -114,7 +155,7 @@ const Quiz = () => {
           </motion.div>
         </motion.div>
       )}
-    </>
+    </div>
   );
 };
 

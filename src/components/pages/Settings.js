@@ -4,7 +4,6 @@ import LastLogins from "./user/LastLogins";
 import {Link} from "react-router-dom";
 import {delete2FA, getUsers} from "../../services/firebase";
 import {useSelector} from "react-redux";
-import TextAnalyzer from "../utils/TextAnalyzer";
 
 function Settings() {
   const [authCheck, setAuthCheck] = useState(false);
@@ -107,23 +106,6 @@ function Settings() {
               </select>
             </span>
           </li>
-          {/* <li className="border p-2 rounded-lg shadow-sm my-3">
-            <span className="flex items-center justify-between m-2">
-              <label className="text-start">Tema </label>
-              <span className="px-2 mx-2">
-                <input type="radio" name="theme" id="dark" />
-                <label className="m-1" htmlFor="dark">
-                  Dark
-                </label>
-              </span>
-              <span>
-                <input type="radio" name="theme" id="light" />
-                <label className="m-1" htmlFor="light">
-                  Light
-                </label>
-              </span>
-            </span>
-          </li> */}
           <li className="border p-2 rounded-lg shadow-sm my-3">
             <span className="flex items-center justify-between ">
               <h1>Para Birimi </h1>

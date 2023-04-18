@@ -3,16 +3,16 @@ import {getUsers, setAdmin} from "../../../services/firebase";
 
 function AddAdmin() {
   const [users, setUsers] = useState([]);
-
+  
   useEffect(() => {
     getUsers().then((res) => {
       res.sort((a, b) => {
         if (a.isFounder && !b.isFounder) {
-          return -1; // a, b'den önce gelmeli
+          return -1;
         } else if (b.isFounder && !a.isFounder) {
-          return 1; // b, a'dan önce gelmeli
+          return 1;
         } else {
-          return 0; // sıralama değişmemeli
+          return 0;
         }
       });
       setUsers(res);
@@ -53,7 +53,7 @@ function AddAdmin() {
               } px-4 py-2 rounded-md text-white font-medium`}
               onClick={() => setAdmin(user.id)}
             >
-              {user.isAdmin ? "Admin" : "Admin Yap"}
+              {user.isFounder ? "Kurucu"  : user.isAdmin ? "Admin" : "Admin Ekle" }
             </button>
           </div>
         ))}

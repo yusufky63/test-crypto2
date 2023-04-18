@@ -43,6 +43,8 @@ import {
   updateDoc,
   query,
   where,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 
 import {
@@ -122,7 +124,6 @@ export const login = async (email, password) => {
     // "users" koleksiyonundaki belgeyi al
     const userDoc = doc(db, "users", user.uid);
     const docSnap = await getDoc(userDoc);
-
     // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
     if (!docSnap.exists()) {
       await setDoc(userDoc, {
@@ -133,7 +134,6 @@ export const login = async (email, password) => {
         uid: user.uid,
         auth2fa: false,
       });
-      toast.success("Kullanıcı başarıyla kaydedildi");
     }
   } catch (error) {
     console.log(error);
@@ -149,11 +149,8 @@ export const googleLogin = async () => {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
 
-    // "users" koleksiyonundaki belgeyi al
     const userDoc = doc(db, "users", user.uid);
     const docSnap = await getDoc(userDoc);
-
-    // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
     if (!docSnap.exists()) {
       await setDoc(userDoc, {
         name: user.displayName,
@@ -163,7 +160,7 @@ export const googleLogin = async () => {
         uid: user.uid,
         auth2fa: false,
       });
-      console.log("Kullanıcı başarıyla kaydedildi");
+      auth2faCheck();
     }
   } catch (error) {
     errorMessages(error);
@@ -177,6 +174,20 @@ export const githubLogin = async () => {
     .then(function (result) {
       auth2faCheck();
       toast.success("Github İle Giriş Yapıldı");
+      const userDoc = doc(db, "users", result.uid);
+      const docSnap = getDoc(userDoc);
+      // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
+      if (!docSnap.exists()) {
+        setDoc(userDoc, {
+          name: result.displayName,
+          email: result.email,
+          photoURL: result.photoURL,
+          isAdmin: false,
+          uid: result.uid,
+          auth2fa: false,
+        });
+        toast.success("Kullanıcı başarıyla kaydedildi");
+      }
 
       window.location.href = "/";
     })
@@ -336,6 +347,7 @@ onAuthStateChanged(auth, (user) => {
       .filter((admin) => admin !== null);
 
     store.dispatch(setAdmins(admins));
+
     store.dispatch(
       setUsers(doc.docs.map((user) => ({...user.data(), id: user.id})))
     );
@@ -517,6 +529,16 @@ export const AddAcademyBlog = async (academyBlog) => {
   }
 };
 
+//EditAcademyBlog
+export const EditAcademyBlog = async (id, data) => {
+  try {
+    await updateDoc(doc(db, "academyblogs", id), data);
+    toast.success("Blog Güncellendi");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //ADD AcademyBlog Photo
 
 export const AddAcademyBlogPhoto = async (academyBlogPhoto) => {
@@ -611,9 +633,19 @@ export const addQuestions = async (data) => {
   }
 };
 
+//editQuestions
+export const editQuestions = async (id, data) => {
+  try {
+    await updateDoc(doc(db, "questions", id), data);
+    toast.success("Soru Güncellendi");
+  } catch (error) {
+    errorMessages(error);
+  }
+};
+
 export const deleteQuestion = async (id) => {
-  try { 
-    if (id) { 
+  try {
+    if (id) {
       await deleteDoc(doc(db, "questions", id));
       toast.success("Soru Silindi");
     }
@@ -621,8 +653,6 @@ export const deleteQuestion = async (id) => {
     errorMessages(error);
   }
 };
-
-
 
 //Score
 export const addScore = async (data) => {
@@ -634,13 +664,29 @@ export const addScore = async (data) => {
   }
 };
 
-//ADMIN SETTINGS
+//Get Score Top 3
+export const getScoreTop3 = async () => {
+  try {
+    const querySnapshot = await getDocs(
+      collection(db, "scores"),           
+    );      
+    const data = querySnapshot.docs.map((doc) => ({   
+      ...doc.data(),      
+      id: doc.id,         
+    }));      
+    return data;    
+  } catch (error) {     
+    errorMessages(error); 
+  }
+};
 
+
+//ADMIN SETTINGS
 export const adminList = async () => {
   try {
     const querySnapshot = await getDoc(
       collection(db, "users"),
-      where("isAdmin", "==", true)
+      where("isAdmin", "==", true || "isFounder", "==", true)
     );
     const data = querySnapshot.docs.map((doc) => ({
       ...doc.data(),
@@ -667,16 +713,15 @@ export const setAdmin = async (userId) => {
     const userRef = doc(db, "users", userId);
     const userDoc = await getDoc(userRef);
     const userData = userDoc.data();
-    if (userData.isAdmin === true && !userData.isFounder ) {
+    if (userData.isAdmin === true && !userData.isFounder) {
       await updateDoc(userRef, {isAdmin: false});
       toast.info("Admin Yetkisi Kaldırıldı");
-    } else if (userData.isAdmin === false){
+    } else if (userData.isAdmin === false) {
       await updateDoc(userRef, {isAdmin: true});
       toast.success("Admin Yetkisi Verildi");
+    } else {
+      toast.info("Kurucu Admin");
     }
-else{
-    toast.info("Kurucu Admin");
-}
   } catch (error) {
     console.log(error);
     toast.warning("İşlem Gerçekleştirilemedi: " + error);

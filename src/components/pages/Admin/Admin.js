@@ -58,13 +58,13 @@ function Admin() {
                         <td className="border border-gray-300 px-4 py-2">
                           {index + 1}
                         </td>
-                        <td className="border border-gray-300 px-4 py-2">
+                        <td className="border border-gray-300 px-4 py-2 w-full">
                           {blog.header}
                         </td>
                         <td className=" flex justify-between border flex-col md:flex-row  text-center items-center px-4 py-2">
-                          <button className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md w-full ">
+                          <Link to={`/admin/edit-blog/${blog.id}`} className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md w-full ">
                             Düzenle
-                          </button>
+                          </Link>
                           <Link
                             to={`/academia/${blog.id}`}
                             className="p-2 rounded-lg m-1 hover:bg-gray-300 shadow-md w-full"
@@ -117,13 +117,13 @@ function Admin() {
                         <td className="border border-gray-300 px-4 py-2">
                           {index + 1}
                         </td>
-                        <td className="border border-gray-300 px-4 py-2">
+                        <td className="border border-gray-300 px-4 py-2 w-full">
                           {question.question}
                         </td>
-                        <td className=" flex justify-between border flex-col md:flex-row px-4 py-2">
-                          <button className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md w-full">
+                        <td className=" flex justify-between border flex-col md:flex-row px-4 py-2 ">
+                          <Link to={`/admin/edit-question/${question.id}`} className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md w-full text-center">
                             Düzenle
-                          </button>
+                          </Link>
                           <button
                             onClick={() => handleDeleteQuestion(question.id)}
                             className="p-2 flex  m-1 justify-center  rounded-lg text-red-600 hover:bg-red-600 hover:text-white shadow-md w-24 "
