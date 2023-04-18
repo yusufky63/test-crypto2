@@ -32,7 +32,7 @@ export default function OrderHistory() {
     <>
       <button
         onClick={openModal}
-        className="border z-30 lg:w-48 p-3 w-32 items-center px-5 text-sm sm:text-lg lg:text-lg xl:text-lg flex justify-around shadow-lg rounded-lg right-10 hover:bg-gray-100 drop-shadow-xl mt-5 hover:mb-2 transition-shadow absolute"
+        className=" z-30 lg:w-44 p-3 w-32 items-center px-5 text-sm sm:text-lg lg:text-base flex justify-around shadow-lg rounded-lg right-0 hover:bg-gray-100 drop-shadow-xl mt-5 hover:mb-2 transition-shadow absolute"
       >
         <svg
           className={"xl:w-6  xl:h-6 w-5 h-5"}

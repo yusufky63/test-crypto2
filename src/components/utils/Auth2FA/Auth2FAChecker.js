@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import {useState} from "react";
-import {useSelector} from "react-redux";
 import * as OTPAuth from "otpauth";
 import {useMemo, useEffect} from "react";
 import {toast} from "react-toastify";
@@ -11,8 +10,7 @@ import {onSnapshot} from "firebase/firestore";
 import {collection, query, where} from "firebase/firestore";
 import {db, auth2fa} from "../../../services/firebase";
 
-function Auth2FALogin() {
-  const {user} = useSelector((state) => state.auth);
+function Auth2FALogin({user}) {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
 
   const [totps, setTotps] = useState("");

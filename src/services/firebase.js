@@ -43,8 +43,6 @@ import {
   updateDoc,
   query,
   where,
-  orderBy,
-  limit,
 } from "firebase/firestore";
 
 import {
@@ -81,12 +79,9 @@ export const register = async (email, password) => {
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     const user = result.user;
-
-    // "users" koleksiyonundaki belgeyi al
     const userDoc = doc(db, "users", user.uid);
     const docSnap = await getDoc(userDoc);
 
-    // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
     if (docSnap.exists()) {
       console.log("Kullanıcı zaten kayıtlı");
     } else {
@@ -136,7 +131,7 @@ export const login = async (email, password) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    errorMessages(error);
   }
 };
 
@@ -173,7 +168,7 @@ export const githubLogin = async () => {
   await signInWithPopup(auth, providerGithub)
     .then(function (result) {
       auth2faCheck();
-      toast.success("Github İle Giriş Yapıldı");
+
       const userDoc = doc(db, "users", result.uid);
       const docSnap = getDoc(userDoc);
       // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
@@ -186,13 +181,11 @@ export const githubLogin = async () => {
           uid: result.uid,
           auth2fa: false,
         });
-        toast.success("Kullanıcı başarıyla kaydedildi");
       }
-
+      toast.success("Github İle Giriş Yapıldı");
       window.location.href = "/";
     })
     .catch(function (error) {
-      toast.error("Github ile giriş yapılamadı!", error.message);
       errorMessages(error);
     });
 };
@@ -205,7 +198,6 @@ export const resetPasword = async (email) => {
     return true;
   } catch (error) {
     errorMessages(error);
-
     return false;
   }
 };
@@ -657,12 +649,21 @@ export const deleteQuestion = async (id) => {
 //Score
 export const addScore = async (data) => {
   try {
-    const result = await addDoc(collection(db, "scores"), data);
-    return result.id;
+    const scoreRef = doc(db, "scores", data.uid); // Belge yolu veya referansı oluştur
+    const scoreDoc = await getDoc(scoreRef); // Belgeyi getir
+    if (scoreDoc.exists()) {
+      const existingScore = scoreDoc.data(); // Mevcut veriyi al
+      if (!existingScore.score || existingScore.score < data.score) {
+        await setDoc(scoreRef, data); // Yeni veriyi ekle, eğer eski veri yoksa veya yeni veri daha yüksekse
+      }
+    } else {
+      await setDoc(scoreRef, data); // Belge yoksa yeni veriyi ekle
+    }
   } catch (error) {
     errorMessages(error);
   }
 };
+
 
 //Get Score Top 3
 export const getScoreTop3 = async () => {

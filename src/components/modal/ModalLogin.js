@@ -8,7 +8,6 @@ import {
   githubLogin,
   googleLogin,
 } from "../../services/firebase";
-import IpLogger from "../utils/IpLogger";
 
 export default function ModalLogin() {
   let [isOpen, setIsOpen] = useState(false);
@@ -26,7 +25,7 @@ export default function ModalLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
     login(email, password);
-    IpLogger();
+
   };
 
   return (

@@ -81,13 +81,13 @@ function Portfolyo() {
           <div className="w-full border shadow-md p-5 rounded-lg font-bold flex items-center justify-between">
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
                
-              Hesap Bakiyesi : 
+              Hesap Bakiyesi :  {" "}
               <span className="text-gray-500">
                 {total && total.toFixed(2)}$
               </span> 
             </span>
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
-              Kar/Zarar : 
+              Kar/Zarar : {" "}
               {totalRate > 0 ? (
                 <span className="text-green-400">
                    

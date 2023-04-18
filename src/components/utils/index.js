@@ -5,7 +5,6 @@ import InternetConnection from "./InternetConnection";
 import MarketsDataError from "./MarketsDataError";
 import Page404 from "./Page404";
 import PortfolioChart from "./PortfolioChart";
-import validationsForm from "./validationsForm";
 import DataGlobal from "./DataGlobal";
 
 export {
@@ -16,6 +15,6 @@ export {
   MarketsDataError,
   Page404,
   PortfolioChart,
-  validationsForm,
+
   DataGlobal,
 };

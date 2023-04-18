@@ -20,7 +20,6 @@ import {toast} from "react-toastify";
 import {auth2FA} from "../../../services/firebase";
 
 import {getUsers} from "../../../services/firebase";
-import {Link} from "react-router-dom";
 
 const steps = [
   "Uygulama Kurulumu",
@@ -238,17 +237,23 @@ export default function Auth2FASetup() {
             )}
           </Box>
         ) : (
-          <div className="flex justify-center items-center mt-10 ">
-            <div className="flex flex-col justify-center items-center ">
-              <h1 className="text-3xl font-bold text-center mb-4 ">
-                2 Adımlı Doğrulama Zaten Aktif
-              </h1>
-              <div className="flex justify-between items-center">
-                <Link to="/" className="rounded p-2 shadow-md mx-5 ">
-                  Anasayfa
-                </Link>
-                <Link to="/settings" className="rounded p-2 px-4 shadow-md mx-5 ">Ayarlar</Link>
+          <div class=" bg-white  mt-10 text-center">
+            <h2 className="text-xl font-bold mb-2">Adım 5: Tamamlandı</h2>
+            <div className="">
+              <div className="flex justify-center">
+                <img
+                  alt="success"
+                  className="w-28  my-20"
+                  src={require("../../../assets/img/verifactionSuccess.png")}
+                />
               </div>
+
+              <a
+                href="/"
+                className="bg-blue-500  hover:bg-blue-700 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Ana Sayfa
+              </a>
             </div>
           </div>
         )}

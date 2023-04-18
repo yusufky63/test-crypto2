@@ -26,7 +26,6 @@ const PortfolioChart = ({chart}) => {
   const config = {
     appendPadding: 10,
     data,
-
     angleField: "value",
     colorField: "type",
     radius: 0.8,
