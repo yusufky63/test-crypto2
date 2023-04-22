@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {getUsers, setAdmin} from "../../../services/firebase";
+import React, { useEffect, useState } from "react";
+import { getUsers, setAdmin } from "../../../services/Firebase/FirebaseAdmin";
 
 function AddAdmin() {
   const [users, setUsers] = useState([]);
-  
+
   useEffect(() => {
     getUsers().then((res) => {
       res.sort((a, b) => {
@@ -47,14 +47,20 @@ function AddAdmin() {
                 )}
               </p>
             </div>
-            <button
-              className={`${
-                user.isAdmin ? "bg-gray-400 " : "bg-blue-500"
-              } px-4 py-2 rounded-md text-white font-medium`}
-              onClick={() => setAdmin(user.id)}
-            >
-              {user.isFounder ? "Kurucu"  : user.isAdmin ? "Admin" : "Admin Ekle" }
-            </button>
+            <div className="flex items-center">
+              <button
+                className={`${
+                  user.isAdmin ? "bg-gray-400 " : "bg-blue-500"
+                } mx-2 px-4 py-2 rounded-md text-white font-medium`}
+                onClick={() => setAdmin(user.id)}
+              >
+                {user.isFounder
+                  ? "Kurucu"
+                  : user.isAdmin
+                  ? "Admin"
+                  : "Admin Ekle"}
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -1,18 +1,18 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {CryptoState} from "../redux/CryptoContext";
-import {TopCoins} from "../../services/Api";
+import { CryptoState } from "../../redux/CryptoContext";
+import { TopCoins } from "../../services/Api";
 
-import {HomeHeader, Contact, PageLinks, TrendCoin} from "./HomeComp";
+import { HomeHeader, Contact, PageLinks, TrendCoin } from "./HomeComp";
 
 function Home() {
   const [crypto, setCrypto] = useState([]);
-  const {currency, symbol} = CryptoState();
+  const { currency, symbol } = CryptoState();
   const [loading, setLoading] = useState(false);
   const currencyEdit = currency.toLowerCase();
   const getCoins = async () => {
     setLoading(true);
-    const {data} = await axios.get(TopCoins(currencyEdit));
+    const { data } = await axios.get(TopCoins(currencyEdit));
     setCrypto(data);
     setLoading(false);
   };
@@ -32,12 +32,7 @@ function Home() {
         symbol={symbol}
         loading={loading}
       />
-
-      <div className="my-20">
-        <PageLinks />
-      </div>
-      <hr />
-
+      <PageLinks />
       <Contact />
     </div>
   );

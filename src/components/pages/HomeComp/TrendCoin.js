@@ -1,11 +1,11 @@
 import React from "react";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
-import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
+import CheckPositiveNumber from "../../../utils/CheckPositiveNumber";
 import { NavLink } from "react-router-dom";
-import TrendSkeleton from "../../utils/design/TrendSkeleton";
+import TrendSkeleton from "../../../utils/design/TrendSkeleton";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { motion } from "framer-motion";
-import NumberWithCommas from "../../utils/NumberWithCommas";
+import NumberWithCommas from "../../../utils/NumberWithCommas";
 
 function TrendCoin({ crypto, symbol, loading }) {
   return (

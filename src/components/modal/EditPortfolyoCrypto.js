@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
-import { updatePorfolyo, addOrderHistory } from "../../services/firebase";
-import numberWithCommas from "../utils/NumberWithCommas";
+import { updatePorfolyo, addOrderHistory } from "../../services/Firebase/FirebasePortfolyoAndFavorites";
+import numberWithCommas from "../../utils/NumberWithCommas";
 import { toast } from "react-toastify";
 
 export default function EditPortfolyoCrypto({ cryptoID }) {

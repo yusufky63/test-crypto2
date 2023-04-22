@@ -15,7 +15,7 @@ function PageLinks() {
 
   return (
     <motion.div
-      className="flex justify-center"
+      className="flex justify-center my-20"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

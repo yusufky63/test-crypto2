@@ -4,26 +4,26 @@ import {
   DataGlobal,
   MarketsDataError,
   AddFavorites,
-} from "../utils";
+} from "../../utils";
 
-import {BuyCrypto, SellCrypto} from "../modal";
+import { BuyCrypto, SellCrypto } from "../modal";
 
-import {Link} from "react-router-dom";
-import {CryptoState} from "../redux/CryptoContext";
+import { Link } from "react-router-dom";
+import { CryptoState } from "../../redux/CryptoContext";
 import axios from "axios";
-import {Pagination} from "@mui/material";
-import {Sparklines, SparklinesLine, SparklinesSpots} from "react-sparklines";
-import {CoinList, GlobalData} from "../../services/Api";
+import { Pagination } from "@mui/material";
+import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
+import { CoinList, GlobalData } from "../../services/Api";
 
-import {addCrypto, deleteCrypto} from "../../services/firebase";
-import {useSelector} from "react-redux";
-import {toast} from "react-toastify";
-import {useEffect, useState, useMemo} from "react";
+import { addFavoritesCrypto, deleteFavoritesCrypto } from "../../services/Firebase/FirebasePortfolyoAndFavorites";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useEffect, useState, useMemo } from "react";
 function Markets() {
-  const {user} = useSelector((state) => state.auth);
-  const {favori} = useSelector((state) => state.favorites);
+  const { user } = useSelector((state) => state.auth);
+  const { favori } = useSelector((state) => state.favorites);
 
-  const {currency, symbol} = CryptoState();
+  const { currency, symbol } = CryptoState();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [globalData, setGlobalData] = useState([]);
@@ -35,7 +35,7 @@ function Markets() {
 
   const fetchCoins = async () => {
     setLoading(true);
-    const {data} = await axios
+    const { data } = await axios
       .get(CoinList(currencyEdit, count))
       .catch((err) => console.log(err));
 
@@ -45,7 +45,7 @@ function Markets() {
   };
 
   const fetchGlobalData = async () => {
-    const {data} = await axios(GlobalData());
+    const { data } = await axios(GlobalData());
     setGlobalData(data.data);
   };
 
@@ -72,12 +72,12 @@ function Markets() {
     if (user) {
       const data = favori.find((item) => item.name === id);
       if (!data) {
-        addCrypto({
+        addFavoritesCrypto({
           name: id,
           uid: user.uid,
         });
       } else {
-        deleteCrypto(data.id);
+        deleteFavoritesCrypto(data.id);
       }
     } else {
       toast.warning("Lütfen Giriş Yapınız !");
@@ -91,7 +91,6 @@ function Markets() {
           {err && <MarketsDataError />}
           <header className="flex flex-col justify-center">
             <div>
-               
               <h1 className="text-4xl text-left my-10  p-3 shadow-md rounded-lg flex justify-between items-center ">
                 Piyasa
                 {globalData.active_cryptocurrencies && (
@@ -241,7 +240,6 @@ function Markets() {
                                         <Link to={`/markets/${item.id}`}>
                                           {item.name}
                                           <span className="uppercase text-xs text-gray-500">
-                                             
                                             {item.symbol}
                                           </span>
                                         </Link>
@@ -251,7 +249,6 @@ function Markets() {
                                 </td>
                                 <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
                                   <div className="">
-                                     
                                     {symbol}
                                     {item.current_price}
                                   </div>
@@ -288,7 +285,7 @@ function Markets() {
                                     margin={-30}
                                     data={item.sparkline_in_7d.price}
                                   >
-                                    <SparklinesLine style={{fill: ""}} />
+                                    <SparklinesLine style={{ fill: "" }} />
                                     <SparklinesSpots />
                                   </Sparklines>
                                 </td>

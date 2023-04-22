@@ -11,8 +11,8 @@ import {
   addPortfolyo,
   updatePorfolyo,
   addOrderHistory,
-} from "../../services/firebase";
-import numberWithCommas from "../utils/NumberWithCommas";
+} from "../../services/Firebase/FirebasePortfolyoAndFavorites";
+import numberWithCommas from "../../utils/NumberWithCommas";
 
 function BuyCrypto({cryptoID}) {
   const {portfolyo} = useSelector((state) => state.portfolios);

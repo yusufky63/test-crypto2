@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, {useState} from "react";
-import {EditAcademyBlog, AddAcademyBlogPhoto} from "../../../services/firebase";
+import {EditAcademyBlog, AddAcademyBlogPhoto} from "../../../services/Firebase/FirebaseBlog";
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {Editor} from "react-draft-wysiwyg";

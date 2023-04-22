@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import {TopExchanges} from "../../services/Api";
-import NumberWithCommas from "../utils/NumberWithCommas";
+import NumberWithCommas from "../../utils/NumberWithCommas";
 
 function Exchanges() {
   const [exchanges, setExchanges] = useState([]);

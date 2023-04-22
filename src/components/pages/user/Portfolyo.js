@@ -4,14 +4,14 @@ import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {SingleCoin} from "../../../services/Api";
-import {deletePortfolyo} from "../../../services/firebase";
+import {deletePortfolyo} from "../../../services/Firebase/FirebasePortfolyoAndFavorites";
 import BuyCrypto from "../../modal/BuyCrypto";
 import SellCrypto from "../../modal/SellCrypto";
 import Favorites from "./Favorites";
 
 import OrderHistory from "../../modal/OrderHistory";
 
-import {PortfolioChart, CheckPositiveNumber} from "../../utils";
+import {PortfolioChart, CheckPositiveNumber} from "../../../utils";
 function Portfolyo() {
   const {portfolyo} = useSelector((state) => state.portfolios);
 

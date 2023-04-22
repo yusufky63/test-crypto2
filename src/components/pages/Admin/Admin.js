@@ -1,14 +1,15 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {deleteBlog, deleteQuestion} from "../../../services/firebase";
+import {deleteBlogAdmin} from "../../../services/Firebase/FirebaseAdmin";
+import {deleteQuestion} from "../../../services/Firebase/FirebaseQuestion";
 
 function Admin() {
   const {blog} = useSelector((state) => state.blogs);
   const {question} = useSelector((state) => state.questions);
 
   const handleDeleteBlog = (id) => {
-    deleteBlog(id);
+    deleteBlogAdmin(id);
   };
 
   const handleDeleteQuestion = (id) => {

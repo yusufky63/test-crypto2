@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {Dialog, Transition} from "@headlessui/react";
 import {Fragment, useState} from "react";
-import {register as registerFirebase} from "../../services/firebase";
-import {githubLogin, googleLogin} from "../../services/firebase";
+import {register as registerFirebase} from "../../services/Firebase/FirebaseProfile";
+import {githubLogin, googleLogin} from "../../services/Firebase/FirebaseProfile";
 export default function ModalRegister() {
   let [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");

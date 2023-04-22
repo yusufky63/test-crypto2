@@ -18,7 +18,7 @@ export function Auth2FAStep2({totps, secretKey}) {
             <img
               alt="otp"
               className="w-48"
-              src={require("../../../assets/img/otp.jpg")}
+              src={require("../../assets/img/otp.jpg")}
             />
           </div>
           <div>

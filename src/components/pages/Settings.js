@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {CryptoState} from "../redux/CryptoContext";
+import {CryptoState} from "../../redux/CryptoContext";
 import LastLogins from "./user/LastLogins";
 import {Link} from "react-router-dom";
-import {delete2FA, getUsers} from "../../services/firebase";
+import { getUsers} from "../../services/Firebase/FirebaseAdmin";
+import {delete2FA} from "../../services/Firebase/FirebaseProfile";
 import {useSelector} from "react-redux";
 
 function Settings() {

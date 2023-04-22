@@ -4,7 +4,7 @@ import {
   upProfile,
   UpdatePassword,
   emailVerified,
-} from "../../../services/firebase";
+} from "../../../services/Firebase/FirebaseProfile";
 import DeleteAccount from "../../modal/DeleteAccount";
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);

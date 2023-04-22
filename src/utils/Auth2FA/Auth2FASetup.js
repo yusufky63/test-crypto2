@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, {useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -7,19 +7,18 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
-import {Auth2FAStep1} from "./Auth2FAStep1";
-import {Auth2FAStep2} from "./Auth2FAStep2";
-import {Auth2FAStep3} from "./Auth2FAStep3";
-import {Auth2FAStep4} from "./Auth2FAStep4";
-import {Auth2FAStep5} from "./Auth2FAStep5";
+import { Auth2FAStep1 } from "./Auth2FAStep1";
+import { Auth2FAStep2 } from "./Auth2FAStep2";
+import { Auth2FAStep3 } from "./Auth2FAStep3";
+import { Auth2FAStep4 } from "./Auth2FAStep4";
+import { Auth2FAStep5 } from "./Auth2FAStep5";
 
 import * as OTPAuth from "otpauth";
-import {toast} from "react-toastify";
-import {auth2FA} from "../../../services/firebase";
-
-import {getUsers} from "../../../services/firebase";
+import { toast } from "react-toastify";
+import { auth2FA } from "../../services/Firebase/FirebaseProfile";
+import { getUsers } from "../../services/Firebase/FirebaseAdmin";
 
 const steps = [
   "Uygulama Kurulumu",
@@ -30,7 +29,7 @@ const steps = [
 
 export default function Auth2FASetup() {
   const [users, setUsers] = useState([]);
-  const {user} = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [authCheck, setAuthCheck] = useState(false);
 
   const [totps, setTotps] = useState("");
@@ -199,21 +198,23 @@ export default function Auth2FASetup() {
             {activeStep === 4 && <Auth2FAStep5 />}
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography sx={{mt: 2, mb: 1}}>Kurulum tamamlandı.</Typography>
-                <Box sx={{display: "flex", flexDirection: "column", pt: 2}}>
-                  <Box sx={{flex: "1 1 auto"}} />
+                <Typography sx={{ mt: 2, mb: 1 }}>
+                  Kurulum tamamlandı.
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column", pt: 2 }}>
+                  <Box sx={{ flex: "1 1 auto" }} />
                   {/* <Button onClick={handleReset}>Sıfırla</Button> */}
                 </Box>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <Box sx={{display: "flex", flexDirection: "row", pt: 2}}>
+                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                   {
                     <Button
                       color="inherit"
                       disabled={activeStep === 0 || activeStep === 3}
                       onClick={handleBack}
-                      sx={{mr: 1}}
+                      sx={{ mr: 1 }}
                     >
                       Geri
                     </Button>
@@ -227,7 +228,7 @@ export default function Auth2FASetup() {
                       İptal
                     </Button>
                   }
-                  <Box sx={{flex: "1 1 auto"}} />
+                  <Box sx={{ flex: "1 1 auto" }} />
 
                   <Button onClick={handleNext} disabled={activeStep === 2}>
                     {activeStep === steps.length - 1 ? "Bitir" : "Sonraki"}
@@ -244,7 +245,7 @@ export default function Auth2FASetup() {
                 <img
                   alt="success"
                   className="w-28  my-20"
-                  src={require("../../../assets/img/verifactionSuccess.png")}
+                  src={require("../../assets/img/verifactionSuccess.png")}
                 />
               </div>
 

@@ -4,7 +4,7 @@ import {motion} from "framer-motion";
 import quizIcon from "../../assets/img/blockchain.png";
 import {useSelector} from "react-redux";
 import {ModalLogin, ModalRegister} from "../modal";
-import {getScoreTop3} from "../../services/firebase";
+import {getScoreTop3} from "../../services/Firebase/FirebaseQuestion";
 const Quiz = () => {
   const [topScore, setTopScore] = useState([]);
   const {user} = useSelector((state) => state.auth);

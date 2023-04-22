@@ -24,7 +24,7 @@ function Page404() {
             to={"/"}
             className="flex justify-center   mx-2 border shadow-md rounded-md p-3  hover:bg-gray-300 "
           >
-            <span className="text-md lg:text-xl ml-2"> Geri Dön</span>
+            <span className="text-md lg:text-xl ml-2">Geri Dön</span>
           </Link>
         </div>
       </div>

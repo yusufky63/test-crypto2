@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {addScore} from "../../../services/firebase";
+import {addScore} from "../../../services/Firebase/FirebaseQuestion"
 import ShowScore from "./ShowScore";
 import {useSelector} from "react-redux";
 

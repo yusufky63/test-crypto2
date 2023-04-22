@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 
-
 export function Auth2FAStep3({handleVerification}) {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
 

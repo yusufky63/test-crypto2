@@ -15,6 +15,5 @@ export {
   MarketsDataError,
   Page404,
   PortfolioChart,
-
   DataGlobal,
 };

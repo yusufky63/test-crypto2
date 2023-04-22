@@ -3,14 +3,17 @@ import { useParams } from "react-router-dom";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import axios from "axios";
 import { SingleCoin } from "../../services/Api";
-import { CryptoState } from "../redux/CryptoContext";
-import NumberWithCommas from "../utils/NumberWithCommas";
-import CheckPositiveNumber from "../utils/CheckPositiveNumber";
+import { CryptoState } from "../../redux/CryptoContext";
+import NumberWithCommas from "../../utils/NumberWithCommas";
+import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
 
-import { addCrypto, deleteCrypto } from "../../services/firebase";
+import {
+  addFavoritesCrypto,
+  deleteFavoritesCrypto,
+} from "../../services/Firebase/FirebasePortfolyoAndFavorites";
 import { useSelector } from "react-redux";
 
-import AddFavorites from "../utils/AddFavorites";
+import AddFavorites from "../../utils/AddFavorites";
 import BuyCrypto from "../modal/BuyCrypto";
 import SellCrypto from "../modal/SellCrypto";
 function CryptoCard() {
@@ -35,21 +38,18 @@ function CryptoCard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-
   const handleSavedCoin = (e, id) => {
     e.preventDefault();
     const data = favori.find((item) => item.name === id);
     if (!data) {
-      addCrypto({
+      addFavoritesCrypto({
         name: id,
         uid: user.uid,
       });
     } else {
-      deleteCrypto(data.id);
+      deleteFavoritesCrypto(data.id);
     }
   };
-
-
 
   return (
     <>
@@ -69,7 +69,7 @@ function CryptoCard() {
 
                 <span className=" absolute mb-16 right-0 text-black rounded-r-lg px-1 ">
                   <button onClick={(e) => handleSavedCoin(e, coin.id)}>
-                  <AddFavorites id={coin.id} />
+                    <AddFavorites id={coin.id} />
                   </button>
                 </span>
 
@@ -79,7 +79,7 @@ function CryptoCard() {
                   className="w-12 h-12 mr-4 mt-5"
                 />
                 <h2 className="text-xl font-bold mt-3">
-                  {coin.name} 
+                  {coin.name}
                   <span className="text-sm uppercase text-gray-500">
                     {coin.symbol}
                   </span>
@@ -92,7 +92,6 @@ function CryptoCard() {
                   {coin.market_data.current_price[currencyEdit]}
                 </h1>
                 <span className="font-bold mt-1">
-                   
                   <CheckPositiveNumber
                     number={
                       coin.market_data.price_change_percentage_24h_in_currency[
@@ -154,7 +153,7 @@ function CryptoCard() {
               <div className="flex items-center  justify-between">
                 <h1 className="font-bold  mr-10">Total Volume: </h1>
                 <span className="text-sm bg-yellow-400 rounded-lg  px-2">
-                  {symbol} 
+                  {symbol}
                   {NumberWithCommas(
                     coin.market_data.total_volume[currencyEdit]
                   )}
@@ -214,7 +213,6 @@ function CryptoCard() {
               </div>
               <br />
               <div className="border shadow-lg rounded-lg p-3">
-                 
                 <button className="shadow-md  hover:bg-green-400   my-1 rounded-lg p-1 px-5 w-full">
                   <BuyCrypto cryptoID={coin.id}></BuyCrypto>
                 </button>
@@ -242,7 +240,6 @@ function CryptoCard() {
             )}
           </div>
           <h1 className="text-xl font-semibold mt-8 mb-4">
-             
             {coin.name} ({coin.symbol?.toUpperCase()}) Hakkında
           </h1>
           <div className="flex justify-center">

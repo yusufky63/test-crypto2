@@ -1,62 +1,32 @@
 /* eslint-disable array-callback-return */
-import {initializeApp} from "firebase/app";
-import {toast} from "react-toastify";
-import {setFavorites} from "../components/redux/favorite/favoriteSlice";
-import {setPortfolyo} from "../components/redux/portfolyo/portfolyoSlice";
-import {setOrder} from "../components/redux/portfolyo/orderHistorySlice";
-import {setLastLogin} from "../components/redux/portfolyo/lastLoginSlice";
-import {setBlog} from "../components/redux/blog/blogSlice";
-import {setQuestion} from "../components/redux/question/questionSlice";
-
-import {setAdmins} from "../components/redux/user/adminsSlice";
-import {setUsers} from "../components/redux/user/usersSlice";
-
-import {store} from "../components/redux/store";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-  onAuthStateChanged,
-  signInWithPopup,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  updateProfile,
-  updatePassword,
-  sendEmailVerification,
-  EmailAuthProvider,
-  reauthenticateWithCredential,
-  deleteUser,
-} from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { toast } from "react-toastify";
+import { setFavorites } from "../redux/favorite/favoriteSlice";
+import { setPortfolyo } from "../redux/portfolyo/portfolyoSlice";
+import { setOrder } from "../redux/portfolyo/orderHistorySlice";
+import { setLastLogin } from "../redux/portfolyo/lastLoginSlice";
+import { setBlog } from "../redux/blog/blogSlice";
+import { setQuestion } from "../redux/question/questionSlice";
+import { setAdmins } from "../redux/user/adminsSlice";
+import { setUsers } from "../redux/user/usersSlice";
+import { store } from "../redux/store";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import {
-  setDoc,
-  getDocs,
-  getDoc,
-  doc,
   getFirestore,
   collection,
-  addDoc,
   onSnapshot,
-  deleteDoc,
-  updateDoc,
   query,
   where,
 } from "firebase/firestore";
 
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 import {
   login as LoginRedux,
   logout as LogoutRedux,
   auth2fa as Auth2faRedux,
-} from "../components/redux/auth";
+} from "../redux/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -68,151 +38,13 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
-export const auth2fa = false;
+
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
 //REGISTER
-export const register = async (email, password) => {
-  try {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    const user = result.user;
-    const userDoc = doc(db, "users", user.uid);
-    const docSnap = await getDoc(userDoc);
-
-    if (docSnap.exists()) {
-      console.log("Kullanıcı zaten kayıtlı");
-    } else {
-      await setDoc(userDoc, {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        isAdmin: false,
-      });
-      console.log("Kullanıcı başarıyla kaydedildi");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const auth2faCheck = async () => {
-  onSnapshot(
-    query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)),
-    (snapshot) => {
-      snapshot.docs.map((doc) => {
-        if (doc.data().auth2fa) {
-          console.log("2FA");
-          window.location.href = "/auth-checker";
-        }
-      });
-    }
-  );
-};
-
-//LOGIN
-export const login = async (email, password) => {
-  try {
-    const {user} = await signInWithEmailAndPassword(auth, email, password);
-    // "users" koleksiyonundaki belgeyi al
-    const userDoc = doc(db, "users", user.uid);
-    const docSnap = await getDoc(userDoc);
-    // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
-    if (!docSnap.exists()) {
-      await setDoc(userDoc, {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        isAdmin: false,
-        uid: user.uid,
-        auth2fa: false,
-      });
-    }
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//GOOGLE AUTH
-const googleProvider = new GoogleAuthProvider();
-
-// Google Signin Function
-export const googleLogin = async () => {
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
-
-    const userDoc = doc(db, "users", user.uid);
-    const docSnap = await getDoc(userDoc);
-    if (!docSnap.exists()) {
-      await setDoc(userDoc, {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        isAdmin: false,
-        uid: user.uid,
-        auth2fa: false,
-      });
-      auth2faCheck();
-    }
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//GITHUB AUTH
-const providerGithub = new GithubAuthProvider();
-export const githubLogin = async () => {
-  await signInWithPopup(auth, providerGithub)
-    .then(function (result) {
-      auth2faCheck();
-
-      const userDoc = doc(db, "users", result.uid);
-      const docSnap = getDoc(userDoc);
-      // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
-      if (!docSnap.exists()) {
-        setDoc(userDoc, {
-          name: result.displayName,
-          email: result.email,
-          photoURL: result.photoURL,
-          isAdmin: false,
-          uid: result.uid,
-          auth2fa: false,
-        });
-      }
-      toast.success("Github İle Giriş Yapıldı");
-      window.location.href = "/";
-    })
-    .catch(function (error) {
-      errorMessages(error);
-    });
-};
-
-//RESET PASSWORD
-export const resetPasword = async (email) => {
-  try {
-    await sendPasswordResetEmail(auth, email);
-    toast.success("Şifre Sıfırlama Maili Gönderildi");
-    return true;
-  } catch (error) {
-    errorMessages(error);
-    return false;
-  }
-};
-
-//LOGOUT
-export const logout = async () => {
-  try {
-    await signOut(auth);
-    window.location.href = "/";
-    toast.success("Çıkış Başarılı");
-    return true;
-  } catch (error) {
-    errorMessages(error);
-  }
-};
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -228,7 +60,7 @@ onAuthStateChanged(auth, (user) => {
               doc.docs.reduce(
                 (favorites, favori) => [
                   ...favorites,
-                  {...favori.data(), id: favori.id},
+                  { ...favori.data(), id: favori.id },
                 ],
                 []
               )
@@ -246,7 +78,7 @@ onAuthStateChanged(auth, (user) => {
               doc.docs.reduce(
                 (portfolios, portfolyo) => [
                   ...portfolios,
-                  {...portfolyo.data(), id: portfolyo.id},
+                  { ...portfolyo.data(), id: portfolyo.id },
                 ],
                 []
               )
@@ -261,7 +93,10 @@ onAuthStateChanged(auth, (user) => {
           store.dispatch(
             setOrder(
               doc.docs.reduce(
-                (orders, order) => [...orders, {...order.data(), id: order.id}],
+                (orders, order) => [
+                  ...orders,
+                  { ...order.data(), id: order.id },
+                ],
                 []
               )
             )
@@ -277,7 +112,7 @@ onAuthStateChanged(auth, (user) => {
               doc.docs.reduce(
                 (lastLogins, lastLogin) => [
                   ...lastLogins,
-                  {...lastLogin.data(), id: lastLogin.id},
+                  { ...lastLogin.data(), id: lastLogin.id },
                 ],
                 []
               )
@@ -292,7 +127,7 @@ onAuthStateChanged(auth, (user) => {
             doc.docs.reduce(
               (questions, question) => [
                 ...questions,
-                {...question.data(), id: question.id},
+                { ...question.data(), id: question.id },
               ],
               []
             )
@@ -318,7 +153,7 @@ onAuthStateChanged(auth, (user) => {
     store.dispatch(
       setBlog(
         doc.docs.reduce(
-          (blogs, blog) => [...blogs, {...blog.data(), id: blog.id}],
+          (blogs, blog) => [...blogs, { ...blog.data(), id: blog.id }],
           []
         )
       )
@@ -330,474 +165,55 @@ onAuthStateChanged(auth, (user) => {
     const admins = doc.docs
       .map((admin) => {
         const data = admin.data();
-        if (data.isAdmin === true) {
-          return {...data, id: admin.id};
+        if (data.isAdmin === true || data.isFounder === "true") {
+          return { ...data, id: admin.id };
         } else {
           return null;
         }
       })
       .filter((admin) => admin !== null);
-
     store.dispatch(setAdmins(admins));
-
     store.dispatch(
-      setUsers(doc.docs.map((user) => ({...user.data(), id: user.id})))
+      setUsers(doc.docs.map((user) => ({ ...user.data(), id: user.id })))
     );
   });
 });
 
-//ADD CRYPTO
-export const addCrypto = async (favorite) => {
-  try {
-    if (favorite) {
-      const result = await addDoc(collection(db, "favorites"), favorite);
-      return result.id;
-    }
-  } catch (error) {
-    toast.warning("Lütfen Giriş Yapınız !", error.message);
-  }
-  await addDoc(collection(db, "favorites"), favorite);
-};
-
-//DELETE CRYPTO
-export const deleteCrypto = async (id) => {
-  try {
-    await deleteDoc(doc(db, "favorites", id));
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//ADD PORTFOLIO
-export const addPortfolyo = async (portfolyo) => {
-  try {
-    if (portfolyo) {
-      const result = await addDoc(collection(db, "portfolios"), portfolyo);
-      toast.success("Satın Alma İşlemi Başarılı");
-      return result.id;
-    }
-  } catch (error) {
-    toast.error("Satın Alma Başarısız", error.message);
-  }
-
-  await addDoc(collection(db, "portfolios"), portfolyo);
-};
-
-//UPDATE PORTFOLIO
-export const updatePorfolyo = async (id, portfolyo) => {
-  try {
-    if (portfolyo) {
-      await updateDoc(doc(db, "portfolios", id), portfolyo);
-      if (portfolyo.coin_price_usd * portfolyo.buy_total_crypto <= 0.01) {
-        deletePortfolyo(id);
-      }
-      toast.success("İşlem Gerçekleşti");
-    }
-  } catch (error) {
-    errorMessages(error);
-    toast.error("İşlem Gerçekleşmedi", error.message);
-  }
-};
-
-//DELETE PORTFOLIO
-export const deletePortfolyo = async (id) => {
-  try {
-    await deleteDoc(doc(db, "portfolios", id));
-    toast.success("Silindi !");
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//PROFILE
-
-//UPDATE PROFILE
-export const upProfile = async (photoURL, displayName) => {
-  try {
-    await updateProfile(auth.currentUser, {
-      displayName,
-      photoURL,
-      auth2fa: true,
-    });
-    toast.success("Profil Güncellendi");
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//UPDATE PASSWORD
-export const UpdatePassword = async (password) => {
-  updatePassword(auth.currentUser, password)
-    .then(() => {
-      toast.success("Şifre Güncelleme Başarılı");
-    })
-    .catch((error) => {
-      errorMessages(error);
-    });
-};
-
-//SEND EMAIL VERIFICATION
-export const emailVerified = async () => {
-  try {
-    sendEmailVerification(auth.currentUser).then(() => {
-      toast.success("Onay Linki Gönderildi !");
-    });
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//DELETE ACCOUNT
-export const deletAccount = async () => {
-  await deleteUser(auth.currentUser)
-    .then(() => {
-      toast.success("Hesabınız Silindi !");
-    })
-    .catch((error) => {
-      errorMessages(error);
-    });
-};
-
-export const reAuth = async (password) => {
-  try {
-    const credential = await EmailAuthProvider.credential(
-      auth.currentUser.email,
-      password
-    );
-
-    const {user} = await reauthenticateWithCredential(
-      auth.currentUser,
-      credential
-    );
-    toast.success("Onaylandı !");
-    return user;
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//DELETE HISTORY
-export const deleteOrderHistory = async (id) => {
-  try {
-    if (id) {
-      await deleteDoc(doc(db, "orders", id));
-    }
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//ADD HISTORY
-export const addOrderHistory = async (order) => {
-  try {
-    const result = await addDoc(collection(db, "orders"), order);
-    return result.id;
-  } catch (error) {
-    errorMessages(error);
-  }
-  await addDoc(collection(db, "orders"), order);
-};
-
-//ADD LOGIN HISTORY
-export const lastLoginIP = async (loginData) => {
-  try {
-    const result = await addDoc(collection(db, "lastlogins"), loginData);
-    return result.id;
-  } catch (error) {
-    errorMessages(error);
-  }
-  await addDoc(collection(db, "lastlogins"), loginData);
-};
-
-//ADD AcademyBlog
-
-export const AddAcademyBlog = async (academyBlog) => {
-  try {
-    const result = await addDoc(collection(db, "academyblogs"), academyBlog);
-    toast.success("Blog Eklendi");
-    return result.id;
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//EditAcademyBlog
-export const EditAcademyBlog = async (id, data) => {
-  try {
-    await updateDoc(doc(db, "academyblogs", id), data);
-    toast.success("Blog Güncellendi");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-//ADD AcademyBlog Photo
-
-export const AddAcademyBlogPhoto = async (academyBlogPhoto) => {
-  const storageRef = ref(storage, "academyblogs/" + academyBlogPhoto.name);
-  const uploadTask = uploadBytesResumable(storageRef, academyBlogPhoto);
-  return new Promise((resolve, reject) => {
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        if (progress === 100) {
-          toast.success("Fotoğraf Yüklendi");
-        }
-      },
-      (error) => {
-        errorMessages(error);
-        reject(error);
-      },
-      async () => {
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-        resolve(downloadURL);
-      }
-    );
-  });
-};
-
-export const deleteBlog = async (id) => {
-  try {
-    if (id) {
-      await deleteDoc(doc(db, "academyblogs", id));
-      toast.success("Blog Silindi");
-    }
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-export const getImageUrl = async (imageName) => {
-  try {
-    const url = await getDownloadURL(ref(storage, imageName));
-    return url;
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//Auth2FA
-
-export const auth2FA = async (id, secretKey, backupCode) => {
-  try {
-    const userRef = doc(db, "users", id);
-    await updateDoc(userRef, {
-      auth2fa: true,
-      Auth2FAcreatedAt: new Date(),
-      secretKey: secretKey,
-      backupCode: backupCode,
-    });
-  } catch (error) {
-    console.log(error);
-    toast.warning("İşlem Gerçekleştirilemedi: ", error);
-  }
-};
-
-// Delete 2FA
-
-export const delete2FA = async (id) => {
-  try {
-    const userRef = doc(db, "users", id);
-    await updateDoc(userRef, {
-      auth2fa: false,
-      Auth2FAcreatedAt: null,
-      secretKey: null,
-      backupCode: null,
-    });
-  } catch (error) {
-    console.log(error);
-    errorMessages(error);
-  }
-};
-
-//Add Questions
-
-export const addQuestions = async (data) => {
-  try {
-    const result = await addDoc(collection(db, "questions"), data);
-    toast.success("Soru Eklendi");
-    return result.id;
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//editQuestions
-export const editQuestions = async (id, data) => {
-  try {
-    await updateDoc(doc(db, "questions", id), data);
-    toast.success("Soru Güncellendi");
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-export const deleteQuestion = async (id) => {
-  try {
-    if (id) {
-      await deleteDoc(doc(db, "questions", id));
-      toast.success("Soru Silindi");
-    }
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//Score
-export const addScore = async (data) => {
-  try {
-    const scoreRef = doc(db, "scores", data.uid); // Belge yolu veya referansı oluştur
-    const scoreDoc = await getDoc(scoreRef); // Belgeyi getir
-    if (scoreDoc.exists()) {
-      const existingScore = scoreDoc.data(); // Mevcut veriyi al
-      if (!existingScore.score || existingScore.score < data.score) {
-        await setDoc(scoreRef, data); // Yeni veriyi ekle, eğer eski veri yoksa veya yeni veri daha yüksekse
-      }
-    } else {
-      await setDoc(scoreRef, data); // Belge yoksa yeni veriyi ekle
-    }
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-
-//Get Score Top 3
-export const getScoreTop3 = async () => {
-  try {
-    const querySnapshot = await getDocs(
-      collection(db, "scores"),           
-    );      
-    const data = querySnapshot.docs.map((doc) => ({   
-      ...doc.data(),      
-      id: doc.id,         
-    }));      
-    return data;    
-  } catch (error) {     
-    errorMessages(error); 
-  }
-};
-
-
-//ADMIN SETTINGS
-export const adminList = async () => {
-  try {
-    const querySnapshot = await getDoc(
-      collection(db, "users"),
-      where("isAdmin", "==", true || "isFounder", "==", true)
-    );
-    const data = querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    return data;
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-// User Delete Function
-export const DeleteUser = async (userId) => {
-  try {
-    await db.collection("users").doc(userId).delete();
-  } catch (error) {
-    console.error("Error deleting user: ", error);
-  }
-};
-
-// Admin Add Function
-export const setAdmin = async (userId) => {
-  try {
-    const userRef = doc(db, "users", userId);
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
-    if (userData.isAdmin === true && !userData.isFounder) {
-      await updateDoc(userRef, {isAdmin: false});
-      toast.info("Admin Yetkisi Kaldırıldı");
-    } else if (userData.isAdmin === false) {
-      await updateDoc(userRef, {isAdmin: true});
-      toast.success("Admin Yetkisi Verildi");
-    } else {
-      toast.info("Kurucu Admin");
-    }
-  } catch (error) {
-    console.log(error);
-    toast.warning("İşlem Gerçekleştirilemedi: " + error);
-  }
-};
-
-//Admin Blog Delete Function
-export const deleteBlogAdmin = async (id) => {
-  try {
-    if (id) {
-      await deleteDoc(doc(db, "academyblogs", id));
-      toast.success("Blog Silindi");
-    }
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//Admin Blog Update Function
-export const updateBlogAdmin = async (id, data) => {
-  try {
-    await updateDoc(doc(db, "academyblogs", id), data);
-    toast.success("Blog Güncellendi");
-  } catch (error) {
-    errorMessages(error);
-  }
-};
-
-//Admin getUsers Function
-export const getUsers = async () => {
-  const users = [];
-  const querySnapshot = await getDocs(collection(db, "users"));
-  querySnapshot.forEach((doc) => {
-    users.push({...doc.data(), id: doc.id});
-  });
-  return users;
-};
 //Error Handling
-const errorMessages = (error) => {
-  toast.error(
-    error.message ===
-      "Firebase: Password should be at least 6 characters (auth/weak-password)."
-      ? "Şifre en az 6 karakter olmalıdır."
-      : error.message === "Firebase: Error (auth/invalid-email)."
-      ? "Geçersiz E-posta" === "Firebase: Error (auth/user-not-found)."
-      : error.message === "Firebase: Error (auth/email-already-in-use)."
-      ? "Bu e-posta adresi zaten kullanımda."
-      : error.message ===
-        "Firebase: The email address is badly formatted. (auth/invalid-email)."
-      ? "Geçersiz E-posta"
-      : error.message ===
-        "Firebase: Password should be at least 6 characters (auth/weak-password)."
-      ? "Şifre en az 6 karakter olmalıdır."
-      : error.message === "Firebase: Error (auth/user-not-found)."
-      ? "Kullanıcı Bulunamadı"
-      : error.message === "Firebase: Error (auth/wrong-password)."
-      ? "Şifre Yanlış"
-      : error.message === "Firebase: Error (auth/too-many-requests)."
-      ? "Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin."
-      : error.message === "Missing or insufficient permissions."
-      ? "İşlem İçin Yetkiniz Yok (Başka Bir Kullanıcı Tarafından Eklendi !"
-      : error.message === "Firebase: Error (auth/requires-recent-login)."
-      ? "Tekrar Giriş Yapın"
-      : error.message === "auth/weak-password"
-      ? "Şifre En Az 6 Karakter Olmalıdır"
-      : error.message === "Firebase: Error (auth/user-disabled)."
-      ? "Kullanıcı Engellendi"
-      : error.message ===
-        "Firebase: Error (auth/account-exists-with-different-credential)."
-      ? "Bu E-posta Adresi Zaten Kullanımda"
-      : error.message === "Firebase: Error (auth/missing-email)."
-      ? "E-posta Adresi Giriniz"
-      : error.message === "Firebase: Error (auth/invalid-email)."
-      ? "Geçersiz E-posta"
-      : error.message
-  );
+export const errorMessages = (error) => {
+  const errorMessageMap = {
+    "auth/weak-password": "Şifre en az 6 karakter olmalıdır.",
+    "auth/invalid-email": "Geçersiz E-posta",
+    "auth/user-not-found": "Kullanıcı Bulunamadı",
+    "auth/email-already-in-use": "Bu e-posta adresi zaten kullanımda.",
+    "auth/too-many-requests":
+      "Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin.",
+    "auth/requires-recent-login": "Tekrar Giriş Yapın",
+    "auth/user-disabled": "Kullanıcı Engellendi",
+    "auth/account-exists-with-different-credential":
+      "Bu E-posta Adresi Zaten Kullanımda",
+    "auth/missing-email": "E-posta Adresi Giriniz",
+    "auth/wrong-password": "Şifre Yanlış",
+    "auth/user-token-expired":
+      "Kullanıcı oturum süresi doldu. Lütfen tekrar giriş yapın.",
+    "auth/user-mismatch":
+      "Hatalı kullanıcı kimliği. Lütfen tekrar giriş yapın.",
+    "auth/invalid-action-code": "Geçersiz veya süresi dolmuş işlem kodu.",
+    "auth/operation-not-allowed": "İşlem izin verilmemiş.",
+    "auth/invalid-verification-code": "Geçersiz doğrulama kodu.",
+    "auth/network-request-failed": "Ağ hatası. Lütfen tekrar deneyin.",
+    "auth/provider-already-linked": "Bu kimlik sağlayıcı zaten kullanımda.",
+    "auth/provider-not-found": "Kimlik sağlayıcı bulunamadı.",
+    "auth/credential-already-in-use": "Bu kimlik zaten kullanımda.",
+    "auth/invalid-credential": "Geçersiz kimlik.",
+    "auth/invalid-verification-id": "Geçersiz doğrulama kimliği.",
+    "auth/invalid-continue-uri": "Geçersiz devam adresi.",
+    "auth/unauthorized-continue-uri": "Devam adresine yetkisiz erişim.",
+    "Cancelled by user": "İptal edildi.",
+    "auth/email-already-exists": "Bu e-posta adresi zaten kullanımda.",
+  };
+
+  const errorMessage = errorMessageMap[error.code] || error.message;
+  toast.error(errorMessage);
   console.log(error.message);
 };

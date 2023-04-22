@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { addCrypto, deleteCrypto } from "../../../services/firebase";
-import NumberWithCommas from "../../utils/NumberWithCommas";
-import CheckPositiveNumber from "../../utils/CheckPositiveNumber";
+import { addFavoritesCrypto, deleteFavoritesCrypto } from "../../../services/Firebase/FirebasePortfolyoAndFavorites";
+import NumberWithCommas from "../../../utils/NumberWithCommas";
+import CheckPositiveNumber from "../../../utils/CheckPositiveNumber";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { CryptoState } from "../../redux/CryptoContext";
+import { CryptoState } from "../../../redux/CryptoContext";
 import { SingleCoin } from "../../../services/Api";
 import BuyCrypto from "../../modal/BuyCrypto";
 import SellCrypto from "../../modal/SellCrypto";
-import AddFavorites from "../../utils/AddFavorites";
+import AddFavorites from "../../../utils/AddFavorites";
 export default function Favorites() {
   const { currency, symbol } = CryptoState();
   const { user } = useSelector((state) => state.auth);
@@ -41,12 +41,12 @@ const currencyEdit = currency.toLowerCase();
     e.preventDefault();
     const data = favori.find((item) => item.name === id);
     if (!data) {
-      addCrypto({
+      addFavoritesCrypto({
         name: id,
         uid: user.uid,
       });
     } else {
-      deleteCrypto(data.id);
+      deleteFavoritesCrypto(data.id);
     }
   };
 

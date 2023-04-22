@@ -6,7 +6,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {CryptoState} from "../../redux/CryptoContext";
-import {CoinList} from "../../../services/Api";
+import {CoinList} from "../../services/Api";
 import WidgetSkeleton from "../design/WidgetSkeleton";
 
 function AllCoinsWidget() {

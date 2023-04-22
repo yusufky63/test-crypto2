@@ -1,20 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
-import {Fragment} from "react";
-import {Disclosure, Menu, Transition} from "@headlessui/react";
-import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
-import {NavLink} from "react-router-dom";
-import {CryptoState} from "./redux/CryptoContext";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { NavLink } from "react-router-dom";
+import { CryptoState } from "../redux/CryptoContext";
 import ModalLogin from "./modal/ModalLogin";
 import ModalRegister from "./modal/ModalRegister";
-import {logout} from "../services/firebase";
-import {useSelector} from "react-redux";
+import { logout } from "../services/Firebase/FirebaseProfile";
+import { useSelector } from "react-redux";
 function Header() {
-  const {currency, setCurrency} = CryptoState();
+  const { currency, setCurrency } = CryptoState();
 
-  const {admins} = useSelector((state) => state.admins);
-  const {user} = useSelector((state) => state.auth);
+  const { admins } = useSelector((state) => state.admins);
+  const { user } = useSelector((state) => state.auth);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ function Header() {
   return (
     <>
       <Disclosure as="nav" className="bg-white navbar ">
-        {({open}) => (
+        {({ open }) => (
           <>
             <div className="mx-auto  max-w-7xl px-2 sm:px-6 ">
               <div className="relative flex h-20 items-center justify-between ">
@@ -42,13 +41,12 @@ function Header() {
                   </Disclosure.Button>
                 </div>
                 <div className=" flex flex-1 items-center justify-center sm:items-stretch ">
-                  <div className="flex  flex-shrink-0 items-center "></div>
                   <div className="hidden sm:ml-6 lg:block ">
                     <div className="flex space-x-4  justify-center items-center  ">
                       <div>
                         <NavLink
                           end
-                          style={({isActive}) => ({
+                          style={({ isActive }) => ({
                             textDecoration: isActive ? "underline 4px" : "none",
                             textUnderlineOffset: isActive ? "8px" : "none",
                           })}
@@ -61,7 +59,7 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({isActive}) => ({
+                          style={({ isActive }) => ({
                             textDecoration: isActive ? "underline 4px" : "none",
                             textUnderlineOffset: isActive ? "8px" : "none",
                           })}
@@ -73,7 +71,7 @@ function Header() {
                       </div>
                       <div>
                         <NavLink
-                          style={({isActive}) => ({
+                          style={({ isActive }) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
@@ -86,7 +84,7 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({isActive}) => ({
+                          style={({ isActive }) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
@@ -99,7 +97,7 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({isActive}) => ({
+                          style={({ isActive }) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
@@ -112,7 +110,7 @@ function Header() {
 
                       <div>
                         <NavLink
-                          style={({isActive}) => ({
+                          style={({ isActive }) => ({
                             textDecoration: isActive ? "underline 4px" : "gray",
                             textUnderlineOffset: isActive ? "8px" : "gray",
                           })}
@@ -139,7 +137,7 @@ function Header() {
                 {isAdmin && (
                   <div className=" absolute inset-y-0 right-36 flex  items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0  border-black rounded ">
                     <NavLink
-                      style={({isActive}) => ({
+                      style={({ isActive }) => ({
                         textDecoration: isActive ? "underline 4px" : "none",
                         textUnderlineOffset: isActive ? "8px" : "none",
                       })}

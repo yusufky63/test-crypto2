@@ -4,10 +4,10 @@ import {Fragment, useState} from "react";
 
 import {
   login,
-  resetPasword,
+  resetPassword,
   githubLogin,
   googleLogin,
-} from "../../services/firebase";
+} from "../../services/Firebase/FirebaseProfile";
 
 export default function ModalLogin() {
   let [isOpen, setIsOpen] = useState(false);
@@ -197,7 +197,7 @@ export default function ModalLogin() {
                       />
                     </div>
                     <a
-                      onClick={() => resetPasword(email)}
+                      onClick={() => resetPassword(email)}
                       className="text-indigo-500 flex justify-end mb-2 text-sm cursor-pointer"
                     >
                       Şifremi Unuttum

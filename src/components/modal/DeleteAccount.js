@@ -2,7 +2,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-import { deletAccount } from "../../services/firebase";
+import { deletAccount } from "../../services/Firebase/FirebaseProfile";
 
 export default function DeleteAccount() {
   let [isOpen, setIsOpen] = useState(false);

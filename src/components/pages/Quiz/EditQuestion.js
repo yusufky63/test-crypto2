@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {editQuestions} from "../../../services/firebase";
+import {editQuestions} from "../../../services/Firebase/FirebaseQuestion";
 import {v4 as uuidv4} from "uuid";
 import {useParams} from "react-router-dom";
 import { useSelector } from "react-redux";

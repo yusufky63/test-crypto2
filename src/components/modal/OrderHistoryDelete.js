@@ -4,7 +4,7 @@ import {Dialog, Transition} from "@headlessui/react";
 import {Fragment, useState} from "react";
 import {useSelector} from "react-redux";
 
-import {deleteOrderHistory} from "../../services/firebase";
+import {deleteOrderHistory} from "../../services/Firebase/FirebasePortfolyoAndFavorites";
 
 export default function OrderHistoryDelete() {
   let [isOpen, setIsOpen] = useState(false);

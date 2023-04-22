@@ -10,7 +10,7 @@ export function Auth2FAStep5() {
           <img
             alt="success"
             className="w-28  my-20"
-            src={require("../../../assets/img/verifactionSuccess.png")}
+            src={require("../../assets/img/verifactionSuccess.png")}
           />
         </div>
 

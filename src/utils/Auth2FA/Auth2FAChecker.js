@@ -2,15 +2,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import * as OTPAuth from "otpauth";
-import {useMemo, useEffect} from "react";
-import {toast} from "react-toastify";
-import {onSnapshot} from "firebase/firestore";
-import {collection, query, where} from "firebase/firestore";
-import {db, auth2fa} from "../../../services/firebase";
+import { useMemo, useEffect } from "react";
+import { toast } from "react-toastify";
+import { onSnapshot } from "firebase/firestore";
+import { collection, query, where } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
-function Auth2FALogin({user}) {
+function Auth2FALogin({ user }) {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
 
   const [totps, setTotps] = useState("");
@@ -63,7 +63,6 @@ function Auth2FALogin({user}) {
       toast.success("2FA Doğrulama Başarılı");
 
       window.location = "/";
-      auth2fa(true);
       console.log("giriş ve 2fa başarılı");
     } else {
       toast.error("Doğrulama Başarısız");

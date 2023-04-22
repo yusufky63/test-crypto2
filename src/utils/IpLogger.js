@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import axios from "axios";
-import {lastLoginIP} from "../../services/firebase";
+import {lastLoginIP} from "../services/Firebase/FirebaseProfile";
 import {useSelector} from "react-redux";
 
 function IpLogger() {

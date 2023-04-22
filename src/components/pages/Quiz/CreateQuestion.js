@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {addQuestions} from "../../../services/firebase";
+import {addQuestions} from "../../../services/Firebase/FirebaseQuestion";
 import {v4 as uuidv4} from "uuid";
 
 function CreateQuestion() {
