@@ -1,3 +1,8 @@
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useEffect, useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   CheckPositiveNumber,
   NumberWithCommas,
@@ -7,18 +12,12 @@ import {
 } from "../../utils";
 
 import { BuyCrypto, SellCrypto } from "../modal";
-
-import { Link } from "react-router-dom";
 import { CryptoState } from "../../redux/CryptoContext";
-import axios from "axios";
 import { Pagination } from "@mui/material";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import { CoinList, GlobalData } from "../../services/Api";
-
 import { addFavoritesCrypto, deleteFavoritesCrypto } from "../../services/Firebase/FirebasePortfolyoAndFavorites";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { useEffect, useState, useMemo } from "react";
+
 function Markets() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
@@ -37,7 +36,7 @@ function Markets() {
     setLoading(true);
     const { data } = await axios
       .get(CoinList(currencyEdit, count))
-      .catch((err) => console.log(err));
+      .catch((err) =>setErr(true));
 
     setCoins(data);
     setLoading(false);
@@ -55,7 +54,6 @@ function Markets() {
 
   useEffect(() => {
     fetchCoins();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count, currency, page]);
 
@@ -85,7 +83,7 @@ function Markets() {
   };
   console.log(currencyEdit);
   return (
-    <div>
+    <div className="bg-market">
       <>
         <div className=" px-6  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
           {err && <MarketsDataError />}

@@ -10,7 +10,7 @@ export function Auth2FAStep4({backupCode}) {
   };
 
   return (
-    <div class="bg-white rounded-lg  mx-auto max-w-md px-6 py-8">
+    <div className="bg-white rounded-lg  mx-auto max-w-md px-6 py-8">
       <h2 className="text-lg font-bold mb-2">Adım 4: Yedek Anahtar</h2>
       <p className="text-gray-600 mb-4">
         Lütfen yedek anahtarınızı güvenli bir yerde saklayın. Bu anahtar,

@@ -238,7 +238,7 @@ export default function Auth2FASetup() {
             )}
           </Box>
         ) : (
-          <div class=" bg-white  mt-10 text-center">
+          <div className=" bg-white  mt-10 text-center">
             <h2 className="text-xl font-bold mb-2">Adım 5: Tamamlandı</h2>
             <div className="">
               <div className="flex justify-center">

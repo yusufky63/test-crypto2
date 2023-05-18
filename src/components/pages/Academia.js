@@ -2,11 +2,7 @@ import React from "react";
 
 import Blogs from "./Academy/Blogs";
 function Academia() {
-  return (
-    <div>
-      <Blogs />
-    </div>
-  );
+  return <Blogs />;
 }
 
 export default Academia;

@@ -1,6 +1,6 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import {TopExchanges} from "../../services/Api";
+import { TopExchanges } from "../../services/Api";
 import NumberWithCommas from "../../utils/NumberWithCommas";
 
 function Exchanges() {
@@ -12,7 +12,7 @@ function Exchanges() {
 
   const getExchanges = async () => {
     setLoading(true);
-    const {data} = await axios.get(TopExchanges(count));
+    const { data } = await axios.get(TopExchanges(count));
     setExchanges(data);
     setLoading(false);
   };
@@ -28,12 +28,11 @@ function Exchanges() {
       )
     );
   }, [search, exchanges]);
-  console.log(exchanges);
   return (
     <div className="">
       <div>
         <h1 className="font-bold xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-3xl my-8 flex justify-center  items-center">
-          Borsalar TOP 
+          Borsalar TOP
           <span
             className="inline-flex items-center py-2 px-3 mx-2 xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-xl font-medium text-center text-white bg-red-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-red-800"
             rel="noreferrer"
@@ -144,7 +143,6 @@ function Exchanges() {
                             className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 "
                             key={item.id}
                           >
-                             
                             <td className="whitespace-nowrap px-1 py-4 text-sm text-gray-500">
                               <div className="text-gray-900">
                                 {item.trust_score_rank}
@@ -161,7 +159,6 @@ function Exchanges() {
                                 </div>
                                 <div className="ml-4">
                                   <div className=" text-gray-900 font-bold ">
-                                     
                                     {item.name}
                                   </div>
                                 </div>
@@ -180,19 +177,17 @@ function Exchanges() {
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               <div className="text-gray-900">
-                                <span className="text-yellow-400">฿</span> 
+                                <span className="text-yellow-400">฿</span>
                                 {NumberWithCommas(item.trade_volume_24h_btc)}
                               </div>
                             </td>
                             <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               <div className="text-gray-900">
-                                 
                                 {item.year_established}
                               </div>
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               <div className="text-gray-900">
-                                 
                                 {item.country}
                               </div>
                             </td>
@@ -210,13 +205,13 @@ function Exchanges() {
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="none"
                                       viewBox="0 0 24 24"
-                                      stroke-width="1.5"
+                                      strokeWidth="1.5"
                                       stroke="currentColor"
-                                      class="w-6 h-6"
+                                      className="w-6 h-6"
                                     >
                                       <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
                                       />
                                     </svg>

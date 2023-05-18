@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import { favoritesSlice } from "./favorite/favoriteSlice";
 import { portfolyoSlice } from "./portfolyo/portfolyoSlice";
 import { orderHistorySlice } from "./portfolyo/orderHistorySlice";
@@ -24,4 +25,9 @@ export const store = configureStore({
     admins: adminsSlice.reducer,
     users: usersSlice.reducer,
   },
+  //serializable hatası verdiği için eklendi
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

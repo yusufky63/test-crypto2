@@ -1,8 +1,8 @@
 import React from "react";
-import {useSelector} from "react-redux";
-import {Pagination} from "@mui/material";
+import { useSelector } from "react-redux";
+import { Pagination } from "@mui/material";
 function LastLogins() {
-  const {lastLogin} = useSelector((state) => state.lastLogins);
+  const { lastLogin } = useSelector((state) => state.lastLogins);
   const [page, setPage] = React.useState(1);
 
   const sortedLastLogin = [...lastLogin].sort((a, b) => {
@@ -10,7 +10,6 @@ function LastLogins() {
   });
   return (
     <div>
-       
       <li className=" p-2 rounded-lg shadow-sm my-3 text-xs">
         <h1 className="text-2xl font-bold mb-5">Son Girişler </h1>
         <span className="flex items-center justify-between text-center">

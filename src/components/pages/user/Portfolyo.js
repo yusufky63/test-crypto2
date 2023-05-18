@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useState, useEffect} from "react";
-import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import {SingleCoin} from "../../../services/Api";
-import {deletePortfolyo} from "../../../services/Firebase/FirebasePortfolyoAndFavorites";
+import { SingleCoin } from "../../../services/Api";
+import { deletePortfolyo } from "../../../services/Firebase/FirebasePortfolyoAndFavorites";
 import BuyCrypto from "../../modal/BuyCrypto";
 import SellCrypto from "../../modal/SellCrypto";
 import Favorites from "./Favorites";
 
 import OrderHistory from "../../modal/OrderHistory";
 
-import {PortfolioChart, CheckPositiveNumber} from "../../../utils";
+import { PortfolioChart, CheckPositiveNumber } from "../../../utils";
 function Portfolyo() {
-  const {portfolyo} = useSelector((state) => state.portfolios);
+  const { portfolyo } = useSelector((state) => state.portfolios);
 
   const [wallet, setWallet] = useState([]);
   const [coins, setCoins] = useState([]);
@@ -26,8 +26,8 @@ function Portfolyo() {
     setLoading(true);
 
     portfolyo.map(async (name) => {
-      const {data} = await axios(SingleCoin(name.coin));
-      let mergeData = {...name, ...data};
+      const { data } = await axios(SingleCoin(name.coin));
+      let mergeData = { ...name, ...data };
 
       setCoins((prev) => [...prev, data]);
       setWallet((prev) => [
@@ -80,19 +80,15 @@ function Portfolyo() {
         {
           <div className="w-full border shadow-md p-5 rounded-lg font-bold flex items-center justify-between">
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
-               
-              Hesap Bakiyesi :  {" "}
+              Hesap Bakiyesi :{" "}
               <span className="text-gray-500">
                 {total && total.toFixed(2)}$
-              </span> 
+              </span>
             </span>
             <span className="text-sm md:text-sm lg:text-lg xl:text-lg">
-              Kar/Zarar : {" "}
+              Kar/Zarar :{" "}
               {totalRate > 0 ? (
-                <span className="text-green-400">
-                   
-                  {totalRate.toFixed(2)} $
-                </span>
+                <span className="text-green-400">{totalRate.toFixed(2)} $</span>
               ) : (
                 <span className="text-red-500">{totalRate.toFixed(2)}$</span>
               )}
@@ -145,56 +141,56 @@ function Portfolyo() {
                     {info.length > 0 ? (
                       <table className="min-w-full divide-y divide-gray-300">
                         <thead className="bg-gray-50 ">
-                          <tr className="text-center">
+                          <tr className="text-center text-sm font-semibold text-gray-900">
                             <th
                               scope="col"
-                              className="whitespace-nowrap py-3.5 pl-4 pr-3  text-sm font-semibold text-gray-900 "
+                              className="whitespace-nowrap py-3.5 pl-4 pr-3  "
                             >
                               Coin
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1 py-3.5"
                             >
                               Miktar
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1 py-3.5"
                             >
                               Bakiye($)
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900 "
+                              className="whitespace-nowrap px-1 py-3.5 "
                             >
                               Alım Fiyatı
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900 "
+                              className="whitespace-nowrap px-1 py-3.5"
                             >
                               Güncel Fiyat
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1 py-3.5"
                             >
                               Kar / Zarar Miktarı
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
+                              className="whitespace-nowrap px-1 py-3.5 "
                             >
                               Kar / Zarar (%)
                             </th>
 
-                            {/* <th
-                        scope="col"
-                        className="px-1  py-3.5  text-sm font-semibold text-gray-900"
-                      >
-                        Alım Zamanı
-                      </th> */}
+                            <th
+                              scope="col"
+                              className="whitespace-nowrap px-1 py-3.5 text-center"
+                            >
+                              İşlemler
+                            </th>
                           </tr>
                         </thead>
 
@@ -218,8 +214,7 @@ function Portfolyo() {
                                     <div className="  text-gray-900 font-bold ">
                                       <Link to={`/markets/${item.id}`}>
                                         {item.name}
-                                        <span className="uppercase text-xs text-gray-500">
-                                           
+                                        <span className="uppercase text-xs text-gray-500 m-1">
                                           {item.symbol}
                                         </span>
                                       </Link>
@@ -229,7 +224,6 @@ function Portfolyo() {
                               </td>
                               <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
                                 <div className="">
-                                   
                                   <h1>{item.buy_total_crypto.toFixed(5)}</h1>
                                 </div>
                               </td>
@@ -254,7 +248,6 @@ function Portfolyo() {
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
-                                   
                                   {(item.market_data.current_price.usd -
                                     item.coin_price_usd) *
                                     item.buy_total_crypto >=
@@ -264,7 +257,7 @@ function Portfolyo() {
                                         (item.market_data.current_price.usd -
                                           item.coin_price_usd) *
                                         item.buy_total_crypto
-                                      ).toFixed(2)} 
+                                      ).toFixed(2)}
                                       $
                                     </span>
                                   ) : (
@@ -273,7 +266,7 @@ function Portfolyo() {
                                         (item.market_data.current_price.usd -
                                           item.coin_price_usd) *
                                         item.buy_total_crypto
-                                      ).toFixed(2)} 
+                                      ).toFixed(2)}
                                       $
                                     </span>
                                   )}
@@ -308,8 +301,6 @@ function Portfolyo() {
                               </td>
                               <td className="  ">
                                 <div className="flex flex-col">
-                                  {/* <EditPortfolyoCrypto cryptoID={item.id} /> */}
-
                                   <a
                                     onClick={(e) => handleDelete(item.id)}
                                     className="   hover:bg-red-300 hover:text-red-900  p-2 rounded-md text-base flex justify-center font-medium "
@@ -351,7 +342,7 @@ function Portfolyo() {
         <h1 className="text-3xl font-bold  p-3 shadow-md rounded-lg text-left ">
           Favoriler
         </h1>
-        <Favorites/>
+        <Favorites />
       </div>
     </div>
   );

@@ -73,16 +73,16 @@ export function Auth2FAStep1() {
             App Store'dan İndirin
           </a>
         </div>
-        <div class="bg-white rounded-lg text-sm lg:text-base shadow-lg w-44 p-2  m-5 ">
-          <div class="flex justify-center">
+        <div className="bg-white rounded-lg text-sm lg:text-base shadow-lg w-44 p-2  m-5 ">
+          <div className="flex justify-center">
             <img
               src="https://play-lh.googleusercontent.com/F2wwwaQwutP2MvUJbjRm9knqRlUxSVghbPncqLr2IHvkyMvPlxjphiwC3Fhr9tOL60lP=w240-h480-rw"
               alt="2FAS Logo"
               className="w-16 rounded-lg mb-4"
             />
           </div>
-          <h2 class="text-lg font-bold mb-2">2FAS Authenticator</h2>
-          <p class="text-gray-600 mb-4">
+          <h2 className="text-lg font-bold mb-2">2FAS Authenticator</h2>
+          <p className="text-gray-600 mb-4">
             2FAS, kimliğinizi doğrulamak için iki faktörlü kimlik doğrulamayı
             etkinleştirmenin en kolay yoludur
           </p>
@@ -91,7 +91,7 @@ export function Auth2FAStep1() {
             href="https://play.google.com/store/apps/details?id=com.twofasapp"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline"
           >
             Play Store'dan İndirin
           </a>
@@ -100,7 +100,7 @@ export function Auth2FAStep1() {
             href="https://apps.apple.com/us/app/2fa-authenticator-2fas/id1217793794"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline"
           >
             App Store'dan İndirin
           </a>

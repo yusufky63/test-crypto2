@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {CryptoState} from "../../redux/CryptoContext";
-import LastLogins from "./user/LastLogins";
+import LastLogins from "./User/LastLogins";
 import {Link} from "react-router-dom";
 import { getUsers} from "../../services/Firebase/FirebaseAdmin";
 import {delete2FA} from "../../services/Firebase/FirebaseProfile";
@@ -40,9 +40,7 @@ function Settings() {
   return (
     <div className=" flex justify-center mt-10">
       <div className=" w-full max-w-4xl">
-        <h1 className="my-5 text-5xl text-red-500"> Geliştirme Aşamasında </h1>
         <h1 className="text-4xl text-left px-4 font-bold">Ayarlar</h1>
-
         <ul className="text-left p-4">
           <li className="border p-2 rounded-lg shadow-sm my-3">
             <h1 className="font-bold text-xl">Güvenlik </h1>

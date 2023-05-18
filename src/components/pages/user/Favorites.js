@@ -53,7 +53,6 @@ const currencyEdit = currency.toLowerCase();
 
   return (
     <div className="">
-       
       <div className="px-12 mt-4 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -114,12 +113,12 @@ const currencyEdit = currency.toLowerCase();
                         >
                           24 Saatlik Hacim
                         </th>
-                        {/* <th
+                        <th
                           scope="col"
-                          className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
+                          className="px-1  py-3.5 text-center text-sm font-semibold text-gray-900"
                         >
-                          Ayrıntılar
-                        </th> */}
+                          İşlemler
+                        </th>
                       </tr>
                     </thead>
 
@@ -151,7 +150,7 @@ const currencyEdit = currency.toLowerCase();
                                 <div className="  text-gray-900 font-bold ">
                                   <Link to={`/markets/${item.id}`}>
                                     {item.name}
-                                    <span className="uppercase text-xs text-gray-500">
+                                    <span className="uppercase text-xs text-gray-500 m-1">
                                        
                                       {item.symbol}
                                     </span>
@@ -186,10 +185,10 @@ const currencyEdit = currency.toLowerCase();
                             </div>
                           </td>
                           <td className="p-1">
-                            <button className="border hover:bg-green-400 shadow-md rounded-lg my-1 w-2/3">
+                            <button className="border hover:bg-green-400 shadow-md rounded-full my-1 w-2/3">
                               <BuyCrypto cryptoID={item.id}></BuyCrypto>
                             </button>
-                            <button className="border hover:bg-red-400 shadow-md rounded-lg  my-1   w-2/3">
+                            <button className="border hover:bg-red-400 shadow-md rounded-full  my-1   w-2/3">
                               <SellCrypto cryptoID={item.id}></SellCrypto>
                             </button>
                           </td>
