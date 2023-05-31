@@ -6,13 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
-import Profile from "./components/pages/User/Profile";
+import Profile from "./components/pages/user/Profile";
 import Markets from "./components/pages/Markets";
 import CryptoCard from "./components/pages/CryptoDetail";
 import Exchanges from "./components/pages/Exchanges";
 import Academia from "./components/pages/Academia";
 import Quiz from "./components/pages/Quiz";
-import Portfolyo from "./components/pages/User/Portfolyo";
+import Portfolyo from "./components/pages/user/Portfolyo";
+
 import Settings from "./components/pages/Settings";
 import Page404 from "./utils/Page404";
 import AddBlogAcademy from "./components/pages/Academy/AddBlogAcademy";
