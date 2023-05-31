@@ -1,4 +1,5 @@
 import React from "react";
+import RightIcon from "../../assets/icon/RightIcon";
 
 function NewsDesign({ news }) {
   return (
@@ -29,23 +30,11 @@ function NewsDesign({ news }) {
                   <a
                     target="_blank"
                     href={news.third_party_url}
-                    className="flex items-center hover:bg-gray-300 p-2 border rounded-lg  "
+                    className="flex items-center hover:bg-gray-300 p-2 border border-gray-100 rounded-lg  m-1  text-gray-900  shadow-lg  px-3"
                     rel="noreferrer"
                   >
                     Habere Git
-                    <svg
-                      aria-hidden="true"
-                      className="ml-2 -mr-1 w-4 h-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
+                  <RightIcon/>
                   </a>
                 </div>
               </div>

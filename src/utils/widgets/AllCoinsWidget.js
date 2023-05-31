@@ -1,23 +1,23 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CheckPositiveNumber from "../CheckPositiveNumber";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import axios from "axios";
-import {useEffect, useState} from "react";
-import {CryptoState} from "../../redux/CryptoContext";
-import {CoinList} from "../../services/Api";
+import { useEffect, useState } from "react";
+import { CryptoState } from "../../redux/CryptoContext";
+import { CoinList } from "../../services/Api";
 import WidgetSkeleton from "../design/WidgetSkeleton";
 
 function AllCoinsWidget() {
   const [crypto, setCrypto] = useState([]);
-  const {currency, symbol} = CryptoState();
+  const { currency, symbol } = CryptoState();
   const [loading, setLoading] = useState(false);
 
   const fetchCoins = async () => {
     setLoading(true);
     setCrypto([]);
-    const {data} = await axios
+    const { data } = await axios
       .get(CoinList(currency.toLowerCase(), 20))
       .catch((err) => console.log(err));
     setCrypto(data);
@@ -67,9 +67,8 @@ function AllCoinsWidget() {
                         <h5 className="mx-3 card-title text-sm">
                           {symbol}
                           {coin.current_price}
-                        </h5> 
+                        </h5>
                         <span className="text-sm  ">
-                           
                           <CheckPositiveNumber
                             number={coin.price_change_percentage_24h}
                           />
@@ -90,11 +89,11 @@ function AllCoinsWidget() {
 export default AllCoinsWidget;
 
 const responsive = {
-  0: {items: 2},
-  680: {items: 3},
-  940: {items: 4},
-  1280: {items: 6},
-  1480: {items: 6},
-  1536: {items: 8},
-  1920: {items: 10},
+  0: { items: 2 },
+  680: { items: 3 },
+  940: { items: 4 },
+  1280: { items: 6 },
+  1480: { items: 6 },
+  1536: { items: 8 },
+  1920: { items: 10 },
 };

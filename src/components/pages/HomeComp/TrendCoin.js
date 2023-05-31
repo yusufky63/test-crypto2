@@ -45,7 +45,7 @@ function TrendCoin({ crypto, symbol, loading }) {
                       className="card-img mr-2"
                     />
                     <NavLink to={`/markets/${coin.id}`}>
-                      <h1 className="text-sm sm:text-base lg:text-lg xl:text-lg">
+                      <h1 className="text-xs sm:text-base  ">
                         {coin.name}
                       </h1>
                       <span className="uppercase text-xs text-gray-500">
@@ -55,7 +55,7 @@ function TrendCoin({ crypto, symbol, loading }) {
                   </div>
                   <br />
                   <div className="flex items-center justify-between max-w-md">
-                    <h1 className="text-sm sm:text-base lg:text-lg xl:text-lg font-bold">
+                    <h1 className="text-sm sm:text-base  font-bold">
                       {symbol}
                       {NumberWithCommas(coin.current_price)}
                     </h1>
@@ -75,6 +75,7 @@ function TrendCoin({ crypto, symbol, loading }) {
                       <SparklinesSpots />
 
                     </Sparklines>
+                    
                   </div>
                 </motion.div>
               ))

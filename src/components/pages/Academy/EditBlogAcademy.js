@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, {useState} from "react";
-import {EditAcademyBlog, AddAcademyBlogPhoto} from "../../../services/Firebase/FirebaseBlog";
-import {useSelector} from "react-redux";
-import {toast} from "react-toastify";
-import {Editor} from "react-draft-wysiwyg";
+import React, { useState } from "react";
+import {
+  EditAcademyBlog,
+  AddAcademyBlogPhoto,
+} from "../../../services/Firebase/FirebaseBlog";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { Editor } from "react-draft-wysiwyg";
 import {
   EditorState,
   convertToRaw,
@@ -12,11 +15,11 @@ import {
 } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const EditBlogAcademy = () => {
-  const {id} = useParams();
-  const {blog} = useSelector((state) => state.blogs);
+  const { id } = useParams();
+  const { blog } = useSelector((state) => state.blogs);
   const filteredBlog = blog.filter((item) => item.id === id);
 
   const [header, setHeader] = useState(filteredBlog[0].header);
@@ -30,7 +33,7 @@ const EditBlogAcademy = () => {
       : EditorState.createEmpty()
   );
 
-  const {user} = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [downloadUrl, setDownloadUrl] = useState(filteredBlog[0].image);
 
   const handleUpload = async (event) => {

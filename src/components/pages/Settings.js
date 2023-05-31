@@ -63,7 +63,7 @@ function Settings() {
               )}
             </span>
           </li>
-          <li className="border p-2 rounded-lg shadow-sm my-3">
+          {/* <li className="border p-2 rounded-lg shadow-sm my-3">
             <h1 className="font-bold text-xl">Listelenecek Veri Sayısı </h1>
             <span className="flex items-center justify-between">
               <label>Kayan Fiyat Listesi (Widget) </label>
@@ -104,7 +104,7 @@ function Settings() {
                 <option value="150">150</option>
               </select>
             </span>
-          </li>
+          </li> */}
           <li className="border p-2 rounded-lg shadow-sm my-3">
             <span className="flex items-center justify-between ">
               <h1>Para Birimi </h1>

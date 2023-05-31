@@ -46,10 +46,10 @@ export default function HomeHeader() {
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="mt-10 sm:mt-0 "
+            className="mt-10 sm:mt-0  hidden md:block"
             width={"35%"}
             src={require("../../../assets/img/svg-1.png")}
-            alt="resim"
+            alt="photo"
           />
         </div>
       </div>

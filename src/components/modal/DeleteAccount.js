@@ -7,7 +7,6 @@ import { deletAccount } from "../../services/Firebase/FirebaseProfile";
 export default function DeleteAccount() {
   let [isOpen, setIsOpen] = useState(false);
 
-  //   const [password, setPassword] = useState("");
   const handleDelete = () => {
     deletAccount();
   };

@@ -1,14 +1,14 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {Dialog, Transition} from "@headlessui/react";
-import {Fragment, useState} from "react";
-import {useSelector} from "react-redux";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
 
-import {deleteOrderHistory} from "../../services/Firebase/FirebasePortfolyoAndFavorites";
+import { deleteOrderHistory } from "../../services/Firebase/FirebasePortfolyoAndFavorites";
 
 export default function OrderHistoryDelete() {
   let [isOpen, setIsOpen] = useState(false);
-  const {order} = useSelector((state) => state.orders);
+  const { order } = useSelector((state) => state.orders);
 
   //   const [password, setPassword] = useState("");
   const handleDelete = () => {

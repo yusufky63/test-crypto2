@@ -1,14 +1,15 @@
-import {useState} from "react";
-import {useSelector} from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   upProfile,
   UpdatePassword,
   emailVerified,
 } from "../../../services/Firebase/FirebaseProfile";
 import DeleteAccount from "../../modal/DeleteAccount";
+import WarningIcon from "../../../assets/icon/WarningIcon";
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
-  const {user} = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState(user.displayName);
@@ -34,23 +35,8 @@ function Profile() {
           <div className="p-5 ">
             {!user.emailVerified && (
               <div className="text-sm rounded-lg text-white flex justify-center mb-5 items-center bg-yellow-400 p-1">
-                 
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  ></path>
-                </svg> 
+                <WarningIcon />
                 <span className="ml-2">
-                   
                   Lütfen E-Mail Adresinizi Doğrulayın !
                 </span>
               </div>
@@ -61,7 +47,6 @@ function Profile() {
             <div className="text-center my-5 ">
               {!user.photoURL ? (
                 <div className="mb-3">
-                   
                   <i className=" fa-regular fa-3x fa-user-circle"></i>
                 </div>
               ) : (
@@ -94,11 +79,10 @@ function Profile() {
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 placeholder="Avatar Url"
-              /> 
+              />
             </div>
             <br />
             <div>
-               
               <h1>
                 <span>Kullanıcı Adı </span>
                 <input
@@ -121,11 +105,10 @@ function Profile() {
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   placeholder="Kullanıcı Adı"
-                /> 
+                />
               </h1>
             </div>
             <div>
-               
               <br />
               <h1>
                 <span>Email </span>
@@ -154,7 +137,6 @@ function Profile() {
               </h1>
               {!user.emailVerified ? (
                 <div className="flex justify-end">
-                   
                   <button
                     onClick={handleEmailVerified}
                     className=" border p-2 mt-1 shadow-sm rounded-lg hover:bg-gray-200 text-yellow-500"
@@ -164,7 +146,6 @@ function Profile() {
                 </div>
               ) : (
                 <div className="flex justify-end">
-                   
                   <span className="border p-2 mt-1 shadow-sm rounded-lg text-green-500">
                     Email Doğrulandı
                   </span>
@@ -173,7 +154,6 @@ function Profile() {
             </div>
             <br />
             <div>
-               
               <h1>
                 <span>Şifre </span>
                 <input

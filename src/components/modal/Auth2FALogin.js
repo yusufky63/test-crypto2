@@ -11,6 +11,7 @@ import {toast} from "react-toastify";
 import {onSnapshot} from "firebase/firestore";
 import {collection, query, where} from "firebase/firestore";
 import {db} from "../../services/firebase";
+import CloseIcon from "../../assets/icon/CloseIcon";
 
 function Auth2FALogin() {
   const {user} = useSelector((state) => state.auth);
@@ -183,20 +184,7 @@ function Auth2FALogin() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                <CloseIcon />
                 </button>
 
                 <h1 className="text-2xl text-center font-bold mb-2">

@@ -9,6 +9,7 @@ import ModalLogin from "./modal/ModalLogin";
 import ModalRegister from "./modal/ModalRegister";
 import { logout } from "../services/Firebase/FirebaseProfile";
 import { useSelector } from "react-redux";
+import CheckedAccountIcon from "../assets/icon/CheckedAccountIcon";
 function Header() {
   const { currency, setCurrency } = CryptoState();
 
@@ -141,7 +142,7 @@ function Header() {
                         textDecoration: isActive ? "underline 4px" : "none",
                         textUnderlineOffset: isActive ? "8px" : "none",
                       })}
-                      className="mx-2 text-lg  text-black hover:bg-gray-900 hover:text-white  px-3 py-2 rounded-md "
+                      className="mx-2 text-base lg:text-xl  text-black hover:bg-gray-900 hover:text-white  px-3 py-2 rounded-md "
                       to="/admin"
                     >
                       Admin
@@ -152,7 +153,7 @@ function Header() {
                 <div className=" absolute inset-y-0 right-0 flex  items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <select
                     value={currency}
-                    className=" rounded-lg  p-2 border  outline-none"
+                    className="text-sm rounded-lg  p-2 border  outline-none"
                     onChange={(e) => setCurrency(e.target.value)}
                   >
                     <option value={"TRY"}>TRY</option>
@@ -221,20 +222,7 @@ function Header() {
                                 ) : (
                                   <span className="absolute right-3 top-1.5 bg-green-400 text-white text-xs p-1 px-2 rounded-md ">
                                     <span className="flex justify-between items-center">
-                                      <svg
-                                        className="w-5 h-5 mr-1"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth="2"
-                                          d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                                        ></path>
-                                      </svg>
+                                      <CheckedAccountIcon />
                                       <span> Onaylı</span>
                                     </span>
                                   </span>

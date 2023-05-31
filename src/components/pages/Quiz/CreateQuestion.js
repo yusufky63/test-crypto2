@@ -1,6 +1,6 @@
-import {useState} from "react";
-import {addQuestions} from "../../../services/Firebase/FirebaseQuestion";
-import {v4 as uuidv4} from "uuid";
+import { useState } from "react";
+import { addQuestions } from "../../../services/Firebase/FirebaseQuestion";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateQuestion() {
   const [question, setQuestion] = useState("");
@@ -18,7 +18,7 @@ function CreateQuestion() {
       id: uuidv4(),
       subject: subject,
       question: question,
-      choices: {A: choice1, B: choice2, C: choice3, D: choice4},
+      choices: { A: choice1, B: choice2, C: choice3, D: choice4 },
       correctChoice: correctChoice.toUpperCase(),
       createdDate: new Date().toLocaleDateString(),
     };
