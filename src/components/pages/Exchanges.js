@@ -31,8 +31,8 @@ function Exchanges() {
     );
   }, [search, exchanges]);
   return (
-    <div className="">
-      <div>
+    <div className="mt-16">
+      {/* <div>
         <h1 className="font-bold xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl text-3xl my-8 flex justify-center  items-center">
           Borsalar TOP
           <span
@@ -42,19 +42,27 @@ function Exchanges() {
             {count}
           </span>
         </h1>
-      </div>
+      </div> */}
 
-      <div className="flex justify-center">
-        <input
-          type="text"
-          placeholder="Arama"
-          className="search w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-md lg:w-3/6  xl:w-2/6 "
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <div className="flex justify-center ">
+        <div className="flex flex-col w-3/4 lg:w-3/6  xl:w-2/6">
+          <input
+            type="text"
+            placeholder="Arama"
+            className="search text-center p-2 px-5 outline-none  rounded-lg shadow-md "
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          {search && (
+            <span className="mt-2 text-xs text-left text-gray-400">
+              Sonuc Bulundu : {filter.length}
+            </span>
+          )}
+        </div>
 
         <select
-          className="p-2 px-3   outline-none border rounded-lg shadow-md"
+          className="p-2 px-3 h-10  outline-none rounded-lg shadow-md "
           onChange={(e) => setCount(e.target.value)}
           value={count}
           name=""
@@ -64,6 +72,7 @@ function Exchanges() {
           <option value={50}>50</option>
           <option value={100}>100</option>
         </select>
+        <br />
       </div>
 
       <div className=" px-6  lg:px-8 pt-5 max-w-7xl mx-auto sm:px-6 ">
@@ -75,6 +84,8 @@ function Exchanges() {
                   <div role="status">
                     <LoadingIcon />
                   </div>
+                ) : filter.length < 1 ? (
+                  <span className=" text-red-600">Sonuç Yok</span>
                 ) : (
                   <table className="min-w-full divide-y divide-gray-300">
                     <thead className="bg-gray-50 ">

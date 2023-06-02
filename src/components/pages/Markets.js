@@ -16,9 +16,12 @@ import { CryptoState } from "../../redux/CryptoContext";
 import { Pagination } from "@mui/material";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import { CoinList, GlobalData } from "../../services/Api";
-import { addFavoritesCrypto, deleteFavoritesCrypto } from "../../services/Firebase/FirebasePortfolyoAndFavorites";
+import {
+  addFavoritesCrypto,
+  deleteFavoritesCrypto,
+} from "../../services/Firebase/FirebasePortfolyoAndFavorites";
 import LoadingIcon from "../../assets/icon/LoadingIcon";
-
+import { motion } from "framer-motion";
 function Markets() {
   const { user } = useSelector((state) => state.auth);
   const { favori } = useSelector((state) => state.favorites);
@@ -37,7 +40,7 @@ function Markets() {
     setLoading(true);
     const { data } = await axios
       .get(CoinList(currencyEdit, count))
-      .catch((err) =>setErr(true));
+      .catch((err) => setErr(true));
 
     setCoins(data);
     setLoading(false);
@@ -90,7 +93,7 @@ function Markets() {
           {err && <MarketsDataError />}
           <header className="flex flex-col justify-center">
             <div>
-              <h1 className="text-4xl text-left my-10  p-3 shadow-md rounded-lg flex justify-between items-center ">
+              <h1 className="text-3xl  text-left my-10  p-3 shadow-md rounded-lg flex justify-between items-center bg-white">
                 Piyasa
                 {globalData.active_cryptocurrencies && (
                   <DataGlobal
@@ -102,16 +105,25 @@ function Markets() {
               </h1>
             </div>
 
-            <div className="flex">
-              <input
-                type="text"
-                placeholder="Arama"
-                className=" w-3/4 text-center p-2 px-5 outline-none border rounded-lg shadow-lg md:4/6 lg:w-3/6  xl:w-2/6  mx-auto"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+            <div className="flex justify-center">
+              <div className="flex flex-col w-3/4 lg:w-3/6  xl:w-2/6">
+                <input
+                  type="text"
+                  placeholder="Arama"
+                  className=" text-center p-2 px-5 outline-none  rounded-lg shadow-md "
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+
+                {search && (
+                  <span className="mt-2 text-xs text-left text-gray-400">
+                    Sonuc Bulundu : {filteredCoins.length}
+                  </span>
+                )}
+              </div>
+
               <select
-                className="p-2 px-3  justify-end  outline-none border rounded-lg shadow-xl"
+                className="p-2 px-3 h-10  outline-none rounded-lg shadow-md "
                 onChange={(e) => setCount(e.target.value)}
                 value={count}
                 name=""
@@ -120,8 +132,8 @@ function Markets() {
                 <option value={10}>10</option>
                 <option value={50}>50</option>
                 <option value={100}>100</option>
-                <option value={250}>250</option>
               </select>
+              <br />
             </div>
           </header>
           <div className="mt-8 flex flex-col">
@@ -130,12 +142,14 @@ function Markets() {
                 <div className="overflow-hidden shadow   md:rounded-lg">
                   {filteredCoins && loading ? (
                     <div className="my-14" role="status">
-                     <LoadingIcon />
+                      <LoadingIcon />
                     </div>
+                  ) : filteredCoins.length < 1 ? (
+                    <span className=" text-red-600">Sonuç Yok</span>
                   ) : (
                     <>
-                      <table className="min-w-full divide-y divide-gray-300">
-                        <thead className="bg-gray-50 ">
+                      <table className="min-w-full divide-y ">
+                        <thead className="bg-white  ">
                           <tr className="text-center">
                             <th
                               scope="col"
@@ -171,12 +185,12 @@ function Markets() {
                             >
                               Piyasa Değeri
                             </th>
-                            <th
+                            {/* <th
                               scope="col"
                               className="whitespace-nowrap px-1  py-3.5  text-sm font-semibold text-gray-900"
                             >
                               Toplam Arz
-                            </th>
+                            </th> */}
                             <th
                               scope="col"
                               className="px-1  py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -192,13 +206,16 @@ function Markets() {
                           </tr>
                         </thead>
 
-                        <tbody className=" divide-y divide-gray-200 bg-white ">
+                        <tbody className=" divide-white  ">
                           {filteredCoins
                             .slice((page - 1) * 20, (page - 1) * 20 + 20)
                             .map((item) => (
-                              <tr
+                              <motion.tr
+                                initial={{ opacity: 0, x: -80 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.2 }}
                                 id="priceT"
-                                className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100  duration-300 ease-in-out  "
+                                className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 duration-300 ease-in-out shadow-inner"
                                 key={item.id}
                               >
                                 <td
@@ -224,7 +241,7 @@ function Markets() {
                                       <div className=" text-gray-900 font-bold ">
                                         <Link to={`/markets/${item.id}`}>
                                           {item.name}
-                                          <span className="uppercase text-xs text-gray-500">
+                                          <span className="uppercase text-xs text-gray-500 ml-1">
                                             {item.symbol}
                                           </span>
                                         </Link>
@@ -251,11 +268,11 @@ function Markets() {
                                     {NumberWithCommas(item.market_cap)}
                                   </div>
                                 </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                   <div className="text-gray-900">
                                     {NumberWithCommas(item.total_supply)}
                                   </div>
-                                </td>
+                                </td> */}
                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                   <div className="text-gray-900">
                                     {symbol}
@@ -282,7 +299,7 @@ function Markets() {
                                     <SellCrypto cryptoID={item.id}></SellCrypto>
                                   </button>
                                 </td>
-                              </tr>
+                              </motion.tr>
                             ))}
                         </tbody>
                       </table>

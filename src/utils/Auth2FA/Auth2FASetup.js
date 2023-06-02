@@ -103,7 +103,18 @@ export default function Auth2FASetup() {
   function handleVerification(data) {
     const currentCode = totp.generate();
     if (data === currentCode) {
+      const auth2faCheckData = JSON.parse(localStorage.getItem("auth2faCheck"));
+      if (auth2faCheckData) {
+        // Durumu güncelle
+        auth2faCheckData.auth = true;
+        auth2faCheckData.status = "verified";
+
+        // Güncellenen veriyi LocalStorage'a geri kaydet
+        localStorage.setItem("auth2faCheck", JSON.stringify(auth2faCheckData));
+      }
+
       toast.success("Doğrulama Başarılı");
+
       handleNext();
       handleAuthComplete();
     } else {

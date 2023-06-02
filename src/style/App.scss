@@ -3,6 +3,7 @@
 @import "react-alice-carousel/lib/alice-carousel.css";
 body {
   font-family: "Signika Negative", sans-serif;
+  background-color: #fafafa;
 }
 
 .App {
@@ -37,12 +38,7 @@ header .search {
   background-position: center;
 }
 
-.bg-reverse {
-  background-image: url("../assets/img/overview-bg.svg");
-  margin-top: 200px;
-  background-size: cover;
-  background-position: center;
-}
+
 
 .bg-home-header {
   background-image: url("../assets/img/home-header.png");
@@ -50,21 +46,7 @@ header .search {
   background-position: center;
 }
 
-// .portfolio-bg {
-//     background-image: url("../img/home-header.png");
-//     background-size: 60%;
-//     background-position: center;
-// }
 
-/* .news-bg {
-    background-image: url("./img/news-background.png");
-    background-size: 80%;
-    background-position: center;
-} */
-
-/* LAODER*/
-
-/* fav  */
 
 #main-content {
   display: flex;
@@ -79,6 +61,3 @@ svg {
   width: 50px;
 }
 
-.news {
-  background-color: #fffffffc;
-}

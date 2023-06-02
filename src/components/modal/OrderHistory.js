@@ -6,6 +6,7 @@ import { Pagination } from "@mui/material";
 import OrderHistoryDelete from "../modal/OrderHistoryDelete";
 import LoadingIcon from "../../assets/icon/LoadingIcon";
 import HistoryIcon from "../../assets/icon/HistoryIcon";
+import CloseIcon from "../../assets/icon/CloseIcon";
 export default function OrderHistory() {
   let [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,7 @@ export default function OrderHistory() {
         onClick={openModal}
         className=" z-30 lg:w-44 p-3 w-32 items-center px-5 text-sm sm:text-lg lg:text-base flex justify-around shadow-lg rounded-lg right-0 hover:bg-gray-100 drop-shadow-xl mt-5 hover:mb-2 transition-shadow absolute"
       >
+        <HistoryIcon />
         Geçmiş
       </button>
 
@@ -79,7 +81,7 @@ export default function OrderHistory() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                  <HistoryIcon />
+              <CloseIcon />
                 </button>
                 <br />
 

@@ -60,7 +60,7 @@ export function Auth2FAStep3({handleVerification}) {
   };
 
   return (
-    <div className="flex justify-center text-center">
+    <div className="flex justify-center text-center bg-white rounded-lg">
       <div className=" max-w-6xl mt-8 text-sm lg:text-base">
         <h2 className="text-lg font-bold mb-2">Adım 3: Doğrulayın</h2>
         <div className="bg-white  mx-auto max-w-xl px-6 py-8">

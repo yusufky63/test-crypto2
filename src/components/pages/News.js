@@ -48,8 +48,7 @@ function News() {
         {loading ? (
           <div role="status">
             <h1 className="my-2">Yükleniyor...</h1>
-            <LoadingIcon/>
-         
+            <LoadingIcon />
           </div>
         ) : (
           news.map((item) => (

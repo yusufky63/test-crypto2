@@ -23,10 +23,7 @@ import {
   doc,
   collection,
   addDoc,
-  onSnapshot,
   updateDoc,
-  query,
-  where,
 } from "firebase/firestore";
 
 import { auth, db, errorMessages } from "../firebase";
@@ -58,10 +55,9 @@ export const register = async (email, password) => {
 export const login = async (email, password) => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-    // "users" koleksiyonundaki belgeyi al
+
     const userDoc = doc(db, "users", user.uid);
     const docSnap = await getDoc(userDoc);
-    // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
     if (!docSnap.exists()) {
       await setDoc(userDoc, {
         name: user.displayName,
@@ -97,8 +93,8 @@ export const googleLogin = async () => {
         uid: user.uid,
         auth2fa: false,
       });
-      auth2faCheck();
     }
+    window.location.href = "/";
   } catch (error) {
     errorMessages(error);
   }
@@ -109,8 +105,6 @@ const providerGithub = new GithubAuthProvider();
 export const githubLogin = async () => {
   await signInWithPopup(auth, providerGithub)
     .then(function (result) {
-      auth2faCheck();
-
       const userDoc = doc(db, "users", result.uid);
       const docSnap = getDoc(userDoc);
       // Kullanıcının verilerini güncelle veya yeni bir belge oluştur
@@ -154,20 +148,6 @@ export const logout = async () => {
   } catch (error) {
     errorMessages(error);
   }
-};
-
-export const auth2faCheck = async () => {
-  onSnapshot(
-    query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)),
-    (snapshot) => {
-      snapshot.docs.map((doc) => {
-        if (doc.data().auth2fa) {
-          console.log("2FA");
-          window.location.href = "/auth-checker";
-        }
-      });
-    }
-  );
 };
 
 //UPDATE PROFILE
@@ -242,6 +222,14 @@ export const delete2FA = async (id) => {
       secretKey: null,
       backupCode: null,
     });
+    const auth2faCheckData = JSON.parse(localStorage.getItem("auth2faCheck"));
+    if (auth2faCheckData) {
+      // Durumu güncelle
+      auth2faCheckData.auth = false;
+      auth2faCheckData.status = "disabled";
+
+      localStorage.setItem("auth2faCheck", JSON.stringify(auth2faCheckData));
+    }
   } catch (error) {
     console.log(error);
     errorMessages(error);

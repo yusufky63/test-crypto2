@@ -10,7 +10,12 @@ import { onSnapshot } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
-function Auth2FALogin({ user }) {
+function Auth2FAChecker() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const user = Object.fromEntries(urlParams.entries());
+  const uid = Object.keys(user)[0];
+  console.log(uid);
+
   const [code, setCode] = useState(["", "", "", "", "", ""]);
 
   const [totps, setTotps] = useState("");
@@ -21,7 +26,7 @@ function Auth2FALogin({ user }) {
   const [showBackupCodeInput, setShowBackupCodeInput] = useState(false);
 
   const getSecureKeyAndBackupCode = async () => {
-    const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    const q = query(collection(db, "users"), where("uid", "==", uid));
     await onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         setSecretKey(doc.data().secretKey);
@@ -34,13 +39,13 @@ function Auth2FALogin({ user }) {
     () =>
       new OTPAuth.TOTP({
         issuer: "CryptoXChain",
-        label: `${user.email || user.displayName}`,
+
         algorithm: "SHA1",
         digits: 6,
         period: 30,
         secret: secretKey,
       }),
-    [secretKey, user]
+    [secretKey, uid]
   );
 
   useEffect(() => {
@@ -60,10 +65,23 @@ function Auth2FALogin({ user }) {
     const currentCode = totp.generate();
 
     if (data === currentCode || data === backupCode) {
-      toast.success("2FA Doğrulama Başarılı");
+      const auth2faCheckData = JSON.parse(localStorage.getItem("auth2faCheck"));
+      if (auth2faCheckData) {
+        // Durumu güncelle
+        auth2faCheckData.status = "verified";
 
+        // Güncellenen veriyi LocalStorage'a geri kaydet
+        localStorage.setItem("auth2faCheck", JSON.stringify(auth2faCheckData));
+
+        // Güncelleme tamamlandı, diğer işlemleri gerçekleştir
+      } else
+        localStorage.setItem(
+          "auth2faCheck",
+          JSON.stringify({ auth: true, status: "verified" })
+        );
+
+      toast.success("2FA Doğrulama Başarılı");
       window.location = "/";
-      console.log("giriş ve 2fa başarılı");
     } else {
       toast.error("Doğrulama Başarısız");
     }
@@ -194,4 +212,4 @@ function Auth2FALogin({ user }) {
   );
 }
 
-export default Auth2FALogin;
+export default Auth2FAChecker;

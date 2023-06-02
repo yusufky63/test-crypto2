@@ -1,10 +1,18 @@
 import React from "react";
 import RightIcon from "../../assets/icon/RightIcon";
+import { motion } from "framer-motion";
 
 function NewsDesign({ news }) {
+
   return (
     <div>
-      <div className="flex justify-center my-5">
+      <motion.div
+          initial={{ x: 100 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.5 }}
+          
+        
+      className="flex justify-center my-5">
         <div className="container max-w-4xl  text-left border relative shadow-md rounded-md">
           <div className="flex p-2 relative ">
             <img
@@ -20,9 +28,9 @@ function NewsDesign({ news }) {
                 {news.HEADLINE}
               </h1>
 
-              <div className="flex   justify-items-end">
-                <div className=" mt-14 ">
-                  <span className="md:text-lg sm:text-sm text-xs  text-gray-500">
+              <div className="flex justify-items-end">
+                <div className=" mt-16 ">
+                  <span className="md:text-base sm:text-sm text-xs  text-gray-500">
                     {news.last_updated}
                   </span>
                 </div>
@@ -34,14 +42,14 @@ function NewsDesign({ news }) {
                     rel="noreferrer"
                   >
                     Habere Git
-                  <RightIcon/>
+                    <RightIcon />
                   </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

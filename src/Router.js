@@ -84,9 +84,9 @@ function Router() {
       <Route
         path="/auth-checker"
         element={
-          <PrivateRoute>
+      
             <Auth2FAChecker />
-          </PrivateRoute>
+        
         }
       />
       <Route

@@ -1,6 +1,6 @@
 import React from "react";
-import TwitterIcon from "../assets/icon/TwitterIcon"
-import GithubIcon from "../assets/icon/GithubIcon"
+import TwitterIcon from "../assets/icon/TwitterIcon";
+import GithubIcon from "../assets/icon/GithubIcon";
 
 function Footer() {
   return (
@@ -26,7 +26,7 @@ function Footer() {
             rel="noreferrer"
           >
             <span className="sr-only">Twitter</span>
-          <TwitterIcon />
+            <TwitterIcon />
           </a>
           <a
             target={"_blank"}
@@ -35,7 +35,7 @@ function Footer() {
             rel="noreferrer"
           >
             <span className="sr-only">GitHub</span>
-           <GithubIcon />
+            <GithubIcon />
           </a>
         </div>
         <p className="mt-8 text-base leading-6 text-center text-gray-400">

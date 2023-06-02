@@ -1,8 +1,13 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-
+import {motion} from "framer-motion";
 function Blogs() {
+  const variants = {
+    initial: {opacity: 0},
+    animate: {opacity: 1, transition: {duration: 1}},
+  };
+
   const {blog} = useSelector((state) => state.blogs);
   const readTime = (blogData) => {
     if (blogData.content) {
@@ -17,11 +22,21 @@ function Blogs() {
   return (
     <div className="flex justify-center mt-10">
       <div className="w-full max-w-7xl">
-        <h1 className="text-3xl font-bold mb-8">Blog Yazıları</h1>
+        <motion.h1
+          variants={variants}
+          initial="initial"
+          animate="animate"
+
+        
+        className="text-3xl font-bold mb-8">Blog Yazıları</motion.h1>
         {blog.length ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {blog.map((item) => (
-              <div
+              <motion.div
+                variants={variants}
+                initial="initial"
+                animate="animate"
+
                 key={item.id}
                 className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col mx-5"
               >
@@ -60,7 +75,7 @@ function Blogs() {
                     </Link>{" "}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         ) : (

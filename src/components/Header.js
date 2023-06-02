@@ -32,7 +32,7 @@ function Header() {
               <div className="relative flex h-20 items-center justify-between ">
                 <div className="absolute  inset-y-0 left-0 flex items-center lg:hidden  ">
                   {/* Mobile menu button*/}
-                  <Disclosure.Button className=" inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -142,7 +142,7 @@ function Header() {
                         textDecoration: isActive ? "underline 4px" : "none",
                         textUnderlineOffset: isActive ? "8px" : "none",
                       })}
-                      className="mx-2 text-base lg:text-xl  text-black hover:bg-gray-900 hover:text-white  px-3 py-2 rounded-md "
+                      className="mx-2 text-base lg:text-lg  text-black hover:bg-gray-900 hover:text-white  px-3 py-2 rounded-md "
                       to="/admin"
                     >
                       Admin
