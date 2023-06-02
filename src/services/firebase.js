@@ -26,7 +26,6 @@ import { getStorage } from "firebase/storage";
 import {
   login as LoginRedux,
   logout as LogoutRedux,
-  auth2fa as Auth2faRedux,
 } from "../redux/auth";
 
 const firebaseConfig = {
