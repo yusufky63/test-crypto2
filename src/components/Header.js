@@ -5,8 +5,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
 import { CryptoState } from "../redux/CryptoContext";
-import ModalLogin from "./modal/ModalLogin";
-import ModalRegister from "./modal/ModalRegister";
+import Login from "./modal/Login";
+import ModalRegister from "./modal/Register";
 import { logout } from "../services/Firebase/FirebaseProfile";
 import { useSelector } from "react-redux";
 import CheckedAccountIcon from "../assets/icon/CheckedAccountIcon";
@@ -124,7 +124,7 @@ function Header() {
                       {!user && (
                         <div className="flex  ">
                           <div className="hover:bg-gray-200 border p-3 px-4  rounded-lg mr-2 cursor-pointer">
-                            <ModalLogin isOpen={true} />
+                            <Login isOpen={true} />
                           </div>
                           <div className="hover:bg-gray-200 border p-3 px-4  rounded-lg cursor-pointer">
                             <ModalRegister isOpen={true} />
@@ -346,7 +346,7 @@ function Header() {
                   {!user && (
                     <div>
                       <div className=" hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-bold  ">
-                        <Disclosure.Button as={ModalLogin}></Disclosure.Button>
+                        <Disclosure.Button as={Login}></Disclosure.Button>
                       </div>
                       <div className=" text-black-300 hover:bg-gray-900 hover:text-white block px-3 py-2 rounded-md text-base font-bold ">
                         <Disclosure.Button

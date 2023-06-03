@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {CryptoState} from "../../redux/CryptoContext";
+import React, { useEffect, useState } from "react";
+import { CryptoState } from "../../redux/CryptoContext";
 import LastLogins from "./user/LastLogins";
-import {Link} from "react-router-dom";
-import { getUsers} from "../../services/Firebase/FirebaseAdmin";
-import {delete2FA} from "../../services/Firebase/FirebaseProfile";
-import {useSelector} from "react-redux";
-
+import { Link } from "react-router-dom";
+import { getUsers } from "../../services/Firebase/FirebaseAdmin";
+import { useSelector } from "react-redux";
+import Auth2FAModal from "../modal/Auth2FAModal";
 function Settings() {
   const [authCheck, setAuthCheck] = useState(false);
-  const {currency, setCurrency} = CryptoState();
+  const { currency, setCurrency } = CryptoState();
   const [users, setUsers] = React.useState([]);
-  const {user} = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchUsers() {
@@ -29,14 +30,7 @@ function Settings() {
     }
   }, [users, user.uid]);
 
-  const handle2FAChange = async () => {
-    try {
-      await delete2FA(user.uid);
-      setAuthCheck(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   return (
     <div className=" flex justify-center mt-10">
       <div className=" w-full max-w-4xl">
@@ -47,16 +41,15 @@ function Settings() {
             <span className="flex items-center justify-between">
               <label>İki Aşamalı Doğrulama </label>
               {authCheck ? (
-                <button
-                  onClick={handle2FAChange}
-                  className="text-red-500 rounded shadow-sm p-2 border hover:bg-red-500 hover:text-white"
-                >
-                  Etkin - Kaldırmak için Tıklayın
-                </button>
+                 <Auth2FAModal
+                 isModalOpen={isModalOpen}
+                 openModal={() => setIsModalOpen(true)}
+                 closeModal={() => setIsModalOpen(false)}
+               />
               ) : (
                 <Link
                   to={"./auth2fa"}
-                  className="text-green-500 rounded shadow-sm p-2 border hover:bg-green-500 hover:text-white"
+                  className="border p-2 shadow-md rounded-md hover:bg-green-500 hover:text-white text-green-600"
                 >
                   Etkinleştir
                 </Link>

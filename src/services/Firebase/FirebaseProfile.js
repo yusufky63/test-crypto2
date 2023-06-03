@@ -27,6 +27,10 @@ import {
 } from "firebase/firestore";
 
 import { auth, db, errorMessages } from "../firebase";
+import {
+  encryptData,
+  decryptData,
+} from "../../utils/Auth2FA/Auth2FAUtils/LocalStorageEncryptAndDecrypt";
 
 export const register = async (email, password) => {
   try {
@@ -211,7 +215,6 @@ export const auth2FA = async (id, secretKey, backupCode) => {
     toast.warning("İşlem Gerçekleştirilemedi: ", error);
   }
 };
-
 // Delete 2FA
 export const delete2FA = async (id) => {
   try {
@@ -222,14 +225,29 @@ export const delete2FA = async (id) => {
       secretKey: null,
       backupCode: null,
     });
-    const auth2faCheckData = JSON.parse(localStorage.getItem("auth2faCheck"));
-    if (auth2faCheckData) {
-      // Durumu güncelle
-      auth2faCheckData.auth = false;
-      auth2faCheckData.status = "disabled";
+    const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
 
-      localStorage.setItem("auth2faCheck", JSON.stringify(auth2faCheckData));
+    let auth2faCheckData;
+
+    if (!ciphertextFromStorage) {
+      // 'auth2faCheck' öğesi bulunamadı, yeni bir değer oluştur
+      auth2faCheckData = {
+        auth: false,
+        status: "disabled",
+      };
+    } else {
+      auth2faCheckData = decryptData(ciphertextFromStorage);
+
+      if (auth2faCheckData) {
+        // Durumu güncelle
+        auth2faCheckData.auth = false;
+        auth2faCheckData.status = "disabled";
+      }
     }
+
+    // Veriyi şifrele ve depolama alanına kaydet
+    const ciphertext = encryptData(auth2faCheckData);
+    localStorage.setItem("auth2faCheck", ciphertext);
   } catch (error) {
     console.log(error);
     errorMessages(error);

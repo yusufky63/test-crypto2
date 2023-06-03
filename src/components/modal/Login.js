@@ -12,7 +12,7 @@ import GoogleIcon from "../../assets/icon/GoogleIcon";
 import GithubIcon from "../../assets/icon/GithubIcon";
 import CloseIcon from "../../assets/icon/CloseIcon";
 
-export default function ModalLogin() {
+export default function Login() {
   let [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

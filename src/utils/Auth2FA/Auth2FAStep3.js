@@ -94,7 +94,7 @@ export function Auth2FAStep3({handleVerification}) {
               Onayla
             </button>
           </div>
-          <div className="mt-4"></div>
+        
         </div>
       </div>
     </div>

@@ -9,12 +9,14 @@ import { toast } from "react-toastify";
 import { onSnapshot } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
 import { db } from "../../services/firebase";
-
+import {
+  encryptData,
+  decryptData,
+} from "./Auth2FAUtils/LocalStorageEncryptAndDecrypt";
 function Auth2FAChecker() {
   const urlParams = new URLSearchParams(window.location.search);
   const user = Object.fromEntries(urlParams.entries());
   const uid = Object.keys(user)[0];
-  console.log(uid);
 
   const [code, setCode] = useState(["", "", "", "", "", ""]);
 
@@ -61,25 +63,30 @@ function Auth2FAChecker() {
     return () => clearInterval(intervalId);
   }, [totp]);
 
+  
   function handleVerification(data) {
     const currentCode = totp.generate();
 
     if (data === currentCode || data === backupCode) {
-      const auth2faCheckData = JSON.parse(localStorage.getItem("auth2faCheck"));
-      if (auth2faCheckData) {
+      const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
+      let auth2faCheckData = decryptData(ciphertextFromStorage);
+
+      if (!auth2faCheckData) {
+        // 'auth2faCheck' verisi bulunamadı, yeni bir değer oluştur
+        auth2faCheckData = {
+          auth: true,
+          status: "verified",
+        };
+      } else {
         // Durumu güncelle
         auth2faCheckData.status = "verified";
+      }
 
-        // Güncellenen veriyi LocalStorage'a geri kaydet
-        localStorage.setItem("auth2faCheck", JSON.stringify(auth2faCheckData));
+      // Güncellenen veriyi şifrele ve LocalStorage'a geri kaydet
+      const ciphertext = encryptData(auth2faCheckData);
+      localStorage.setItem("auth2faCheck", ciphertext);
 
-        // Güncelleme tamamlandı, diğer işlemleri gerçekleştir
-      } else
-        localStorage.setItem(
-          "auth2faCheck",
-          JSON.stringify({ auth: true, status: "verified" })
-        );
-
+      // Güncelleme tamamlandı, diğer işlemleri gerçekleştir
       toast.success("2FA Doğrulama Başarılı");
       window.location = "/";
     } else {
@@ -150,7 +157,7 @@ function Auth2FAChecker() {
         Authenticator uygulamasını açın Ardından 6 haneli kodu girin.
       </h1>
 
-      <div className="bg-white  mx-auto max-w-xl text-center px-6 py-8">
+      <div className="  mx-auto max-w-xl text-center px-6 py-8">
         <h2 className="text-lg  mb-2">6 Haneli Kodu Girin</h2>
         <div className="flex justify-center items-center mb-4">
           {code.map((otp, index) => (

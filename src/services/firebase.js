@@ -13,6 +13,11 @@ import { store } from "../redux/store";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import {
+  encryptData,
+  decryptData,
+} from "../utils/Auth2FA/Auth2FAUtils/LocalStorageEncryptAndDecrypt";
+
+import {
   getFirestore,
   collection,
   onSnapshot,
@@ -23,10 +28,7 @@ import {
 
 import { getStorage } from "firebase/storage";
 
-import {
-  login as LoginRedux,
-  logout as LogoutRedux,
-} from "../redux/auth";
+import { login as LoginRedux, logout as LogoutRedux } from "../redux/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -55,17 +57,31 @@ const getUserAuth2FA = async (user) => {
     }
     const useR = querySnapshot.docs[0].data();
     const auth2fa = useR.auth2fa;
-    // Auth2FA durumunu kaydedin
-    const auth2faControl = JSON.parse(localStorage.getItem("auth2faCheck"));
 
-    if (auth2faControl && auth2faControl.status === "verified") {
+    // Şifreli veriyi al ve çöz
+    const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
+
+    let auth2faCheckData;
+
+    if (!ciphertextFromStorage) {
+      // 'auth2faCheck' öğesi bulunamadı, yeni bir değer oluştur
+      auth2faCheckData = {
+        auth: false, // Bu özelliği varsayılan durumunuza göre ayarlayın
+        status: "disable", // Bu özelliği varsayılan durumunuza göre ayarlayın
+      };
     } else {
-      const auth2faCheckData = {
-        auth: auth2fa, // Auth2FA durumu (true/false)
-        status: auth2fa ? "waiting" : "disable", // Doğrulama durumu ("waiting", "verified", vb.)
+      auth2faCheckData = decryptData(ciphertextFromStorage);
+    }
+
+    if (!(auth2faCheckData && auth2faCheckData.status === "verified")) {
+      auth2faCheckData = {
+        auth: auth2fa,
+        status: auth2fa ? "waiting" : "disable",
       };
 
-      localStorage.setItem("auth2faCheck", JSON.stringify(auth2faCheckData));
+      // Veriyi şifrele ve depolama alanına kaydet
+      const ciphertext = encryptData(auth2faCheckData);
+      localStorage.setItem("auth2faCheck", ciphertext);
     }
 
     return auth2fa;
@@ -79,7 +95,10 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     getUserAuth2FA(user);
 
-    const auth2faCheckData = JSON.parse(localStorage.getItem("auth2faCheck"));
+    // Şifreli veriyi al ve çöz
+    const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
+
+    const auth2faCheckData = decryptData(ciphertextFromStorage);
 
     if (auth2faCheckData) {
       const auth2fa = auth2faCheckData.auth;
@@ -206,41 +225,36 @@ onAuthStateChanged(auth, async (user) => {
         }
       }
     } else {
-      // Kullanıcı oturumu kapattığında yapılacak işlemler
-      localStorage.removeItem("auth2faCheck");
-      store.dispatch(setOrder([]));
-      store.dispatch(setLastLogin([]));
-      store.dispatch(LogoutRedux());
-      store.dispatch(setFavorites([]));
-      store.dispatch(setPortfolyo([]));
-     
+      resetData();
     }
+  } else {
+    resetData();
+  }
 
-    // Blog
-    onSnapshot(query(collection(db, "academyblogs")), (doc) => {
-      store.dispatch(
-        setBlog(
-          doc.docs.reduce(
-            (blogs, blog) => [...blogs, { ...blog.data(), id: blog.id }],
-            []
-          )
+  // Blog
+  onSnapshot(query(collection(db, "academyblogs")), (doc) => {
+    store.dispatch(
+      setBlog(
+        doc.docs.reduce(
+          (blogs, blog) => [...blogs, { ...blog.data(), id: blog.id }],
+          []
         )
-      );
-    });
-  }
-  else {
-    // Kullanıcı oturumu kapattığında yapılacak işlemler
-    localStorage.removeItem("auth2faCheck");
-    store.dispatch(setOrder([]));
-    store.dispatch(setLastLogin([]));
-    store.dispatch(LogoutRedux());
-    store.dispatch(setFavorites([]));
-    store.dispatch(setPortfolyo([]));
-    store.dispatch(setQuestion([]));
-    store.dispatch(setAdmins([]));
-    store.dispatch(setUsers([]));
-  }
+      )
+    );
+  });
 });
+
+function resetData() {
+  store.dispatch(setOrder([]));
+  store.dispatch(setLastLogin([]));
+  store.dispatch(LogoutRedux());
+  store.dispatch(setFavorites([]));
+  store.dispatch(setPortfolyo([]));
+  store.dispatch(setQuestion([]));
+  store.dispatch(setAdmins([]));
+  store.dispatch(setUsers([]));
+  localStorage.removeItem("auth2faCheck");
+}
 
 //Error Handling
 export const errorMessages = (error) => {

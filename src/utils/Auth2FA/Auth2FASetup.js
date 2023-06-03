@@ -13,12 +13,20 @@ import { Auth2FAStep1 } from "./Auth2FAStep1";
 import { Auth2FAStep2 } from "./Auth2FAStep2";
 import { Auth2FAStep3 } from "./Auth2FAStep3";
 import { Auth2FAStep4 } from "./Auth2FAStep4";
-import { Auth2FAStep5 } from "./Auth2FAStep5";
 
 import * as OTPAuth from "otpauth";
 import { toast } from "react-toastify";
 import { auth2FA } from "../../services/Firebase/FirebaseProfile";
 import { getUsers } from "../../services/Firebase/FirebaseAdmin";
+
+import { generateBackupCode, generateSecretKey } from "./Auth2FAUtils/helpers";
+import DesktopStepper from "./Auth2FAUtils/DesktopStepper";
+import MobilStepper from "./Auth2FAUtils/MobilStepper";
+
+import {
+  encryptData,
+  decryptData,
+} from "./Auth2FAUtils/LocalStorageEncryptAndDecrypt";
 
 const steps = [
   "Uygulama Kurulumu",
@@ -37,6 +45,19 @@ export default function Auth2FASetup() {
   const [secretKey, setSecretKey] = useState(generateSecretKey());
   const [backupCode, setBackupCode] = useState(generateBackupCode());
 
+  let totp = useMemo(
+    () =>
+      new OTPAuth.TOTP({
+        issuer: "CryptoXChain",
+        label: `${user.email || user.displayName}`,
+        algorithm: "SHA1",
+        digits: 6,
+        period: 30,
+        secret: secretKey,
+      }),
+    [secretKey, user]
+  );
+
   useEffect(() => {
     async function fetchUsers() {
       const res = await getUsers();
@@ -54,40 +75,6 @@ export default function Auth2FASetup() {
     }
   }, [users, user.uid]);
 
-  function generateBackupCode() {
-    const codeLength = 10;
-    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let backupCode = "";
-
-    for (let i = 0; i < codeLength; i++) {
-      const randomIndex = Math.floor(Math.random() * chars.length);
-      backupCode += chars.charAt(randomIndex);
-    }
-
-    return backupCode;
-  }
-  function generateSecretKey() {
-    let secretKey = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-    for (let i = 0; i < 10; i++) {
-      secretKey += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return secretKey;
-  }
-
-  let totp = useMemo(
-    () =>
-      new OTPAuth.TOTP({
-        issuer: "CryptoXChain",
-        label: `${user.email || user.displayName}`,
-        algorithm: "SHA1",
-        digits: 6,
-        period: 30,
-        secret: secretKey,
-      }),
-    [secretKey, user]
-  );
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       let token = totp.generate();
@@ -102,16 +89,26 @@ export default function Auth2FASetup() {
 
   function handleVerification(data) {
     const currentCode = totp.generate();
+
     if (data === currentCode) {
-      const auth2faCheckData = JSON.parse(localStorage.getItem("auth2faCheck"));
-      if (auth2faCheckData) {
+      const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
+      let auth2faCheckData = decryptData(ciphertextFromStorage);
+
+      if (!auth2faCheckData) {
+        // 'auth2faCheck' verisi bulunamadı, yeni bir değer oluştur
+        auth2faCheckData = {
+          auth: true,
+          status: "verified",
+        };
+      } else {
         // Durumu güncelle
         auth2faCheckData.auth = true;
         auth2faCheckData.status = "verified";
-
-        // Güncellenen veriyi LocalStorage'a geri kaydet
-        localStorage.setItem("auth2faCheck", JSON.stringify(auth2faCheckData));
       }
+
+      // Güncellenen veriyi şifrele ve LocalStorage'a geri kaydet
+      const ciphertext = encryptData(auth2faCheckData);
+      localStorage.setItem("auth2faCheck", ciphertext);
 
       toast.success("Doğrulama Başarılı");
 
@@ -123,8 +120,8 @@ export default function Auth2FASetup() {
   }
 
   const handleAuthComplete = () => {
+    console.log(backupCode);
     const currentUser = users.find((u) => u.id === user.uid);
-    console.log(currentUser);
     auth2FA(currentUser.id, secretKey, backupCode);
     toast.success("2 Adımlı Doğrulama Başarıyla Aktif Edildi");
   };
@@ -161,41 +158,11 @@ export default function Auth2FASetup() {
             </h1>
             <div className="sm:hidden ml-5 text-xs">
               {/* mobilde */}
-              <Stepper
-                orientation="vertical"
-                className=""
-                activeStep={activeStep}
-              >
-                {steps.map((label, index) => {
-                  const stepProps = {};
-                  const labelProps = {};
-
-                  return (
-                    <Step key={label} {...stepProps}>
-                      <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                  );
-                })}
-              </Stepper>
+              <MobilStepper activeStep={activeStep} steps={steps} />
             </div>
             <div className=" hidden sm:block">
               {/* masaüstünde */}
-              <Stepper
-                orientation="horizontal"
-                className=""
-                activeStep={activeStep}
-              >
-                {steps.map((label, index) => {
-                  const stepProps = {};
-                  const labelProps = {};
-
-                  return (
-                    <Step key={label} {...stepProps}>
-                      <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                  );
-                })}
-              </Stepper>
+              <DesktopStepper activeStep={activeStep} steps={steps} />
             </div>
 
             {activeStep === 0 && <Auth2FAStep1 />}
@@ -205,8 +172,8 @@ export default function Auth2FASetup() {
             {activeStep === 2 && (
               <Auth2FAStep3 handleVerification={handleVerification} />
             )}
-            {activeStep === 3 && <Auth2FAStep4 backupCode={backupCode} />}
-            {activeStep === 4 && <Auth2FAStep5 />}
+            {activeStep === 3 && <Auth2FAStep4 />}
+
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography sx={{ mt: 2, mb: 1 }}>
@@ -214,7 +181,6 @@ export default function Auth2FASetup() {
                 </Typography>
                 <Box sx={{ display: "flex", flexDirection: "column", pt: 2 }}>
                   <Box sx={{ flex: "1 1 auto" }} />
-                  {/* <Button onClick={handleReset}>Sıfırla</Button> */}
                 </Box>
               </React.Fragment>
             ) : (
@@ -249,25 +215,9 @@ export default function Auth2FASetup() {
             )}
           </Box>
         ) : (
-          <div className=" bg-white  mt-10 text-center">
-            <h2 className="text-xl font-bold mb-2">Adım 5: Tamamlandı</h2>
-            <div className="">
-              <div className="flex justify-center">
-                <img
-                  alt="success"
-                  className="w-28  my-20"
-                  src={require("../../assets/img/verifactionSuccess.png")}
-                />
-              </div>
-
-              <a
-                href="/"
-                className="bg-blue-500  hover:bg-blue-700 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Ana Sayfa
-              </a>
-            </div>
-          </div>
+          <>
+            <Auth2FAStep4 backupCode={backupCode} />
+          </>
         )}
       </div>
     </div>

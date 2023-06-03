@@ -2,37 +2,34 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 import React from "react";
-import {Dialog, Transition} from "@headlessui/react";
-import {Fragment, useState} from "react";
-import {useSelector} from "react-redux";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
 import * as OTPAuth from "otpauth";
-import {useMemo, useEffect} from "react";
-import {toast} from "react-toastify";
-import {onSnapshot} from "firebase/firestore";
-import {collection, query, where} from "firebase/firestore";
-import {db} from "../../services/firebase";
+import { useMemo, useEffect } from "react";
+import { toast } from "react-toastify";
+import { onSnapshot } from "firebase/firestore";
+import { collection, query, where } from "firebase/firestore";
+import { db } from "../../services/firebase";
 import CloseIcon from "../../assets/icon/CloseIcon";
+import { delete2FA } from "../../services/Firebase/FirebaseProfile";
 
-function Auth2FALogin() {
-  const {user} = useSelector((state) => state.auth);
+function Auth2FAModal({ isModalOpen, openModal, closeModal }) {
+  const { user } = useSelector((state) => state.auth);
   const [code, setCode] = useState(["", "", "", "", "", ""]);
+
+  useEffect(() => {
+    if (isModalOpen) openModal();
+  }, [isModalOpen]);
 
   const [otp, setOtp] = useState("");
   const [totps, setTotps] = useState("");
   const [generatedCode, setGeneratedCode] = useState("");
   const [secretKey, setSecretKey] = useState();
   const [backupCode, setBackupCode] = useState();
-
+  const [userBackupCode, setUserBackupCode] = useState("");
+  const [showBackupCodeInput, setShowBackupCodeInput] = useState(false);
   let [isOpen, setIsOpen] = useState(true);
-
-  function closeModal() {
-    setCode(["", "", "", "", "", ""]);
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
 
   const getSecureKeyAndBackupCode = async () => {
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
@@ -74,12 +71,19 @@ function Auth2FALogin() {
     const currentCode = totp.generate();
     if (data === currentCode) {
       toast.success("2FA Doğrulama Başarılı");
-
+      delete2FA(user.uid);
       closeModal();
-      console.log("giriş ve 2fa başarılı");
     } else {
       toast.error("Doğrulama Başarısız");
+      reset();
     }
+  }
+
+  function reset() {
+    setCode(["", "", "", "", "", ""]);
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => (input.value = ""));
+    inputs[0].focus();
   }
 
   const handleInput = (index, e) => {
@@ -140,11 +144,13 @@ function Auth2FALogin() {
 
   return (
     <div>
-      <button className="border p-2 shadow-md rounded-md" onClick={openModal}>
+      <button
+        className="border p-2 shadow-md rounded-md hover:bg-red-500 hover:text-white text-red-600"
+        onClick={openModal}
+      >
         Devre Dışı Bırak
       </button>
-
-      <Transition appear show={isOpen} as={Fragment}>
+      <Transition appear show={isModalOpen} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto w-full "
@@ -184,7 +190,7 @@ function Auth2FALogin() {
                   onClick={closeModal}
                   className=" text-red-500 hover:bg-red-200 rounded-lg p-2"
                 >
-                <CloseIcon />
+                  <CloseIcon />
                 </button>
 
                 <h1 className="text-2xl text-center font-bold mb-2">
@@ -226,11 +232,32 @@ function Auth2FALogin() {
                     </button>
                   </div>
                   <a
+                    onClick={() => setShowBackupCodeInput(!showBackupCodeInput)}
                     href="#"
                     className="text-blue-500 text-sm  hover:underline"
                   >
                     Authenticator Koduna erişemiyorum
                   </a>
+                  {showBackupCodeInput && (
+                    <div>
+                      <label className="block  text-sm mt-10 mb-2">
+                        Yedek Kod
+                      </label>
+                      <div className="flex justify-center items-center">
+                        <input
+                          onChange={(e) => setUserBackupCode(e.target.value)}
+                          value={userBackupCode}
+                          className="border block p-2 outline-none shadow-sm rounded-lg w-2/3"
+                        />
+                        <button
+                          onClick={() => handleVerification(userBackupCode)}
+                          className=" px-5 hover:bg-gray-300  text-gray-600 shadow-lg rounded-lg font-bold py-2  focus:outline-none focus:shadow-outline mr-4"
+                        >
+                          Onayla
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </Transition.Child>
@@ -241,4 +268,4 @@ function Auth2FALogin() {
   );
 }
 
-export default Auth2FALogin;
+export default Auth2FAModal;

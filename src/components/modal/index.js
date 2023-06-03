@@ -1,7 +1,7 @@
 import BuyCrypto from "./BuyCrypto";
 import DeleteAccount from "./DeleteAccount";
-import ModalLogin from "./ModalLogin";
-import ModalRegister from "./ModalRegister";
+import Login from "./Login";
+import Register from "./Register";
 import OrderHistory from "./OrderHistory";
 import OrderHistoryDelete from "./OrderHistoryDelete";
 import SellCrypto from "./SellCrypto";
@@ -9,8 +9,8 @@ import SellCrypto from "./SellCrypto";
 export {
   BuyCrypto,
   DeleteAccount,
-  ModalLogin,
-  ModalRegister,
+  Login,
+  Register,
   OrderHistory,
   OrderHistoryDelete,
   SellCrypto,

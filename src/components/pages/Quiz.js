@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import quizIcon from "../../assets/img/blockchain.png";
 import { useSelector } from "react-redux";
-import { ModalLogin, ModalRegister } from "../modal";
+import { Login, Register } from "../modal";
 import { getScoreTop3 } from "../../services/Firebase/FirebaseQuestion";
 const Quiz = () => {
   const medals = ["🥇", "🥈", "🥉"];
@@ -149,14 +149,14 @@ const Quiz = () => {
                 whileTap={{ scale: 0.95 }}
                 className=" flex items-center justify-between px-4 py-2 border border-transparent rounded-md shadow-md text-base font-medium text-white bg-green-600 hover:bg-white hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
-                <ModalLogin>Giriş Yap</ModalLogin>
+                <Login>Giriş Yap</Login>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className=" flex items-center justify-between px-4 py-2 border border-transparent rounded-md shadow-md text-base font-medium text-green-600 bg-white hover:text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
-                <ModalRegister>Kayıt Ol</ModalRegister>
+                <Register>Kayıt Ol</Register>
               </motion.div>
             </motion.div>
           </motion.div>
