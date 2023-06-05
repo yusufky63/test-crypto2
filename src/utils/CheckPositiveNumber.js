@@ -1,4 +1,4 @@
-function CheckPositiveNumber({ number }) {
+function CheckPositiveNumber({ number}) {
   if (number > 0) {
     return (
       <div className="inline-flex gap-2 rounded bg-green-100 p-1 text-green-600">
@@ -17,9 +17,12 @@ function CheckPositiveNumber({ number }) {
           />
         </svg>
 
-        <span className="text-xs font-medium">
+        {/* <span className={`text-[${textSize}]`}>
            
           {parseFloat(number).toFixed(2)}% 
+        </span> */}
+          <span className="text-xs">
+          {parseFloat(number).toFixed(2)}%
         </span>
       </div>
     );
@@ -41,7 +44,10 @@ function CheckPositiveNumber({ number }) {
           />
         </svg>
 
-        <span className="text-xs font-medium">
+        {/* <span className={`text-[${textSize}]`}>
+          {parseFloat(number).toFixed(2)}%
+        </span> */}
+        <span className="text-xs">
           {parseFloat(number).toFixed(2)}%
         </span>
       </div>

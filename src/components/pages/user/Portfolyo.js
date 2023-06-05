@@ -114,10 +114,10 @@ function Portfolyo() {
         <h1 className="text-3xl font-bold    p-3 shadow-md rounded-lg text-left ">
           Porfolyo
         </h1>
-        <div className="px-12 mt-4 flex flex-col ">
-          <div className="-my-2 -mx-10 overflow-x-auto sm:-mx-6 lg:-mx-8 ">
+        <div className="text-xs lg:text-sm px-12 md:px-4 mt-4 flex flex-col">
+          <div className="-mx-10 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5    md:rounded-lg pb-12 ">
+              <div className="round ring-black ring-opacity-5 md:rounded-lg pb-12">
                 {loading ? (
                   <div role="status">
                     <h1 className="my-2">Yükleniyor...</h1>
@@ -126,12 +126,12 @@ function Portfolyo() {
                 ) : (
                   <>
                     {info.length > 0 ? (
-                      <table className="min-w-full divide-y divide-gray-300">
-                        <thead className="bg-gray-50 ">
+                      <table className="min-w-full divide-y-8 divide-x-8 border-white  bg-white">
+                        <thead className="">
                           <tr className="text-center text-sm font-semibold text-gray-900">
                             <th
                               scope="col"
-                              className="whitespace-nowrap py-3.5 pl-4 pr-3  "
+                              className="whitespace-nowrap py-3.5 pl-4 pr-3"
                             >
                               Coin
                             </th>
@@ -149,7 +149,7 @@ function Portfolyo() {
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1 py-3.5 "
+                              className="whitespace-nowrap px-1 py-3.5"
                             >
                               Alım Fiyatı
                             </th>
@@ -167,11 +167,10 @@ function Portfolyo() {
                             </th>
                             <th
                               scope="col"
-                              className="whitespace-nowrap px-1 py-3.5 "
+                              className="whitespace-nowrap px-1 py-3.5"
                             >
                               Kar / Zarar (%)
                             </th>
-
                             <th
                               scope="col"
                               className="whitespace-nowrap px-1 py-3.5 text-center"
@@ -181,14 +180,13 @@ function Portfolyo() {
                           </tr>
                         </thead>
 
-                        <tbody className=" divide-y divide-gray-200 bg-white ">
-                          {info.map((item) => (
+                        <tbody className="border-gray-50 shadow-md rounded-lg   divide-y-8  bg-transparent">
+                          {info.map((item, index) => (
                             <tr
-                              id="priceT"
-                              className=" hover:shadow-md hover:bg-gray-100 duration-300 ease-in-out"
                               key={item.id}
+                              className="border-gray-50 shadow-md rounded-lg border my-5   duration-300 ease-in-out"
                             >
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                              <td className=" whitespace-nowrap  py-4 pl-4 pr-3 text-sm sm:pl-6">
                                 <div className="flex items-center">
                                   <div className="h-10 w-10">
                                     <img
@@ -198,7 +196,7 @@ function Portfolyo() {
                                     />
                                   </div>
                                   <div className="ml-4">
-                                    <div className="  text-gray-900 font-bold ">
+                                    <div className="text-gray-900 font-bold">
                                       <Link to={`/markets/${item.id}`}>
                                         {item.name}
                                         <span className="uppercase text-xs text-gray-500 m-1">
@@ -209,7 +207,7 @@ function Portfolyo() {
                                   </div>
                                 </div>
                               </td>
-                              <td className=" price whitespace-nowrap px-3 py-4 text-sm ">
+                              <td className="price whitespace-nowrap px-3 py-4 text-sm">
                                 <div className="">
                                   <h1>{item.buy_total_crypto.toFixed(5)}</h1>
                                 </div>
@@ -225,62 +223,43 @@ function Portfolyo() {
                                   </h1>
                                 </div>
                               </td>
-                              <td className=" whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 {item.coin_price_usd}$
                               </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
                                   {item.market_data.current_price.usd}$
                                 </div>
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <div className="text-gray-900">
-                                  {(item.market_data.current_price.usd -
-                                    item.coin_price_usd) *
-                                    item.buy_total_crypto >=
-                                  0 ? (
-                                    <span className="text-green-500">
-                                      {(
-                                        (item.market_data.current_price.usd -
-                                          item.coin_price_usd) *
-                                        item.buy_total_crypto
-                                      ).toFixed(2)}
-                                      $
-                                    </span>
-                                  ) : (
-                                    <span className="text-red-500">
-                                      {(
-                                        (item.market_data.current_price.usd -
-                                          item.coin_price_usd) *
-                                        item.buy_total_crypto
-                                      ).toFixed(2)}
-                                      $
-                                    </span>
-                                  )}
+                                  {(
+                                    (item.market_data.current_price.usd -
+                                      item.coin_price_usd) *
+                                    item.buy_total_crypto
+                                  ).toFixed(2)}
+                                  $
                                 </div>
                               </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  ">
-                                <div className="text-sm ">
-                                  {
-                                    <CheckPositiveNumber
-                                      number={
-                                        ((item.market_data.current_price.usd -
-                                          item.coin_price_usd) *
-                                          100) /
-                                        item.coin_price_usd
-                                      }
-                                    />
-                                  }
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                <div className="text-sm">
+                                  <CheckPositiveNumber
+                                    number={
+                                      ((item.market_data.current_price.usd -
+                                        item.coin_price_usd) *
+                                        100) /
+                                      item.coin_price_usd
+                                    }
+                                  />
                                 </div>
                               </td>
-
                               <td className="p-1">
-                                <button className="hover:bg-green-400 hover:text-white border bg-white shadow-md rounded-lg my-1  w-full">
+                                <button className="hover:bg-green-400 hover:text-white border bg-white shadow-md rounded-lg my-1 w-full">
                                   <BuyCrypto
                                     cryptoID={portfolyo && item.id}
                                   ></BuyCrypto>
                                 </button>
-                                <button className="border hover:bg-red-400 hover:text-white shadow-md rounded-lg  my-1 w-full">
+                                <button className="hover:bg-red-400 hover:text-white border bg-white shadow-md rounded-lg my-1 w-full">
                                   <SellCrypto
                                     cryptoID={portfolyo && item.id}
                                   ></SellCrypto>
@@ -290,7 +269,7 @@ function Portfolyo() {
                                 <div className="flex flex-col">
                                   <a
                                     onClick={(e) => handleDelete(item.id)}
-                                    className="   hover:bg-red-300 hover:text-red-900  p-2 rounded-md text-base flex justify-center font-medium "
+                                    className="hover:bg-red-300 hover:text-red-900 p-2 rounded-md text-base flex justify-center font-medium"
                                   >
                                     <DeleteIcon />
                                   </a>
@@ -300,6 +279,7 @@ function Portfolyo() {
                           ))}
                         </tbody>
                       </table>
+                        // <PortfolyoTableMobileDesign data={info} portfolyo={portfolyo} handleDelete={handleDelete}  />
                     ) : (
                       <div className="flex justify-center text-center text-2xl font-bold my-5 text-red-500">
                         Portfolyonuzda Coin Bulunmamaktadır.
@@ -311,6 +291,7 @@ function Portfolyo() {
             </div>
           </div>
         </div>
+
         <br />
         <br />
         <h1 className="text-3xl font-bold  p-3 shadow-md rounded-lg text-left ">
