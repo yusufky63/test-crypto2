@@ -20,13 +20,6 @@ body {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-header .search {
-  background: url("../assets/img/search-icon.svg") no-repeat left;
-  background-position: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
 .top-coins {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -38,21 +31,12 @@ header .search {
   background-position: center;
 }
 
-
-
 .bg-home-header {
-  background-image: url("../assets/img/home-header.png");
-  background-size: 100%;
+  background-image: url("../assets/img/web-network.png");
+  background-size: cover;
   background-position: center;
-}
-
-
-
-#main-content {
+  height: 70vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
 svg {
@@ -61,15 +45,10 @@ svg {
   width: 50px;
 }
 
-
 .box {
- 
- background: rgba(255, 255, 255, 0.05);
- backdrop-filter: blur(10px);
- box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
- border-radius: 8px;
-
- transform: 0.5s;
-
-
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transform: 0.5s;
 }
