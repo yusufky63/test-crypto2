@@ -85,7 +85,6 @@ function QuizQuestion() {
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < question.length) {
       setCurrentQuestion(nextQuestion);
-      console.log(nextQuestion);
     }
   };
 

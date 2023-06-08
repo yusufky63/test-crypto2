@@ -9,7 +9,6 @@ function EditQuestion() {
 
 const {id} = useParams();
 const filteredQuestions = question.find((item) => item.id === id);
-console.log(filteredQuestions);
   const [questionState, setQuestionState] = useState(filteredQuestions.question);
   const [choice1, setChoice1] = useState(filteredQuestions.choices.A);
   const [choice2, setChoice2] = useState(filteredQuestions.choices.B);
@@ -28,7 +27,6 @@ console.log(filteredQuestions);
       correctChoice: correctChoice.toUpperCase(),
       createdDate: new Date().toLocaleDateString(),
     };
-    console.log(newQuestion);
     editQuestions(filteredQuestions.id,newQuestion);
     setQuestionState("");
     setChoice1("");

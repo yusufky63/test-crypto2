@@ -20,7 +20,7 @@ export const EditAcademyBlog = async (id, data) => {
     await updateDoc(doc(db, "academyblogs", id), data);
     toast.success("Blog Güncellendi");
   } catch (error) {
-    console.log(error);
+   errorMessages(error);
   }
 };
 

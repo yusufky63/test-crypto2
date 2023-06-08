@@ -85,7 +85,6 @@ function Markets() {
       toast.warning("Lütfen Giriş Yapınız !");
     }
   };
-  console.log(currencyEdit);
   return (
     <div className="bg-market">
       <>

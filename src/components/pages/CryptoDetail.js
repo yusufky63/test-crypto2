@@ -28,7 +28,6 @@ function CryptoCard() {
   const currencyEdit = currency.toLowerCase();
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(id));
-    console.log(symbolTrading);
     setSymbolTrading(data.symbol);
     setCoin(data);
   };
@@ -61,18 +60,20 @@ function CryptoCard() {
       </h1>
       {coin ? (
         <>
-          <div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center">
-            <div className=" ml-10 mr-5">
-              <div className="flex items-center relative">
-                <span className=" absolute mb-20 bg-yellow-500 text-md  text-black rounded-r-lg px-1 ">
-                  Rank #{coin.market_cap_rank}
-                </span>
+          <div className=" flex lg:flex-row flex-col mt-20 gap-20 justify-center items-center ">
+            <div className=" ml-10 mr-5 box p-6 relative shadow-lg rounded-lg">
+              <div className="flex items-center ">
+                <div className="absolute mb-10 top-0 left-0 right-0 flex items-center justify-between p-2">
+                  <span className="bg-yellow-500 text-md text-black rounded-r-lg px-1">
+                    Rank #{coin.market_cap_rank}
+                  </span>
 
-                <span className=" absolute mb-16 right-0 text-black rounded-r-lg px-1 ">
-                  <button onClick={(e) => handleSavedCoin(e, coin.id)}>
-                    <AddFavorites id={coin.id} />
-                  </button>
-                </span>
+                  <span className="text-black  ">
+                    <button onClick={(e) => handleSavedCoin(e, coin.id)}>
+                      <AddFavorites id={coin.id} />
+                    </button>
+                  </span>
+                </div>
 
                 <img
                   src={coin.image.small}
@@ -81,7 +82,7 @@ function CryptoCard() {
                 />
                 <h2 className="text-xl font-bold mt-3">
                   {coin.name}
-                  <span className="text-sm uppercase text-gray-500">
+                  <span className="text-sm uppercase text-gray-500 ml-1">
                     {coin.symbol}
                   </span>
                 </h2>
@@ -213,14 +214,18 @@ function CryptoCard() {
                 )}
               </div>
               <br />
-              <div className="border shadow-lg rounded-lg p-3">
-                <button className="shadow-md  hover:bg-green-400   my-1 rounded-lg p-1 px-5 w-full">
-                  <BuyCrypto cryptoID={coin.id}></BuyCrypto>
-                </button>
-                <button className=" shadow-md  hover:bg-red-400 rounded-lg  my-1 p-1 px-5 w-full">
-                  <SellCrypto cryptoID={coin.id}></SellCrypto>
-                </button>
-              </div>
+              {user ? (
+                <div className="">
+                  <button className="shadow-md  hover:bg-green-400   my-1 rounded-lg p-1 px-5 w-full">
+                    <BuyCrypto cryptoID={coin.id} />
+                  </button>
+                  <button className=" shadow-md  hover:bg-red-400 rounded-lg  my-1 p-1 px-5 w-full">
+                    <SellCrypto cryptoID={coin.id} />
+                  </button>
+                </div>
+              ) : (
+                <span className="text-sm text-red-500">Alım Yapabilmek İçin Lütfen Giriş Yapınız</span>
+              )}
             </div>
 
             {symbolTrading && (

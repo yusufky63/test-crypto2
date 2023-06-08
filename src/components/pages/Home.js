@@ -33,6 +33,7 @@ function Home() {
         loading={loading}
       />
       <PageLinks />
+
       <Contact />
     </div>
   );

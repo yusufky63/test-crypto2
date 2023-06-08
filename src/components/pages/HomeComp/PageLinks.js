@@ -1,16 +1,16 @@
 import React from "react";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import myLogo from "../../../assets/img/pageLinks.svg";
 
 function PageLinks() {
   const containerVariants = {
-    hidden: {opacity: 0},
-    visible: {opacity: 1, transition: {delay: 0.5, duration: 1}},
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { delay: 0.5, duration: 1 } },
   };
 
   const itemVariants = {
-    hidden: {opacity: 0, y: -20},
-    visible: {opacity: 1, y: 0, transition: {duration: 0.5}},
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
   return (
@@ -95,7 +95,7 @@ function PageLinks() {
           </div>
           <br />
           <br />
-          <div className="">
+          <div>
             <motion.h1
               className="font-bold sm:text-lg lg:text-xl xl:text-2xl text-md"
               variants={itemVariants}
@@ -115,6 +115,30 @@ function PageLinks() {
               href="/academia"
             >
               Akademi <i className="fa fa-arrow-right-long"></i>
+            </motion.a>
+          </div>
+          <br />
+          <br />
+          <div className="">
+            <motion.h1
+              className="font-bold sm:text-lg lg:text-xl xl:text-2xl text-md"
+              variants={itemVariants}
+            >
+              Quizlerle Öğrenin
+            </motion.h1>
+
+            <motion.p
+              className="mb-1 sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm"
+              variants={itemVariants}
+            >
+              Quizlerle Blokzincir ve Kripto hakkında Temel Bilgileri test et.
+            </motion.p>
+
+            <motion.a
+              className="md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
+              href="/quiz"
+            >
+              Quiz <i className="fa fa-arrow-right-long"></i>
             </motion.a>
           </div>
         </motion.div>

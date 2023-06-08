@@ -120,7 +120,6 @@ export default function Auth2FASetup() {
   }
 
   const handleAuthComplete = () => {
-    console.log(backupCode);
     const currentUser = users.find((u) => u.id === user.uid);
     auth2FA(currentUser.id, secretKey, backupCode);
     toast.success("2 Adımlı Doğrulama Başarıyla Aktif Edildi");

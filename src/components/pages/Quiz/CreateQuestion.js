@@ -22,7 +22,6 @@ function CreateQuestion() {
       correctChoice: correctChoice.toUpperCase(),
       createdDate: new Date().toLocaleDateString(),
     };
-    console.log(newQuestion);
     addQuestions(newQuestion);
     setQuestion("");
     setChoice1("");

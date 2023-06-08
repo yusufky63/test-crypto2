@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { Login, Register } from "../../modal";
+import { useSelector } from "react-redux";
 
 export default function HomeHeader() {
+  const { user } = useSelector((state) => state.auth);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -9,7 +12,6 @@ export default function HomeHeader() {
       className="flex justify-center bg-home-header"
     >
       <div className="max-w-7xl container ">
-         
         <motion.h1
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -37,9 +39,27 @@ export default function HomeHeader() {
               transition={{ delay: 0.6, duration: 0.5 }}
               className="text-gray-600  mt-1  md:text-lg lg:text-xl xl:text-2xl text-md sm:whitespace-pre-wrap"
             >
-              2011'den beri milyonlarca insanın güveni ile <br />
-              değeri 1 Trilyon doları aşan kripto para işlemleri.
+              Demo Al-Sat deneyimleri ve kripto dünyasından <br />
+              en son haberlerle yatırım yolculuğunuza yön verin.
             </motion.p>
+           {!user && <div>
+              <motion.button
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-4 shadow-lg"
+              >
+                <Login />
+              </motion.button>
+              <motion.button
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 shadow-lg"
+              >
+                <Register />
+              </motion.button>
+            </div>}
           </div>
 
           <motion.img

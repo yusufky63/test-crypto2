@@ -31,7 +31,6 @@ import {
   encryptData,
   decryptData,
 } from "../../utils/Auth2FA/Auth2FAUtils/LocalStorageEncryptAndDecrypt";
-
 export const register = async (email, password) => {
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
@@ -39,27 +38,27 @@ export const register = async (email, password) => {
     const userDoc = doc(db, "users", user.uid);
     const docSnap = await getDoc(userDoc);
 
-    if (docSnap.exists()) {
-      console.log("Kullanıcı zaten kayıtlı");
-    } else {
+    if (!docSnap.exists()) {
       await setDoc(userDoc, {
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
         isAdmin: false,
+        uid: user.uid,
+        auth2fa: false,
       });
-      console.log("Kullanıcı başarıyla kaydedildi");
     }
+    window.location.href = "/";
   } catch (error) {
-    console.log(error);
+    errorMessages(error);
   }
 };
 
-//LOGIN
+// LOGIN
 export const login = async (email, password) => {
   try {
-    const { user } = await signInWithEmailAndPassword(auth, email, password);
-
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
     const userDoc = doc(db, "users", user.uid);
     const docSnap = await getDoc(userDoc);
     if (!docSnap.exists()) {
@@ -72,6 +71,7 @@ export const login = async (email, password) => {
         auth2fa: false,
       });
     }
+    window.location.href = "/";
   } catch (error) {
     errorMessages(error);
   }
@@ -211,7 +211,6 @@ export const auth2FA = async (id, secretKey, backupCode) => {
       backupCode: backupCode,
     });
   } catch (error) {
-    console.log(error);
     toast.warning("İşlem Gerçekleştirilemedi: ", error);
   }
 };
@@ -249,7 +248,6 @@ export const delete2FA = async (id) => {
     const ciphertext = encryptData(auth2faCheckData);
     localStorage.setItem("auth2faCheck", ciphertext);
   } catch (error) {
-    console.log(error);
     errorMessages(error);
   }
 };

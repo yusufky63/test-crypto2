@@ -71,7 +71,6 @@ function Portfolyo() {
   }, [portfolyo]);
 
   const handleDelete = (id) => {
-    console.log(id);
     const data = portfolyo.find((c) => c.coin === id);
     deletePortfolyo(data.id);
   };

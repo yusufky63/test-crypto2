@@ -30,7 +30,7 @@ function TrendCoin({ crypto, symbol, loading }) {
               crypto.map((coin) => (
                 <motion.div
                   key={coin.id}
-                  className="top-coins rounded-lg p-7 w-48 bg-white relative duration-500 ease-in-out transform hover:scale-105"
+                  className=" top-coins rounded-lg p-7 w-48 bg-white relative duration-500 ease-in-out transform hover:scale-105"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >

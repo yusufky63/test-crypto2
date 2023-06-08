@@ -59,15 +59,17 @@ const getUserAuth2FA = async (user) => {
     const auth2fa = useR.auth2fa;
 
     // Şifreli veriyi al ve çöz
-    const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
+    const ciphertextFromStorage =
+      localStorage.getItem("auth2faCheck") ||
+      localStorage.setItem("auth2faCheck", null);
 
     let auth2faCheckData;
 
     if (!ciphertextFromStorage) {
       // 'auth2faCheck' öğesi bulunamadı, yeni bir değer oluştur
       auth2faCheckData = {
-        auth: false, // Bu özelliği varsayılan durumunuza göre ayarlayın
-        status: "disable", // Bu özelliği varsayılan durumunuza göre ayarlayın
+        auth: false,
+        status: "disable",
       };
     } else {
       auth2faCheckData = decryptData(ciphertextFromStorage);
@@ -93,7 +95,7 @@ const getUserAuth2FA = async (user) => {
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    getUserAuth2FA(user);
+    await getUserAuth2FA(user);
 
     // Şifreli veriyi al ve çöz
     const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
@@ -214,7 +216,6 @@ onAuthStateChanged(auth, async (user) => {
         });
       } else {
         if (status === "waiting") {
-          console.log(status);
           // /auth-checker sayfasına yönlendirme işlemi
           const queryString = new URLSearchParams(user.uid).toString();
 
@@ -288,6 +289,10 @@ export const errorMessages = (error) => {
     "auth/unauthorized-continue-uri": "Devam adresine yetkisiz erişim.",
     "Cancelled by user": "İptal edildi.",
     "auth/email-already-exists": "Bu e-posta adresi zaten kullanımda.",
+    "auth/popup-closed-by-user": "İptal edildi.",
+    "auth/unauthorized-domain": "Yetkisiz alan adı.",
+    "auth/invalid-user-token":
+      "Kullanıcı oturum süresi doldu. Lütfen tekrar giriş yapın.",
   };
 
   const errorMessage = errorMessageMap[error.code] || error.message;
