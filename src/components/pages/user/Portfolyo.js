@@ -125,8 +125,8 @@ function Portfolyo() {
                 ) : (
                   <>
                     {info.length > 0 ? (
-                      <table className="min-w-full divide-y-8 divide-x-8 border-white  bg-white">
-                        <thead className="">
+                      <table className="min-w-full divide-y ">
+                        <thead className="bg-white  ">
                           <tr className="text-center text-sm font-semibold text-gray-900">
                             <th
                               scope="col"
@@ -179,11 +179,11 @@ function Portfolyo() {
                           </tr>
                         </thead>
 
-                        <tbody className="border-gray-50 shadow-md rounded-lg   divide-y-8  bg-transparent">
+                        <tbody className=" divide-white ">
                           {info.map((item, index) => (
                             <tr
                               key={item.id}
-                              className="border-gray-50 shadow-md rounded-lg border my-5   duration-300 ease-in-out"
+                              className="hover:drop-shadow-2xl hover:shadow-md hover:bg-gray-100 duration-300 ease-in-out shadow-inner"
                             >
                               <td className=" whitespace-nowrap  py-4 pl-4 pr-3 text-sm sm:pl-6">
                                 <div className="flex items-center">
@@ -278,8 +278,8 @@ function Portfolyo() {
                           ))}
                         </tbody>
                       </table>
-                        // <PortfolyoTableMobileDesign data={info} portfolyo={portfolyo} handleDelete={handleDelete}  />
                     ) : (
+                      // <PortfolyoTableMobileDesign data={info} portfolyo={portfolyo} handleDelete={handleDelete}  />
                       <div className="flex justify-center text-center text-2xl font-bold my-5 text-red-500">
                         Portfolyonuzda Coin Bulunmamaktadır.
                       </div>

@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { deleteBlogAdmin } from "../../../services/Firebase/FirebaseAdmin";
 import { deleteQuestion } from "../../../services/Firebase/FirebaseQuestion";
 import DeleteIcon from "../../../assets/icon/DeleteIcon";
+import EditIcon from "../../../assets/icon/EditIcon";
+import OtherSiteDirectIcon from "../../../assets/icon/OtherSiteDirectIcon";
 
 function Admin() {
   const { blog } = useSelector((state) => state.blogs);
@@ -61,22 +63,22 @@ function Admin() {
                           {index + 1}
                         </div>
                         <div className="px-4 py-2 w-full">{blog.header}</div>
-                        <div className=" flex justify-between  flex-col md:flex-row  text-center w-1/3 items-center px-4 py-2">
+                        <div className=" flex justify-end  flex-col md:flex-row  text-center w-1/3 items-center px-4 py-2">
                           <Link
                             to={`/admin/edit-blog/${blog.id}`}
-                            className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md w-full "
+                            className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md "
                           >
-                            Düzenle
+                            <EditIcon />
                           </Link>
                           <Link
                             to={`/academia/${blog.id}`}
-                            className="p-2 rounded-lg m-1 hover:bg-gray-300 shadow-md w-full"
+                            className="p-2 rounded-lg m-1 hover:bg-gray-300 shadow-md"
                           >
-                            Görüntüle
+                            <OtherSiteDirectIcon />
                           </Link>
                           <button
                             onClick={() => handleDeleteBlog(blog.id)}
-                            className="p-2 flex justify-center  m-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white shadow-md md:w-24 w-full "
+                            className="p-2 flex justify-center  m-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white shadow-md  "
                           >
                             <DeleteIcon />
                           </button>
@@ -110,18 +112,18 @@ function Admin() {
                         <div className=" px-4 py-2 w-full">
                           {question.question}
                         </div>
-                        <div className=" flex justify-between  flex-col md:flex-row  text-center w-1/4 items-center px-4 py-2">
+                        <div className=" flex justify-end  flex-col md:flex-row  text-center w-1/4 items-center px-4 py-2">
                           <Link
                             to={`/admin/edit-question/${question.id}`}
-                            className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md w-full"
+                            className="p-2 m-1 rounded-lg hover:bg-gray-300 shadow-md"
                           >
-                            Düzenle
+                            <EditIcon />
                           </Link>
                           <button
                             onClick={() => handleDeleteQuestion(question.id)}
-                            className="p-2 flex  m-1 justify-center  rounded-lg text-red-600 hover:bg-red-600 hover:text-white shadow-md w-24 "
+                            className="p-2 flex  m-1 justify-center  rounded-lg text-red-600 hover:bg-red-600 hover:text-white shadow-md  "
                           >
-                          <DeleteIcon />
+                            <DeleteIcon />
                           </button>
                         </div>
                       </div>

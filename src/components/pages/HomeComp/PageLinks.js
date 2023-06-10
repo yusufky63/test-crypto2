@@ -83,7 +83,7 @@ function PageLinks() {
               className="mb-1 sm:text-sm md:text-md lg:text-lg xl:text-xl text-sm"
               variants={itemVariants}
             >
-              Alım-Satım yapacağını
+              Alım-Satım yapacağınız borsayı seçin ve inceleyin.
             </motion.p>
             <motion.a
               className="md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
@@ -111,7 +111,7 @@ function PageLinks() {
             </motion.p>
 
             <motion.a
-              className="  md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
+              className="md:text-md lg:text-lg xl:text-xl text-sm text-blue-600"
               href="/academia"
             >
               Akademi <i className="fa fa-arrow-right-long"></i>

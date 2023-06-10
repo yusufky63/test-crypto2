@@ -13,6 +13,7 @@ import { collection, query, where } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import CloseIcon from "../../assets/icon/CloseIcon";
 import { delete2FA } from "../../services/Firebase/FirebaseProfile";
+import { encryptData, decryptData } from "../../utils/Auth2FA/Auth2FAUtils/LocalStorageEncryptAndDecrypt";
 
 function Auth2FAModal({ isModalOpen, openModal, closeModal }) {
   const { user } = useSelector((state) => state.auth);
@@ -69,7 +70,28 @@ function Auth2FAModal({ isModalOpen, openModal, closeModal }) {
 
   function handleVerification(data) {
     const currentCode = totp.generate();
-    if (data === currentCode) {
+
+    if (data === currentCode || data === backupCode) {
+      
+      const ciphertextFromStorage = localStorage.getItem("auth2faCheck");
+      let auth2faCheckData = decryptData(ciphertextFromStorage);
+
+      if (!auth2faCheckData) {
+        // 'auth2faCheck' verisi bulunamadı, yeni bir değer oluştur
+        auth2faCheckData = {
+          auth: false,
+          status: "disabled",
+        };
+      } else {
+        // Durumu güncelle
+        auth2faCheckData.status = "disabled";
+      }
+
+      // Güncellenen veriyi şifrele ve LocalStorage'a geri kaydet
+      const ciphertext = encryptData(auth2faCheckData);
+      localStorage.setItem("auth2faCheck", ciphertext);
+
+
       toast.success("2FA Doğrulama Başarılı");
       delete2FA(user.uid);
       closeModal();
