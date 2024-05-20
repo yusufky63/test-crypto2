@@ -38,7 +38,7 @@
         "hunspell-spellchecker": "^1.0.2",
         "moment": "^2.29.4",
         "nouislider-react": "^3.4.1",
-        "npm": "^9.1.1",
+        "npm": "^10.2.0",
         "otpauth": "^9.0.2",
         "otplib": "^12.0.1",
         "plotly.js-dist-min": "^2.15.0",
